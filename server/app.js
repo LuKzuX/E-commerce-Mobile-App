@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import { connect } from "./db/connection.js";
 const app = express();
+import {User} from '../server/models/userSchema.js'
 
 const start = async () => {
   try {
@@ -14,5 +15,15 @@ const start = async () => {
     console.log(error);
   }
 };
+
+app.get('/', async (req, res) => {
+  try {
+    const response = await User.create({username: 'Lucas', password: '12345', isAdmin: false})
+    res.json(response)
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
 
 start();
