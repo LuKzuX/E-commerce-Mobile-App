@@ -16,14 +16,4 @@ const start = async () => {
   }
 };
 
-app.get('/', async (req, res) => {
-  try {
-    const response = await User.create({username: 'Lucas', password: '12345', isAdmin: false})
-    res.json(response)
-  } catch (error) {
-    console.log(error);
-    
-  }
-})
-
 start();
