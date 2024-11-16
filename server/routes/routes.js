@@ -1,7 +1,10 @@
-import express from 'express'
+import express from "express";
+import { userAuth } from "../middlewares/userAuth.js";
 export const router = express.Router();
-import {
-    createUser
-} from "../controllers/userControllers.js"
+import { createUser, loginUser } from "../controllers/userControllers.js";
+import { getProducts } from "../controllers/productControllers.js";
 
-router.post(`/signup`, createUser)
+router.post(`/signup`, createUser);
+router.post(`/signin`, loginUser);
+
+router.get(`/`, userAuth, getProducts);
