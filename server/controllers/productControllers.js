@@ -1,4 +1,4 @@
-export const getProducts = (req, res, next) =>{
+export const createProduct = (req, res, next) =>{
     try {
         res.send("welcome")
     } catch (error) {
