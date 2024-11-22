@@ -11,7 +11,6 @@ export const userAuth = (req, res, next) => {
 
     req.user = verified;
     next();
-    console.log(verified);
   } catch (error) {
     res.status(401).json({ error: "Invalid or expired token" });
   }
