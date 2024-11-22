@@ -13,10 +13,12 @@ const userSchema = new mongoose.Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Product",
+      default: []
     },
   ],
   isAdmin: {
     type: Boolean,
+    default: false,
     required: true,
   },
 });
