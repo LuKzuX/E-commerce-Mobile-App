@@ -8,8 +8,6 @@ import {
   createProduct,
 } from "../controllers/productControllers.js";
 
-import { createProduct } from "../controllers/productControllers.js";
-
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 

@@ -29,8 +29,6 @@ export const createProduct = async (req, res, next) => {
     });
 
     res.json(product);
-
-    res.json(product);
   } catch (error) {
     res.send(error);
   }
