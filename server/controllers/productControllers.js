@@ -28,7 +28,6 @@ export const createProduct = async (req, res, next) => {
       productQuantity,
     });
 
-    res.json(product);
 
     res.json(product);
   } catch (error) {
