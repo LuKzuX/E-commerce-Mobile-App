@@ -27,11 +27,6 @@ export const createProduct = async (req, res, next) => {
       productImage,
       productQuantity,
     });
-
-<<<<<<< HEAD
-
-=======
->>>>>>> c6b39b9218679ed46382c253eab26cb6a00e09aa
     res.json(product);
   } catch (error) {
     res.send(error);
