@@ -8,7 +8,6 @@ import {
   createProduct,
 } from "../controllers/productControllers.js";
 
-<<<<<<< HEAD
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -19,8 +18,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-=======
->>>>>>> c6b39b9218679ed46382c253eab26cb6a00e09aa
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
