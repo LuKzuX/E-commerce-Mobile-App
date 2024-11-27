@@ -16,7 +16,7 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
-      productImage,
+      productImage = req.file.path,
       productQuantity,
     } = req.body;
     const product = await Product.create({
