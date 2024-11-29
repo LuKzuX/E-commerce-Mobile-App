@@ -9,6 +9,16 @@ export const getAllProducts = async (req, res, next) => {
   }
 };
 
+export const getProductDetails = async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const product = await Product.find({_id: id})
+    res.json(product)
+  } catch (error) {
+    res.send(error)
+  }
+}
+
 export const createProduct = async (req, res, next) => {
   try {
     const {

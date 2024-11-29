@@ -5,6 +5,7 @@ import { userAuth } from "../middlewares/userAuth.js";
 import { createUser, loginUser } from "../controllers/userControllers.js";
 import {
   getAllProducts,
+  getProductDetails,
   createProduct,
 } from "../controllers/productControllers.js";
 
@@ -22,7 +23,7 @@ router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
 router.get("/", getAllProducts);
-
+router.get("/:id", getProductDetails)
 router.post(
   `/new-product`,
   userAuth,
