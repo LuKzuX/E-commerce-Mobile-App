@@ -23,7 +23,7 @@ const upload = multer({ storage });
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
-router.get("/cart", getCartProducts)
+router.get("/cart", userAuth, getCartProducts)
 
 router.get("/", getAllProducts);
 router.get("/:id", getProductDetails)
