@@ -8,6 +8,7 @@ import {
   getProductDetails,
   createProduct,
 } from "../controllers/productControllers.js";
+import { getCartProducts } from "../controllers/cartControllers.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -22,6 +23,8 @@ const upload = multer({ storage });
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
+router.get("/cart", getCartProducts)
+
 router.get("/", getAllProducts);
 router.get("/:id", getProductDetails)
 router.post(
@@ -30,3 +33,5 @@ router.post(
   upload.single("productImage"),
   createProduct
 );
+
+
