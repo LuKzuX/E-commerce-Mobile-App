@@ -8,7 +8,7 @@ import {
   getProductDetails,
   createProduct,
 } from "../controllers/productControllers.js";
-import { getCartProducts } from "../controllers/cartControllers.js";
+import { getCartProducts, addProductToCart } from "../controllers/cartControllers.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -24,6 +24,7 @@ router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
 router.get("/cart", userAuth, getCartProducts)
+router.post("/:id", userAuth, addProductToCart)
 
 router.get("/", getAllProducts);
 router.get("/:id", getProductDetails)
