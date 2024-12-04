@@ -11,9 +11,13 @@ const userSchema = new mongoose.Schema({
   },
   cart: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      default: []
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product"},
+      quantity: {
+        type: Number,
+        default: 1
+        },
     },
   ],
   isAdmin: {
@@ -23,4 +27,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema);
