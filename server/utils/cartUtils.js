@@ -29,8 +29,7 @@ export const addSpecificProductQuantityToCart = (
     }
   }
   if (!found) {
-    console.log(x);
     user.cart.push(product);
-    user.cart[0].quantity = quantity;
+    user.cart[x].quantity = quantity;
   }
 };

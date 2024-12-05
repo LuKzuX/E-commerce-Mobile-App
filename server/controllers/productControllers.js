@@ -39,6 +39,8 @@ export const createProduct = async (req, res, next) => {
     });
     res.json(product);
   } catch (error) {
+    console.log(error);
+    
     res.send(error);
   }
 };

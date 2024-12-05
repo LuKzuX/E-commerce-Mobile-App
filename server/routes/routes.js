@@ -8,7 +8,10 @@ import {
   getProductDetails,
   createProduct,
 } from "../controllers/productControllers.js";
-import { getCartProducts, addProductToCart } from "../controllers/cartControllers.js";
+import {
+  getCartProducts,
+  addProductToCart,
+} from "../controllers/cartControllers.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,14 +23,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// User authentication routes
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 
-router.get("/cart", userAuth, getCartProducts)
-router.post("/:id", userAuth, addProductToCart)
+// Cart routes
+router.get("/cart", userAuth, getCartProducts);
+router.post("/:id", userAuth, addProductToCart);
 
-router.get("/", getAllProducts);
-router.get("/:id", getProductDetails)
+// Product routes
 router.post(
   `/new-product`,
   userAuth,
@@ -35,4 +39,5 @@ router.post(
   createProduct
 );
 
-
+router.get("/", getAllProducts);
+router.get("/:id", getProductDetails);
