@@ -42,3 +42,19 @@ export const addProductToCart = async (req, res, next) => {
     res.send(error);
   }
 };
+
+export const removeProductFromCart = async (req, res, next) => {
+  try {
+    const { _id } = req.user.user;
+    const { id } = req.params;
+    const loggedUser = await User.findById({ _id });
+    const newCart = loggedUser.cart.filter((obj) => {
+      return obj._id.toString() !== id;
+    });
+    loggedUser.cart = newCart;
+    await loggedUser.save();
+    res.json(newCart)
+  } catch (error) {
+    console.log(error);
+  }
+};

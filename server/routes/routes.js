@@ -12,6 +12,7 @@ import {
 import {
   getCartProducts,
   addProductToCart,
+  removeProductFromCart
 } from "../controllers/cartControllers.js";
 
 const storage = multer.diskStorage({
@@ -31,6 +32,7 @@ router.post(`/signin`, loginUser);
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
 router.post("/cart/:id", userAuth, addProductToCart); // Updated to make it more specific
+router.delete("/cart/:id", userAuth, removeProductFromCart)
 
 // Product routes
 router.post(
