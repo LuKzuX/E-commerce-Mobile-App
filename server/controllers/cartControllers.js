@@ -3,6 +3,7 @@ import { Product } from "../models/productSchema.js";
 import {
   addMoreOfTheSameProductToCart,
   addSpecificProductQuantityToCart,
+  calculatePrice,
 } from "../utils/cartUtils.js";
 
 export const getCartProducts = async (req, res, next) => {
@@ -24,11 +25,18 @@ export const addProductToCart = async (req, res, next) => {
     const loggedUser = await User.findById({ _id });
 
     if (productQuantity > 1) {
-      addSpecificProductQuantityToCart(loggedUser, id, productQuantity, product);
+      addSpecificProductQuantityToCart(
+        loggedUser,
+        id,
+        productQuantity,
+        product
+      );
+      calculatePrice(loggedUser);
     } else {
       addMoreOfTheSameProductToCart(loggedUser, id, product);
+      calculatePrice(loggedUser);
     }
-    loggedUser.save()
+
     res.send(loggedUser);
   } catch (error) {
     res.send(error);

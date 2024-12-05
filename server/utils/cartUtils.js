@@ -1,3 +1,5 @@
+import { Product } from "../models/productSchema.js";
+
 export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
@@ -30,4 +32,13 @@ export const addSpecificProductQuantityToCart = (
     user.cart.push(product);
     user.cart[x].quantity = quantity;
   }
+};
+
+export const calculatePrice = async (user) => {
+  const productIds = user.cart.map((obj) => obj._id.toString());
+  const products = await Product.find({ _id: { $in: productIds } });
+  for (let i = 0; i < user.cart.length; i++) {
+    user.cart[i].totalPrice = products[0].productPrice * user.cart[i].quantity;
+  }
+  await user.save();
 };
