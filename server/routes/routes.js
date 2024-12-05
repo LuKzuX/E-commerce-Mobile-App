@@ -7,6 +7,7 @@ import {
   getAllProducts,
   getProductDetails,
   createProduct,
+  deleteProduct
 } from "../controllers/productControllers.js";
 import {
   getCartProducts,
@@ -29,7 +30,7 @@ router.post(`/signin`, loginUser);
 
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
-router.post("/:id", userAuth, addProductToCart);
+router.post("/cart/:id", userAuth, addProductToCart); // Updated to make it more specific
 
 // Product routes
 router.post(
@@ -39,5 +40,6 @@ router.post(
   createProduct
 );
 
-router.get("/", getAllProducts);
+router.get("/", getAllProducts); // Ensure this is before any dynamic route
 router.get("/:id", getProductDetails);
+router.delete("/:id", userAuth, deleteProduct);

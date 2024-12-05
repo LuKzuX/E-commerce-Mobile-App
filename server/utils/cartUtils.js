@@ -15,15 +15,13 @@ export const addSpecificProductQuantityToCart = (
   product
 ) => {
   let found = false;
-  let x = null;
+  let x = 0;
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
       user.cart[i].quantity = quantity;
       found = true;
     } else {
-      if (!user.cart.length) {
-        x = 0;
-      } else {
+      if (user.cart.length > 1) {
         x = user.cart.length - 1;
       }
     }

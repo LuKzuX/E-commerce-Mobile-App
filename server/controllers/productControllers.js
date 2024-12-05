@@ -1,4 +1,5 @@
 import { Product } from "../models/productSchema.js";
+import { User } from "../models/userSchema.js";
 
 export const getAllProducts = async (req, res, next) => {
   try {
@@ -44,3 +45,21 @@ export const createProduct = async (req, res, next) => {
     res.send(error);
   }
 };
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {_id} = req.user.user
+    const loggedUser = await User.findById({_id})
+    const deletedProduct = await Product.findByIdAndDelete({_id: id})
+    
+    const filtered = loggedUser.cart.filter((obj) => {
+      return obj._id.toString() !== deletedProduct._id.toString()
+    })
+    loggedUser.cart = filtered
+    loggedUser.save()
+    res.send(deletedProduct)
+  } catch (error) {
+    res.send(error)
+  }
+}
