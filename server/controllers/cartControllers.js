@@ -4,16 +4,13 @@ import {
   addMoreOfTheSameProductToCart,
   addSpecificProductQuantityToCart,
   calculatePrice,
-  getAllProductInfo
 } from "../utils/cartUtils.js";
 
 export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user;
   try {
     const loggedUser = await User.findById({ _id });
-    calculatePrice(loggedUser)
-    const all = await getAllProductInfo(loggedUser)
-    res.json(all);
+    res.json(loggedUser.cart);
   } catch (error) {
     res.send(error);
   }
