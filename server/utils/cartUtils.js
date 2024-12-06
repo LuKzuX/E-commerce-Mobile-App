@@ -41,5 +41,8 @@ export const calculatePrice = async (user) => {
     user.cart[i].totalPrice = 0
     user.cart[i].totalPrice = products[i].productPrice * user.cart[i].quantity;
   }
+  console.log(products);
+  
   await user.save();
 };
+

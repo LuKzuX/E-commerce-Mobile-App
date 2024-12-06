@@ -10,6 +10,7 @@ export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user;
   try {
     const loggedUser = await User.findById({ _id });
+    calculatePrice(loggedUser)
     res.send(loggedUser.cart);
   } catch (error) {
     res.send(error);
