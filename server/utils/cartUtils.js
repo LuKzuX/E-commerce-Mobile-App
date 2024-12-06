@@ -38,11 +38,20 @@ export const calculatePrice = async (user) => {
   const productIds = user.cart.map((obj) => obj._id.toString());
   const products = await Product.find({ _id: { $in: productIds } });
   for (let i = 0; i < user.cart.length; i++) {
-    user.cart[i].totalPrice = 0
+    user.cart[i].totalPrice = 0;
     user.cart[i].totalPrice = products[i].productPrice * user.cart[i].quantity;
   }
-  console.log(products);
-  
   await user.save();
 };
 
+export const getAllProductInfo = async (user) => {
+  const array = [];
+  for (let i = 0; i < user.cart.length; i++) {
+    const allProductInfo = await Product.find({
+      _id: user.cart[i]._id.toString(),
+    });
+    array.push(allProductInfo);
+    array[i].totalPrice = user.cart[i].totalPrice;
+  }
+  return array;
+};
