@@ -10,7 +10,13 @@ export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user;
   try {
     const loggedUser = await User.findById({ _id });
-    res.json(loggedUser.cart);
+    const productIds = loggedUser.cart.map((obj) => obj._id.toString());
+    const products = await Product.find({ _id: { $in: productIds } });
+    for (let i = 0; i < products.length; i++) {
+      products[i] = { ...products[i].toObject(), totalPrice: 3 }; // Convert to object and add the property
+    }
+
+    res.json(products);
   } catch (error) {
     res.send(error);
   }
@@ -53,7 +59,7 @@ export const removeProductFromCart = async (req, res, next) => {
     });
     loggedUser.cart = newCart;
     await loggedUser.save();
-    res.json(newCart)
+    res.json(newCart);
   } catch (error) {
     console.log(error);
   }
