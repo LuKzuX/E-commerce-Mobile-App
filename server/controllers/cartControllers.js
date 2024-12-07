@@ -12,11 +12,15 @@ export const getCartProducts = async (req, res, next) => {
     const loggedUser = await User.findById({ _id });
     const productIds = loggedUser.cart.map((obj) => obj._id.toString());
     const products = await Product.find({ _id: { $in: productIds } });
-    for (let i = 0; i < products.length; i++) {
-      products[i] = { ...products[i].toObject(), totalPrice: 3 }; // Convert to object and add the property
-    }
+    const x = products.map((obj, index) => {
+      return {
+        ...obj.toObject(),
+        totalPrice: loggedUser.cart[index].totalPrice,
+        quantity: loggedUser.cart[index].quantity,
+      };
+    });
 
-    res.json(products);
+    res.json(x);
   } catch (error) {
     res.send(error);
   }
@@ -30,7 +34,7 @@ export const addProductToCart = async (req, res, next) => {
     const product = await Product.findById({ _id: id });
     const loggedUser = await User.findById({ _id });
 
-    if (productQuantity > 1) {
+    if (productQuantity >= 1) {
       addSpecificProductQuantityToCart(
         loggedUser,
         id,

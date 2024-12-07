@@ -13,14 +13,15 @@ const userSchema = new mongoose.Schema({
     {
       product: {
         type: Schema.Types.ObjectId,
-        ref: "Product"},
+        ref: "Product",
+      },
       quantity: {
         type: Number,
-        default: 1
-        },
+        default: 1,
+      },
       totalPrice: {
-        type: Number
-        } 
+        type: Number,
+      },
     },
   ],
   isAdmin: {
