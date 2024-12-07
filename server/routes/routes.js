@@ -8,12 +8,13 @@ import {
   getProductDetails,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 } from "../controllers/productControllers.js";
 import {
   getCartProducts,
   addProductToCart,
-  removeProductFromCart
+  removeProductFromCart,
+  updateProductQuantityInCart,
 } from "../controllers/cartControllers.js";
 
 const storage = multer.diskStorage({
@@ -32,8 +33,9 @@ router.post(`/signin`, loginUser);
 
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
-router.post("/cart/:id", userAuth, addProductToCart); 
-router.delete("/cart/:id", userAuth, removeProductFromCart)
+router.post("/cart/:id", userAuth, addProductToCart);
+router.patch("/cart/:id", userAuth, updateProductQuantityInCart);
+router.delete("/cart/:id", userAuth, removeProductFromCart);
 
 // Product routes
 router.post(
@@ -44,5 +46,5 @@ router.post(
 );
 router.get("/", getAllProducts);
 router.get("/:id", getProductDetails);
-router.patch("/:id", updateProduct)
+router.patch("/:id", updateProduct);
 router.delete("/:id", userAuth, deleteProduct);

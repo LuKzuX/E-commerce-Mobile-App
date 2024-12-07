@@ -29,25 +29,29 @@ export const getCartProducts = async (req, res, next) => {
 export const addProductToCart = async (req, res, next) => {
   const { id } = req.params;
   const { _id } = req.user.user;
-  const { productQuantity } = req.body || 1;
   try {
     const product = await Product.findById({ _id: id });
     const loggedUser = await User.findById({ _id });
 
-    if (productQuantity >= 1) {
-      addSpecificProductQuantityToCart(
-        loggedUser,
-        id,
-        productQuantity,
-        product
-      );
-      calculatePrice(loggedUser);
-    } else {
-      addMoreOfTheSameProductToCart(loggedUser, id, product);
-      calculatePrice(loggedUser);
-    }
+    addMoreOfTheSameProductToCart(loggedUser, id, product);
+    calculatePrice(loggedUser);
 
     res.send(loggedUser);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const updateProductQuantityInCart = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id } = req.user.user;
+  const { quantity } = req.body;
+  try {
+    const product = await Product.findById({ _id: id });
+    const loggedUser = await User.findById({ _id });
+    addSpecificProductQuantityToCart(loggedUser, id, quantity, product);
+    calculatePrice(loggedUser);
+    res.json(loggedUser);
   } catch (error) {
     res.send(error);
   }
