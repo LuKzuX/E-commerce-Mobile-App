@@ -11,7 +11,7 @@ export const getCartProducts = async (req, res, next) => {
   try {
     const loggedUser = await User.findById({ _id });
     const productIds = loggedUser.cart.map((obj) => obj._id.toString());
-    const products = await Product.find({ _id: { $in: productIds } });
+    const products = await Product.find({ _id: { $in: productIds } })
     const x = products.map((obj, index) => {
       return {
         ...obj.toObject(),
@@ -25,6 +25,7 @@ export const getCartProducts = async (req, res, next) => {
     res.send(error);
   }
 };
+
 
 export const addProductToCart = async (req, res, next) => {
   const { id } = req.params;
@@ -72,3 +73,7 @@ export const removeProductFromCart = async (req, res, next) => {
     console.log(error);
   }
 };
+
+export const buy = async (req, res, next) => {
+
+}

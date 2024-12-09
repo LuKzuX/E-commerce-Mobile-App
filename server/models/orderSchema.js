@@ -1,6 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const orderSchema = new mongoose.Schema({
+  orderItems: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+  },
   orderDate: {
     type: Date,
     required: true,
