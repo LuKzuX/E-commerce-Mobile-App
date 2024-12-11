@@ -1,5 +1,6 @@
 import { User } from "../models/userSchema.js";
 import { Product } from "../models/productSchema.js";
+import { Order } from "../models/orderSchema.js";
 import {
   addMoreOfTheSameProductToCart,
   addSpecificProductQuantityToCart,
@@ -11,7 +12,7 @@ export const getCartProducts = async (req, res, next) => {
   try {
     const loggedUser = await User.findById({ _id });
     const productIds = loggedUser.cart.map((obj) => obj._id.toString());
-    const products = await Product.find({ _id: { $in: productIds } })
+    const products = await Product.find({ _id: { $in: productIds } });
     const x = products.map((obj, index) => {
       return {
         ...obj.toObject(),
@@ -25,7 +26,6 @@ export const getCartProducts = async (req, res, next) => {
     res.send(error);
   }
 };
-
 
 export const addProductToCart = async (req, res, next) => {
   const { id } = req.params;
@@ -75,5 +75,33 @@ export const removeProductFromCart = async (req, res, next) => {
 };
 
 export const buy = async (req, res, next) => {
-
-}
+  const { _id } = req.user.user;
+  try {
+    const loggedUser = await User.findById({ _id });
+    const productIds = loggedUser.cart.map((obj) => obj._id.toString());
+    const products = await Product.find({ _id: { $in: productIds } });
+    const x = products.map((obj, index) => {
+      return {
+        ...obj.toObject(),
+        totalPrice: loggedUser.cart[index].totalPrice,
+        quantity: loggedUser.cart[index].quantity,
+      };
+    });
+    res.send(products)
+  //   const order = Order.create({
+  //     productItem: products,
+  //     orderDate: Date.now(),
+  //     orderAddress: {
+  //       street: req.user.user.address.street,
+  //       city: req.user.user.address.city,
+  //       state: req.user.user.address.state,
+  //       zipCode: req.user.user.address.zipCode,
+  //       country: req.user.user.address.country,
+  //     },
+  //     orderStatus: 'pending',
+  //     orderValue: 0
+  // });
+  } catch (error) {
+    res.send(error);
+  }
+};

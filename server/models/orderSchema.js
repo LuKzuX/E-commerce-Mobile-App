@@ -1,10 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
 const orderSchema = new mongoose.Schema({
-  orderItems: {
-    type: Schema.Types.ObjectId,
-    ref: "Product",
-  },
+  orderItems: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
   orderDate: {
     type: Date,
     required: true,
@@ -18,24 +20,12 @@ const orderSchema = new mongoose.Schema({
     country: { type: String, required: true },
   },
   orderStatus: {
-    type: Array,
-    enum: [
-      "pending",
-      "shipped",
-      "in transit",
-      "delivered",
-      "cancelled",
-      "returned",
-    ],
+   type: String
   },
   orderValue: {
     type: Number,
     required: true,
-  },
-  orderBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
+  }
 });
 
 export const Order = mongoose.model("Order", orderSchema);
