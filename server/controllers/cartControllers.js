@@ -91,26 +91,27 @@ export const buy = async (req, res, next) => {
     const finalObj = [];
     for (let i = 0; i < x.length; i++) {
       finalObj.push({
+        productId: x[i]._id,
         productName: x[i].productName,
         totalPrice: x[i].totalPrice,
         quantity: x[i].quantity,
       });
       totalPrice += x[i].totalPrice;
     }
-    //   const order = Order.create({
-    //     productItem: products,
-    //     orderDate: Date.now(),
-    //     orderAddress: {
-    //       street: req.user.user.address.street,
-    //       city: req.user.user.address.city,
-    //       state: req.user.user.address.state,
-    //       zipCode: req.user.user.address.zipCode,
-    //       country: req.user.user.address.country,
-    //     },
-    //     orderStatus: 'pending',
-    //     orderValue: 0
-    // });
-    res.json({ finalObj, totalPrice: totalPrice });
+    const order = await Order.create({
+      orderItems: finalObj,
+      orderDate: new Date(),
+      orderAddress: {
+        street: req.user.user.address.street || "a",
+        city: req.user.user.address.city || "a",
+        state: req.user.user.address.state || "a",
+        zipCode: req.user.user.address.zipCode || "a",
+        country: req.user.user.address.country || "a",
+      },
+      orderStatus: "pending",
+      orderValue: totalPrice,
+    });
+    res.json(order);
   } catch (error) {
     res.send(error);
   }

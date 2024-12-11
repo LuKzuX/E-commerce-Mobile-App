@@ -1,16 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
 const orderSchema = new mongoose.Schema({
-  orderItems: [
+  orderItems: 
     {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
+      type: Array,
+      default: {}
     },
-  ],
   orderDate: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: Date.now,
   },
   orderAddress: {
     street: { type: String, required: true },
@@ -20,11 +19,13 @@ const orderSchema = new mongoose.Schema({
     country: { type: String, required: true },
   },
   orderStatus: {
-   type: String
+   type: String,
+   default: "pending"
   },
   orderValue: {
     type: Number,
     required: true,
+    default: 0
   }
 });
 
