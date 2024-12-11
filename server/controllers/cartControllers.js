@@ -87,20 +87,30 @@ export const buy = async (req, res, next) => {
         quantity: loggedUser.cart[index].quantity,
       };
     });
-    res.send(products)
-  //   const order = Order.create({
-  //     productItem: products,
-  //     orderDate: Date.now(),
-  //     orderAddress: {
-  //       street: req.user.user.address.street,
-  //       city: req.user.user.address.city,
-  //       state: req.user.user.address.state,
-  //       zipCode: req.user.user.address.zipCode,
-  //       country: req.user.user.address.country,
-  //     },
-  //     orderStatus: 'pending',
-  //     orderValue: 0
-  // });
+    let totalPrice = 0;
+    const finalObj = [];
+    for (let i = 0; i < x.length; i++) {
+      finalObj.push({
+        productName: x[i].productName,
+        totalPrice: x[i].totalPrice,
+        quantity: x[i].quantity,
+      });
+      totalPrice += x[i].totalPrice;
+    }
+    //   const order = Order.create({
+    //     productItem: products,
+    //     orderDate: Date.now(),
+    //     orderAddress: {
+    //       street: req.user.user.address.street,
+    //       city: req.user.user.address.city,
+    //       state: req.user.user.address.state,
+    //       zipCode: req.user.user.address.zipCode,
+    //       country: req.user.user.address.country,
+    //     },
+    //     orderStatus: 'pending',
+    //     orderValue: 0
+    // });
+    res.json({ finalObj, totalPrice: totalPrice });
   } catch (error) {
     res.send(error);
   }

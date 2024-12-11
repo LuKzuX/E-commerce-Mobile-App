@@ -35,7 +35,7 @@ router.post(`/signin`, loginUser);
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
 router.post("/cart/:id", userAuth, addProductToCart);
-router.post("/cart/buy", userAuth, buy)
+router.post("/cart", userAuth, buy)
 router.patch("/cart/:id", userAuth, updateProductQuantityInCart);
 router.delete("/cart/:id", userAuth, removeProductFromCart);
 
