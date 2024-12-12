@@ -101,19 +101,21 @@ export const buy = async (req, res, next) => {
 
     for (let j = 0; j < finalObj.length; j++) {
       if (products[j].productQuantity <= 0) {
-        return res.json({message: "no product in stock",
-               productIssue: "product: " + products[j]
+        return res.json({
+          message: "no product in stock",
+          productIssue: "product: " + products[j],
         });
       }
       if (finalObj[j].productId.toString() == products[j]._id.toString()) {
         products[j].productQuantity -= finalObj[j].quantity;
-        if (products[j].productQuantity - finalObj[j].quantity < 1) {
-          return res.json({message: "we dont have the amount required in stock",
-                 productIssue: products[j]
-          });
-        }
-        await products[j].save();
       }
+      if (products[j].productQuantity - finalObj[j].quantity < 1) {
+        return res.json({
+          message: "we dont have the amount required in stock",
+          productIssue: products[j],
+        });
+      }
+      await products[j].save();
     }
 
     const order = await Order.create({
