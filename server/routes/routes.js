@@ -2,7 +2,11 @@ import express from "express";
 export const router = express.Router();
 import multer from "multer";
 import { userAuth } from "../middlewares/userAuth.js";
-import { createUser, loginUser, updateUserInfo } from "../controllers/userControllers.js";
+import {
+  createUser,
+  loginUser,
+  updateUserInfo,
+} from "../controllers/userControllers.js";
 import {
   getAllProducts,
   getProductDetails,
@@ -17,6 +21,7 @@ import {
   updateProductQuantityInCart,
   buy,
 } from "../controllers/cartControllers.js";
+import { getUserOrders } from "../controllers/orderControllers.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,12 +36,12 @@ const upload = multer({ storage });
 // User authentication routes
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
-router.patch(`/user`, userAuth, updateUserInfo)
+router.patch(`/user`, userAuth, updateUserInfo);
 
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
 router.post("/cart/:id", userAuth, addProductToCart);
-router.post("/cart", userAuth, buy)
+router.post("/cart", userAuth, buy);
 router.patch("/cart/:id", userAuth, updateProductQuantityInCart);
 router.delete("/cart/:id", userAuth, removeProductFromCart);
 
@@ -51,3 +56,6 @@ router.get("/", getAllProducts);
 router.get("/:id", getProductDetails);
 router.patch("/:id", userAuth, updateProduct);
 router.delete("/:id", userAuth, deleteProduct);
+
+// Order routes
+router.get("/orders/get", userAuth, getUserOrders);
