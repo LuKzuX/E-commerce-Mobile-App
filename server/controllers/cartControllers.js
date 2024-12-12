@@ -130,8 +130,10 @@ export const buy = async (req, res, next) => {
       },
       orderStatus: "pending",
       orderValue: totalPrice,
+      orderBy: loggedUser._id
     });
-
+    loggedUser.cart = []
+    await loggedUser.save()
     res.json(order);
   } catch (error) {
     res.send(error);

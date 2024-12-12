@@ -26,6 +26,16 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  orderBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now, // Automatically set the creation time
+    index: { expires: '1h' }, // TTL: Delete the document after 1 hour
+  },
 });
+
 
 export const Order = mongoose.model("Order", orderSchema);
