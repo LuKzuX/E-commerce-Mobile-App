@@ -2,7 +2,7 @@ import express from "express";
 export const router = express.Router();
 import multer from "multer";
 import { userAuth } from "../middlewares/userAuth.js";
-import { createUser, loginUser } from "../controllers/userControllers.js";
+import { createUser, loginUser, updateUserInfo } from "../controllers/userControllers.js";
 import {
   getAllProducts,
   getProductDetails,
@@ -31,6 +31,7 @@ const upload = multer({ storage });
 // User authentication routes
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
+router.patch(`/user`, userAuth, updateUserInfo)
 
 // Cart routes
 router.get("/cart", userAuth, getCartProducts);
@@ -48,5 +49,5 @@ router.post(
 );
 router.get("/", getAllProducts);
 router.get("/:id", getProductDetails);
-router.patch("/:id", updateProduct);
+router.patch("/:id", userAuth, updateProduct);
 router.delete("/:id", userAuth, deleteProduct);

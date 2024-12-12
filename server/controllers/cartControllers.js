@@ -78,6 +78,8 @@ export const buy = async (req, res, next) => {
   const { _id } = req.user.user;
   try {
     const loggedUser = await User.findById({ _id });
+    console.log(loggedUser);
+    
     const productIds = loggedUser.cart.map((obj) => obj._id.toString());
     const products = await Product.find({ _id: { $in: productIds } });
     const x = products.map((obj, index) => {
@@ -102,15 +104,16 @@ export const buy = async (req, res, next) => {
       orderItems: finalObj,
       orderDate: new Date(),
       orderAddress: {
-        street: req.user.user.address.street || "a",
-        city: req.user.user.address.city || "a",
-        state: req.user.user.address.state || "a",
-        zipCode: req.user.user.address.zipCode || "a",
-        country: req.user.user.address.country || "a",
+        street: loggedUser.address.street || "",
+        city: loggedUser.address.city || "",
+        state: loggedUser.address.state || "",
+        areaCode: loggedUser.address.areaCode || "",
+        country: loggedUser.address.country || "",
       },
       orderStatus: "pending",
       orderValue: totalPrice,
     });
+    
     res.json(order);
   } catch (error) {
     res.send(error);
