@@ -55,12 +55,14 @@ export const updateUserInfo = async (req, res, next) => {
       street,
       state,
     } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     const user = await User.findByIdAndUpdate(
       { _id: _id },
       {
         $set: {
           username,
-          password,
+          password: hashedPassword,
           email,
           address: {
             country,

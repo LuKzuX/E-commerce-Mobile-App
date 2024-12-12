@@ -78,8 +78,6 @@ export const buy = async (req, res, next) => {
   const { _id } = req.user.user;
   try {
     const loggedUser = await User.findById({ _id });
-    console.log(loggedUser);
-    
     const productIds = loggedUser.cart.map((obj) => obj._id.toString());
     const products = await Product.find({ _id: { $in: productIds } });
     const x = products.map((obj, index) => {
@@ -100,6 +98,20 @@ export const buy = async (req, res, next) => {
       });
       totalPrice += x[i].totalPrice;
     }
+
+    for (let j = 0; j < finalObj.length; j++) {
+      if (products[j].productQuantity <= 0) {
+        return res.send("not enought products in stock");
+      }
+      if (finalObj[j].productId.toString() == products[j]._id.toString()) {
+        products[j].productQuantity -= finalObj[j].quantity;
+        if (products[j].productQuantity - finalObj[j].quantity < 1) {
+          return res.send("we dont have the amount required in stock");
+        }
+        await products[j].save();
+      }
+    }
+
     const order = await Order.create({
       orderItems: finalObj,
       orderDate: new Date(),
@@ -113,7 +125,7 @@ export const buy = async (req, res, next) => {
       orderStatus: "pending",
       orderValue: totalPrice,
     });
-    
+
     res.json(order);
   } catch (error) {
     res.send(error);
