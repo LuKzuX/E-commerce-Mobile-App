@@ -1,0 +1,11 @@
+
+    {
+        "[typescript]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "[typescriptreact]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+    
+    "prettier.jsxSingleQuote": true
+    }
