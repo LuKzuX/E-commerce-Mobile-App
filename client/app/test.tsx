@@ -16,6 +16,7 @@ export default function DetailsScreen() {
         console.log(error)
       }
     }
+    getData()
   }, [])
 
   return (
