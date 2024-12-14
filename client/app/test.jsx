@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import axios from 'axios'
 
 export default function DetailsScreen() {
-  const [data, setData] = useState('')
+  const [data, setData] = useState([])
   useEffect(() => {
     const getData = async () => {
       try {
@@ -11,7 +11,6 @@ export default function DetailsScreen() {
           'http://10.0.0.160:5000/material-delivery/'
         )
         setData(products.data)
-        console.log(data)
       } catch (error) {
         console.log(error)
       }
@@ -19,11 +18,9 @@ export default function DetailsScreen() {
     getData()
   }, [])
 
-  return (
-    <View style={styles.container}>
-      <Text>test</Text>
-    </View>
-  )
+  if (data) {
+    return data.map((obj) => <Text key={obj._id}>{obj.productName}</Text>)
+  }
 }
 
 const styles = StyleSheet.create({
