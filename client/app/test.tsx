@@ -8,7 +8,7 @@ export default function DetailsScreen() {
     const getData = async () => {
       try {
         const products = await axios.get(
-          'http://localhost:5000/material-delivery/'
+          'http://10.0.0.160:5000/material-delivery/'
         )
         setData(products.data)
         console.log(data)
