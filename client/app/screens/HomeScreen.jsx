@@ -1,9 +1,11 @@
 import { Link } from 'expo-router'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { useState, useEffect } from 'react'
-import axios from "axios"
+import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
 
 export default function HomeScreen() {
+  const navigation = useNavigation()
   const [data, setData] = useState([])
   useEffect(() => {
     const getData = async () => {
@@ -19,14 +21,21 @@ export default function HomeScreen() {
     getData()
   }, [])
 
-  if (data) {
-    return data.map((obj) => (
-      <View key={obj._id}>
-        <Text>{obj.productName}</Text>
-        <Text>{obj.productPrice}</Text>
-      </View>
-    ))
-  }
+  return (
+    <>
+      {data &&
+        data.map((obj) => (
+          <View key={obj._id}>
+            <Text>{obj.productName}</Text>
+            <Text>{obj.productPrice}</Text>
+          </View>
+        ))}
+      <Button
+        title='Go to Signup'
+        onPress={() => navigation.navigate('screens/SignupScreen')}
+      />
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
