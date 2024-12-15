@@ -38,6 +38,8 @@ export const createProduct = async (req, res, next) => {
       productImage,
       productQuantity,
     });
+    console.log(req.file);
+    
     res.json(product);
   } catch (error) {
     console.log(error);

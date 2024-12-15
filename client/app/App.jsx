@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from './screens/HomeScreen'
+import HomeScreen from "./index"
 import SignupScreen from './screens/SignupScreen'
 
 export default function App() {

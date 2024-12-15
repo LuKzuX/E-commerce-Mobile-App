@@ -28,9 +28,11 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
   },
 });
+
 const upload = multer({ storage });
 
 // User authentication routes
