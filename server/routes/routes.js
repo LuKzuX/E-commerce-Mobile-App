@@ -25,10 +25,10 @@ import { getUserOrders } from "../controllers/orderControllers.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, "./images");
   },
   filename: function (req, file, cb) {
-    const uniqueName = `${Date.now()}-${file.originalname}`;
+    const uniqueName = file.originalname;
     cb(null, uniqueName);
   },
 });
