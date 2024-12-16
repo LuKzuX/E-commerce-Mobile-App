@@ -1,3 +1,4 @@
+import path from "path"
 import express from "express";
 export const router = express.Router();
 import multer from "multer";
@@ -28,8 +29,7 @@ const storage = multer.diskStorage({
     cb(null, "./images");
   },
   filename: function (req, file, cb) {
-    const uniqueName = file.originalname;
-    cb(null, uniqueName);
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -50,7 +50,6 @@ router.delete("/cart/:id", userAuth, removeProductFromCart);
 // Product routes
 router.post(
   `/new-product`,
-  userAuth,
   upload.single("productImage"),
   createProduct
 );

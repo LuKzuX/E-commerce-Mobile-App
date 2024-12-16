@@ -29,11 +29,10 @@ export default function HomeScreen() {
       {data &&
         data.map((obj) => (
           <View key={obj._id}>
-            <Image
-              resizeMode="cover"
-              source={obj.productImage}
+            <img
+              src={'http://localhost:5000/' + obj.productImage}
               style={styles.image}
-            ></Image>
+            ></img>
             <Text>{obj.productName}</Text>
             <Text>{obj.productPrice}</Text>
           </View>
