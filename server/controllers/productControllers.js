@@ -40,10 +40,9 @@ export const createProduct = async (req, res, next) => {
     });
     console.log(req.file);
     
+    
     res.json(product);
   } catch (error) {
-    console.log(error);
-
     res.send(error);
   }
 };
