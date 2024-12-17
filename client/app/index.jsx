@@ -53,13 +53,14 @@ export default function HomeScreen() {
       // Make the POST request with Axios to upload the image
       const response = await axios.post(
         "http://192.168.1.111:5000/material-delivery/new-product",
-        formData,
+
         {
           headers: {
             "Content-Type": "multipart/form-data", // This is needed for file uploads
           },
         }
       );
+      
       console.log(formData);
     } catch (error) {
       console.error("Error uploading image:", error);
