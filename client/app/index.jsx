@@ -26,31 +26,30 @@ export default function HomeScreen() {
 
   const handleSelectImage = async () => {
     try {
-      await launchImageLibrary({ mediaType: "photo", quality: 1 }, (response) => {
-        const imageUri = response.assets[0].uri;
-        setProductImage(imageUri); // Set the image URI
-  
-        // Now call handleUpload after the image has been selected
-      });
+      await launchImageLibrary(
+        { mediaType: "photo", quality: 1 },
+        (response) => {
+          const imageUri = response.assets[0].uri;
+          setProductImage(imageUri); // Set the image URI
+
+          // Now call handleUpload after the image has been selected
+        }
+      );
       handleUpload();
     } catch (error) {
       console.log(error);
-      
     }
-    
-    
   };
 
   const handleUpload = async () => {
-    
     try {
       const formData = new FormData();
       const image = {
         uri: productImage,
         type: "image/jpeg", // or 'image/png' based on your image type
         name: "product_image.jpg",
-      }
-      formData.append("productImage",image)
+      };
+      formData.append("productImage", image);
       // Make the POST request with Axios to upload the image
       const response = await axios.post(
         "http://192.168.1.111:5000/material-delivery/new-product",
@@ -62,7 +61,6 @@ export default function HomeScreen() {
         }
       );
       console.log(formData);
-      
     } catch (error) {
       console.error("Error uploading image:", error);
     }
