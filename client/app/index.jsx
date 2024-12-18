@@ -10,9 +10,8 @@ export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
   const [productImage, setProductImage] = useState('')
+  const imgDir = FileSystem.documentDirectory + 'my_images/';
 
-  {productImage && console.log(productImage);
-  }
 
   useEffect(() => {
     const getData = async () => {
@@ -47,17 +46,10 @@ export default function HomeScreen() {
   }
 
   const handleUpload = async () => {
-    const formData = new FormData()
-    formData.append("productName", "sdfghj")
-    formData.append("productPrice", 8)
-    formData.append("productcription", 'dop')
-    formData.append("productCategory", 'description')
-    formData.append("productImage", productImage)
-    formData.append("productQuantity", 10)
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
-        formData
+        productImage
       )
       console.log(response.data)
     } catch (error) {
