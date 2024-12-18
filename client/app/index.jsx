@@ -9,8 +9,6 @@ import * as FileSystem from 'expo-file-system'
 export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
-  const [productImage, setProductImage] = useState('')
-  const imgDir = FileSystem.documentDirectory + 'my_images/'
 
   useEffect(() => {
     const getData = async () => {
@@ -36,7 +34,7 @@ export default function HomeScreen() {
       })
       if (!result.canceled) {
         const selectedUri = result.assets[0].uri
-        if (selectedUri) await handleUpload(selectedUri);
+        if (selectedUri) await handleUpload(selectedUri)
       }
     } catch (error) {
       console.log(error)
@@ -44,11 +42,16 @@ export default function HomeScreen() {
   }
 
   const handleUpload = async (fileUri) => {
+    const fileInfo = await FileSystem.getInfoAsync(fileUri)
     const formData = new FormData()
-    formData.append('productImage', fileUri)
+    formData.append('productImage', {
+      uri: fileInfo,
+      name: 'productImage.jpg', // Name of the file
+      type: 'image/jpeg', // MIME type
+    })
     try {
       const response = await axios.post(
-        'http://10.0.0.160/material-delivery/new-product',
+        'http://10.0.0.160:5000/material-delivery/new-product',
         formData
       )
       console.log(response.data)
@@ -56,7 +59,6 @@ export default function HomeScreen() {
       console.error(error)
     }
   }
-
   return (
     <>
       <Text style={styles.title}>Image Uploader</Text>
