@@ -9,11 +9,10 @@ import bodyParser from "body-parser";
 
 app.use(bodyParser.json())
 app.use('/images', express.static('./images'))
-app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(`/material-delivery`, router);
-
+app.use(cors())
 
 const start = async () => {
   try {

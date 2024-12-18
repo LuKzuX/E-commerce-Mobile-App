@@ -10,8 +10,7 @@ export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
   const [productImage, setProductImage] = useState('')
-  const imgDir = FileSystem.documentDirectory + 'my_images/';
-
+  const imgDir = FileSystem.documentDirectory + 'my_images/'
 
   useEffect(() => {
     const getData = async () => {
@@ -37,19 +36,20 @@ export default function HomeScreen() {
       })
       if (!result.canceled) {
         const selectedUri = result.assets[0].uri
-        setProductImage(selectedUri) // Update state with the URI// Log the URI directly here
-        handleUpload() // Optionally handle upload here, e.g., handleUpload(selectedUri)
+        if (selectedUri) await handleUpload(selectedUri);
       }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const handleUpload = async () => {
+  const handleUpload = async (fileUri) => {
+    const formData = new FormData()
+    formData.append('productImage', fileUri)
     try {
       const response = await axios.post(
-        'http://10.0.0.160:5000/material-delivery/new-product',
-        productImage
+        'http://10.0.0.160/material-delivery/new-product',
+        formData
       )
       console.log(response.data)
     } catch (error) {
