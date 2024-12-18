@@ -4,11 +4,15 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
   const [productImage, setProductImage] = useState('')
+
+  {productImage && console.log(productImage);
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -44,18 +48,18 @@ export default function HomeScreen() {
 
   const handleUpload = async () => {
     const formData = new FormData()
-    formData.append('productImage', {
-    uri: productImage, // Local URI of the image
-    name: 'image.jpg', // Provide a file name
-    type: 'image/jpeg', // 
-    })
+    formData.append("productName", "sdfghj")
+    formData.append("productPrice", 8)
+    formData.append("productcription", 'dop')
+    formData.append("productCategory", 'description')
+    formData.append("productImage", productImage)
+    formData.append("productQuantity", 10)
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
         formData
       )
-      console.log(response);
-      
+      console.log(response.data)
     } catch (error) {
       console.error(error)
     }
@@ -70,7 +74,7 @@ export default function HomeScreen() {
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-              source={{ uri: productImage }}
+              source={'http://10.0.0.160:5000/' + obj.productImage}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>
