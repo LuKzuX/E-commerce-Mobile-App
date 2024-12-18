@@ -33,24 +33,24 @@ export default function HomeScreen() {
         quality: 1,
       })
       if (!result.canceled) {
-        const selectedUri = result.assets[0].uri
-        setProductImage( selectedUri) // Update state with the URI// Log the URI directly here
-        handleUpload()// Optionally handle upload here, e.g., handleUpload(selectedUri)
+        const selectedUri = result.assets[0]
+        setProductImage(selectedUri) // Update state with the URI// Log the URI directly here
+        handleUpload() // Optionally handle upload here, e.g., handleUpload(selectedUri)
       }
-
     } catch (error) {
       console.log(error)
     }
   }
 
   const handleUpload = async () => {
+    const formData = new FormData()
+    formData.append('productImage', productImage)
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
-        productImage   
+        formData
       )
-      console.log(response.data);
-      
+      console.log(formData.get('productImage'))
     } catch (error) {
       console.error(error)
     }
@@ -65,7 +65,7 @@ export default function HomeScreen() {
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-              source={{uri: productImage}}
+              source={{ uri: productImage }}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>

@@ -5,11 +5,13 @@ const app = express();
 import cors from "cors"
 import { connect } from "./db/connection.js";
 import { router } from "./routes/routes.js";
+import bodyParser from "body-parser";
 
+app.use(bodyParser.json())
 app.use('/images', express.static('./images'))
-app.use(cors());
-app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(`/material-delivery`, router);
 
 
