@@ -33,7 +33,7 @@ export default function HomeScreen() {
         quality: 1,
       })
       if (!result.canceled) {
-        const selectedUri = result.assets[0]
+        const selectedUri = result.assets[0].uri
         setProductImage(selectedUri) // Update state with the URI// Log the URI directly here
         handleUpload() // Optionally handle upload here, e.g., handleUpload(selectedUri)
       }
@@ -44,13 +44,18 @@ export default function HomeScreen() {
 
   const handleUpload = async () => {
     const formData = new FormData()
-    formData.append('productImage', productImage)
+    formData.append('productImage', {
+    uri: productImage, // Local URI of the image
+    name: 'image.jpg', // Provide a file name
+    type: 'image/jpeg', // 
+    })
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
         formData
       )
-      console.log(formData.get('productImage'))
+      console.log(response);
+      
     } catch (error) {
       console.error(error)
     }
