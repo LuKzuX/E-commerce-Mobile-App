@@ -33,7 +33,9 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage, limits: {
+  fieldSize: 50000000
+} });
 
 // User authentication routes
 router.post(`/signup`, createUser);

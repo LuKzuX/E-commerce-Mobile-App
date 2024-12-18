@@ -42,17 +42,17 @@ export default function HomeScreen() {
   }
 
   const handleUpload = async (fileUri) => {
-    const fileInfo = await FileSystem.getInfoAsync(fileUri)
     const formData = new FormData()
-    formData.append('productImage', {
-      uri: fileInfo,
-      name: 'productImage.jpg', // Name of the file
-      type: 'image/jpeg', // MIME type
-    })
+    formData.append('productImage', fileUri)
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
-        formData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       )
       console.log(response.data)
     } catch (error) {
@@ -68,7 +68,7 @@ export default function HomeScreen() {
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-              source={'http://10.0.0.160:5000/' + obj.productImage}
+              source={obj.productImage}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>

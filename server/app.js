@@ -7,12 +7,13 @@ import { connect } from "./db/connection.js";
 import { router } from "./routes/routes.js";
 import bodyParser from "body-parser";
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use('/images', express.static('./images'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(`/material-delivery`, router);
-app.use(cors())
+
 
 const start = async () => {
   try {
