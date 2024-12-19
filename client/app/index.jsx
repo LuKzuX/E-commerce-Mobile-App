@@ -43,7 +43,11 @@ export default function HomeScreen() {
 
   const handleUpload = async (fileUri) => {
     const formData = new FormData()
-    formData.append('productImage', fileUri)
+    formData.append('productImage', {
+      uri: fileUri,
+      name: 'uploaded_image.jpg', // Default name if extraction fails
+      type: 'image/jpeg', // Or 'image/png' based on the file type
+    })
     try {
       const response = await axios.post(
         'http://10.0.0.160:5000/material-delivery/new-product',
@@ -54,6 +58,7 @@ export default function HomeScreen() {
           },
         }
       )
+
       console.log(response.data)
     } catch (error) {
       console.error(error)
@@ -68,7 +73,7 @@ export default function HomeScreen() {
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-              source={obj.productImage}
+             source={{ uri: 'http://10.0.0.160:5000/' + obj.productImage }}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>

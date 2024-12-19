@@ -3,7 +3,7 @@ import { User } from "../models/userSchema.js";
 
 export const getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find().sort({ productPrice: -1 });
+    const products = await Product.find()
     res.json(products);
   } catch (error) {
     res.send(error);
