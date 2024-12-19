@@ -1,79 +1,55 @@
 import { Link } from 'expo-router'
-import { View, Text, StyleSheet, Button, Image, FlatList } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  FlatList,
+  Platform,
+} from 'react-native'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
+import { uploadImage } from '../utils/uploadImage'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const products = await axios.get(
-          'http://10.0.0.160:5000/material-delivery/'
-        )
-        setData(products.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getData()
-  }, [])
-
-  const handleSelectImage = async () => {
+  const getData = async () => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      })
-      if (!result.canceled) {
-        const selectedUri = result.assets[0].uri
-        if (selectedUri) await handleUpload(selectedUri)
-      }
+      const products = await axios.get('http://10.0.0.160:5000/material-delivery/')
+      setData(products.data)
+      console.log(products.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const handleUpload = async (fileUri) => {
-    const formData = new FormData()
-    formData.append('productImage', {
-      uri: fileUri,
-      name: 'uploaded_image.jpg', // Default name if extraction fails
-      type: 'image/jpeg', // Or 'image/png' based on the file type
-    })
-    try {
-      const response = await axios.post(
-        'http://10.0.0.160:5000/material-delivery/new-product',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      )
+  useEffect(() => {
+    getData()
+  }, [])
 
-      console.log(response.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
   return (
     <>
       <Text style={styles.title}>Image Uploader</Text>
-      <Button title='Select Image' onPress={handleSelectImage} />
+      <Button
+        title='Select Image'
+        onPress={async () => {
+          await uploadImage(
+            'http://10.0.0.160:5000/material-delivery/new-product'
+          ), getData()
+        }}
+      />
       <Text style={styles.uploadedTitle}>Uploaded Images:</Text>
       {data &&
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-             source={{ uri: 'http://10.0.0.160:5000/' + obj.productImage }}
+              source={{ uri: 'http://10.0.0.160:5000/' + obj.productImage }}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>
