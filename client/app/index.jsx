@@ -21,7 +21,7 @@ export default function HomeScreen() {
 
   const getData = async () => {
     try {
-      const products = await axios.get('http://10.0.0.160:5000/material-delivery/')
+      const products = await axios.get('http://192.168.1.111:5000/material-delivery/')
       setData(products.data)
       console.log(products.data)
     } catch (error) {
@@ -40,7 +40,7 @@ export default function HomeScreen() {
         title='Select Image'
         onPress={async () => {
           await uploadImage(
-            'http://10.0.0.160:5000/material-delivery/new-product'
+            'http://192.168.1.111:5000/material-delivery/new-product'
           ), getData()
         }}
       />
@@ -49,10 +49,11 @@ export default function HomeScreen() {
         data.map((obj, index) => (
           <View key={obj._id}>
             <Image
-              source={{ uri: 'http://10.0.0.160:5000/' + obj.productImage }}
+              source={{ uri: 'http://192.168.1.111:5000/' + obj.productImage }}
               style={styles.uploadedImage}
             ></Image>
             <Text>{obj.productName}</Text>
+            <Text>{obj.productPrice}</Text>
           </View>
         ))}
     </>
