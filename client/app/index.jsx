@@ -18,6 +18,11 @@ import { uploadImage } from '../utils/uploadImage'
 export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
+  const [productName, setProductName] = useState("")
+  const [productPrice, setProductPrice] = useState("")
+  const [productCategory, setProductCategory] = useState("")
+  const [productDescription, setProductDescription] = useState("")
+  const [productQuantity, setProductQuantity] = useState("")
 
   const getData = async () => {
     try {
