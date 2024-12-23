@@ -32,7 +32,7 @@ export default function HomeScreen() {
 
   return (
     <>
-      <TouchableOpacity onPress={() => navigation.navigate('CreateProduct')}>
+      <TouchableOpacity onPress={() => navigation.navigate('screens/CreateProductScreen')}>
         <Ionicons name='add-circle-outline' size={120} color='gray' />
       </TouchableOpacity>
 

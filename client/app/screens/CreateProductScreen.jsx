@@ -3,8 +3,7 @@ import { ip } from '../../getIp.js'
 import { View, Text, StyleSheet, Button, Image, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'
 
-
-export const CreateProductScreen = () => {
+export default function CreateProductScreen() {
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
   const [productCategory, setProductCategory] = useState('')
@@ -60,3 +59,41 @@ export const CreateProductScreen = () => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  previewContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  previewImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+  },
+  uploadedTitle: {
+    marginTop: 20,
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  uploadedImage: {
+    width: 100,
+    height: 100,
+    marginRight: 10,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+})
