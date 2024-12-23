@@ -5,25 +5,16 @@ import {
   StyleSheet,
   Button,
   Image,
-  FlatList,
-  Platform,
-  TextInput,
+  TouchableOpacity,
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
-import * as ImagePicker from 'expo-image-picker'
-import * as FileSystem from 'expo-file-system'
-import { uploadData } from '../utils/uploadImage.js'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
   const [data, setData] = useState('')
-  const [productName, setProductName] = useState('')
-  const [productPrice, setProductPrice] = useState('')
-  const [productCategory, setProductCategory] = useState('')
-  const [productDescription, setProductDescription] = useState('')
-  const [productQuantity, setProductQuantity] = useState('')
 
   const getData = async () => {
     try {
@@ -41,51 +32,10 @@ export default function HomeScreen() {
 
   return (
     <>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductName(text)}
-        placeholder='name'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductPrice(text)}
-        placeholder='price'
-        keyboardType='numeric'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductCategory(text)}
-        placeholder='category'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductDescription(text)}
-        placeholder='desc'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductQuantity(text)}
-        placeholder='quantity'
-        keyboardType='numeric'
-      />
+      <TouchableOpacity onPress={() => navigation.navigate('CreateProduct')}>
+        <Ionicons name='add-circle-outline' size={120} color='gray' />
+      </TouchableOpacity>
 
-      <Button
-        title='Select Image'
-        onPress={async () => {
-          await uploadData(`http://${ip}:5000/material-delivery/new-product`,
-            productName,
-            productPrice,
-            productCategory,
-            productDescription,
-            productQuantity,
-          )
-          getData()
-        }}
-      />
-      <Text style={styles.uploadedTitle}>Products:</Text>
       {data &&
         data.map((obj, index) => (
           <View key={obj._id}>
