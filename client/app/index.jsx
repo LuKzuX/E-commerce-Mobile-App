@@ -11,28 +11,17 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import useGetProducts from '../utils/useGetProducts.js'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
-  const [data, setData] = useState('')
-
-  const getData = async () => {
-    try {
-      const products = await axios.get(`http://${ip}:5000/material-delivery/`)
-      setData(products.data)
-      console.log(products.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data } = useGetProducts()
 
   return (
     <>
-      <TouchableOpacity onPress={() => navigation.navigate('screens/CreateProductScreen')}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('screens/CreateProductScreen')}
+      >
         <Ionicons name='add-circle-outline' size={120} color='gray' />
       </TouchableOpacity>
 
