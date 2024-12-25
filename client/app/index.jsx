@@ -1,4 +1,4 @@
-import { ip } from '../getIp.js'
+import { ip } from "../getIp.js";
 import {
   View,
   Text,
@@ -6,54 +6,40 @@ import {
   Button,
   Image,
   TouchableOpacity,
-} from 'react-native'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useNavigation } from '@react-navigation/native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import useGetProducts from '../utils/useGetProducts.js'
+  ScrollView,
+} from "react-native";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import useGetProducts from "../utils/useGetProducts.js";
+import { ProductList } from "./components/ProductList.jsx";
 
 export default function HomeScreen() {
-  const navigation = useNavigation()
-  const { data } = useGetProducts()
+  const navigation = useNavigation();
+  const { data } = useGetProducts();
 
   return (
-    <>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('screens/CreateProductScreen')}
+        onPress={() => navigation.navigate("screens/CreateProductScreen")}
       >
-        <Ionicons name='add-circle-outline' size={120} color='gray' />
+        <Ionicons name="add-circle-outline" size={120} color="gray" />
       </TouchableOpacity>
-
-      {data &&
-        data.map((obj, index) => (
-          <View key={obj._id}>
-            <Image
-              source={{ uri: `http://${ip}:5000/` + obj.productImage }}
-              style={styles.uploadedImage}
-            ></Image>
-            <Text>{obj.productName}</Text>
-            <Text>{obj.productPrice}</Text>
-          </View>
-        ))}
-    </>
-  )
+      <ProductList data={data} />
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#ebebeb",
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
-  },
-  previewContainer: {
-    marginTop: 20,
-    alignItems: 'center',
   },
   previewImage: {
     width: 200,
@@ -76,4 +62,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-})
+});
