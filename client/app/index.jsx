@@ -26,7 +26,7 @@ export default function HomeScreen() {
       >
         <Ionicons name="add-circle-outline" size={120} color="gray" />
       </TouchableOpacity>
-      <ProductList data={data} />
+      <ProductList data={data} property="productName" filter={"Sonic"}/>
     </ScrollView>
   );
 }

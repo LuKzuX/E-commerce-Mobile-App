@@ -9,17 +9,19 @@ import {
   ScrollView,
 } from "react-native";
 
-export const ProductList = ({ data }) => {
-  return data.map((obj, index) => (
-    <View key={obj._id}>
-      <Image
-        source={{ uri: `http://${ip}:5000/` + obj.productImage }}
-        style={styles.uploadedImage}
-      ></Image>
-      <Text>{obj.productName}</Text>
-      <Text>{obj.productPrice}</Text>
-    </View>
-  ));
+export const ProductList = ({ data, property, filter }) => {
+  return data
+    .filter((obj) => obj[property] === filter)
+    .map((obj, index) => (
+      <View key={obj._id}>
+        <Image
+          source={{ uri: `http://${ip}:5000/` + obj.productImage }}
+          style={styles.uploadedImage}
+        ></Image>
+        <Text>{obj.productName}</Text>
+        <Text>{obj.productPrice}</Text>
+      </View>
+    ));
 };
 
 const styles = StyleSheet.create({
