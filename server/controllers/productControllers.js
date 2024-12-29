@@ -17,7 +17,7 @@ export const getAllProducts = async (req, res, next) => {
     })
       .limit(productsPerPage)
       .skip(productsPerPage * (page - 1))
-      .sort("productPrice")
+      .sort('productPrice')
     res.json(products)
   } catch (error) {
     res.send(error)
@@ -92,18 +92,20 @@ export const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params
     const { _id } = req.user.user
-    const loggedUser = await User.findById({ _id })
-    const deletedProduct = await Product.findByIdAndDelete({ _id: id })
+    const deletedProduct = await Product.findById({ _id: id })
 
-    const filtered = loggedUser.cart.filter((obj) => {
-      return obj._id.toString() !== deletedProduct._id.toString()
+    const imagePath = path.join(
+      './images/',
+      deletedProduct.productImage.split('\\')[1]
+    )
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
     })
-    const imagePath = path.join(__dirname, '../images/', deletedProduct.productImage.split('\\')[1]);
-    fs.unlinkSync(imagePath);
+    console.log(imagePath)
 
-    
-    loggedUser.cart = filtered
-    loggedUser.save()
     res.send(deletedProduct)
   } catch (error) {
     res.send(error)
