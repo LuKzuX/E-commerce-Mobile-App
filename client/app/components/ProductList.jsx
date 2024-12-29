@@ -9,9 +9,8 @@ import {
   ScrollView,
 } from "react-native";
 
-export const ProductList = ({ data, property, filter }) => {
+export const ProductList = ({ data }) => {
   return data
-    .filter((obj) => obj[property] === filter)
     .map((obj, index) => (
       <View key={obj._id}>
         <Image
