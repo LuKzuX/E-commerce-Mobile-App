@@ -22,9 +22,12 @@ const productSchema = new mongoose.Schema({
   },
   productQuantity: {
     type: Number,
-   
     default: 0,
   },
+  productTimesSold: {
+    type: Number,
+    default: 0,
+  }
 });
 
 export const Product = mongoose.model("Product", productSchema)

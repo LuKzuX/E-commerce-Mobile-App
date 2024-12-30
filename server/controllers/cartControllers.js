@@ -92,7 +92,7 @@ export const buy = async (req, res, next) => {
     for (let i = 0; i < x.length; i++) {
       finalObj.push({
         productId: x[i]._id,
-        productName: x[i].productName,
+        productName: x[i].productName, 
         totalPrice: x[i].totalPrice,
         quantity: x[i].quantity,
       });
@@ -116,6 +116,14 @@ export const buy = async (req, res, next) => {
         });
       }
       await products[j].save();
+    }
+    
+    for (let k = 0; k < products.length; k++) {
+      if (products[k]._id.toString() == finalObj[k].productId.toString()){
+        products[k].productTimesSold += finalObj[k].quantity
+      }
+      await products[k].save()
+      
     }
 
     const order = await Order.create({
