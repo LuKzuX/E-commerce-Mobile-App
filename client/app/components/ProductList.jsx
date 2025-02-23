@@ -1,4 +1,4 @@
-import { ip } from "@/getIp";
+import { ip } from '@/getIp'
 import {
   View,
   Text,
@@ -7,51 +7,83 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
+  FlatList,
+} from 'react-native'
 
 export const ProductList = ({ data }) => {
-  return data
-    .map((obj, index) => (
-      <View key={obj._id}>
-        <Image
-          source={{ uri: `http://${ip}:5000/` + obj.productImage }}
-          style={styles.uploadedImage}
-        ></Image>
-        <Text>{obj.productName}</Text>
-        <Text>{obj.productPrice}</Text>
+  const renderItem = ({ item }) => (
+    <View style={styles.container}>
+      <Image
+        source={{ uri: `http://${ip}:5000/` + item.productImage }}
+        style={styles.uploadedImage}
+      />
+      <View style={styles.containerContent}>
+        <Text style={styles.productName}>{item.productName}</Text>
+        <View style={styles.productPriceContainer}>
+          <Text style={styles.productPriceCurrency}>$</Text>
+          <Text style={styles.productPrice}>{item.productPrice}</Text>
+        </View>
       </View>
-    ));
-};
+      <Text
+        style={styles.btn}
+        onPress={() => console.log(item.productDescription)}
+      >
+        Add to Cart
+      </Text>
+    </View>
+  )
+
+  return (
+    <FlatList
+      style={styles.list}
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item._id}
+      numColumns={2}
+    />
+  )
+}
 
 const styles = StyleSheet.create({
+  list: {
+    gap: 20,
+  },
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#ebebeb",
+    padding: 10,
+    backgroundColor: '#fff',
+    margin: 10,
+    borderRadius: 5,
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  previewImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 10,
-  },
-  uploadedTitle: {
-    marginTop: 20,
-    fontSize: 18,
-    marginBottom: 10,
+  containerContent: {
+    marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   uploadedImage: {
-    width: 100,
-    height: 100,
-    marginRight: 10,
+    height: 150,
+    resizeMode: 'cover',
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  productName: {
+    fontSize: 20,
   },
-});
+  productPriceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  productPriceCurrency: {
+    fontSize: 12,
+    marginRight: 1,
+  },
+  productPrice: {
+    fontSize: 20,
+  },
+  btn: {
+    alignSelf: 'center',
+    backgroundColor: '#ffd814',
+    paddingVertical: 6,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+    marginTop: 10,
+  },
+})

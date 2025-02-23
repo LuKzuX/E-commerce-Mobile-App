@@ -1,4 +1,4 @@
-import { ip } from "../getIp.js";
+import { ip } from '../getIp.js'
 import {
   View,
   Text,
@@ -7,59 +7,47 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import useGetProducts from "../utils/useGetProducts.js";
-import { ProductList } from "./components/ProductList.jsx";
+} from 'react-native'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import useGetProducts from '../utils/useGetProducts.js'
+import { ProductList } from './components/ProductList.jsx'
+import Navbar from './components/Navbar.jsx'
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
-  const { data } = useGetProducts();
+  const navigation = useNavigation()
+  const { data } = useGetProducts()
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("screens/CreateProductScreen")}
+        style={styles.addItemBtn}
+        onPress={() => navigation.navigate('screens/CreateProductScreen')}
       >
-        <Ionicons name="add-circle-outline" size={120} color="gray" />
+        <Ionicons name='add-circle-outline' size={120} color='gray' />
+        <Text style={styles.btnText}>Add Product</Text>
       </TouchableOpacity>
-      <ProductList data={data} property="productName" filter={"Sonic"}/>
-    </ScrollView>
-  );
+      <ProductList data={data} property='productName' />
+      <Navbar />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#ebebeb",
+    backgroundColor: '#ebebeb',
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
+  addItemBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
-  previewImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 10,
+  btnText: {
+    fontSize: 20,
+    fontWeight: 500,
+    color: 'gray',
   },
-  uploadedTitle: {
-    marginTop: 20,
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  uploadedImage: {
-    width: 100,
-    height: 100,
-    marginRight: 10,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
+})
