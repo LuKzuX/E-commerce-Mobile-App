@@ -9,13 +9,29 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    unique: true,
+    type: String,
+    required: true,
+  },
   cart: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      default: []
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+      totalPrice: {
+        type: Number,
+      },
     },
   ],
+  address: {
+    type: Object,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
@@ -23,4 +39,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema);
