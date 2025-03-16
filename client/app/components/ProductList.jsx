@@ -12,20 +12,20 @@ import {
 
 export const ProductList = ({ data }) => {
   const renderItem = ({ item }) => (
-    <View style={styles.container}>
+    <View className='flex-1 p-7 bg-white'>
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
-        style={styles.uploadedImage}
+        className='h-[150px] object-cover'
       />
-      <View style={styles.containerContent}>
-        <Text style={styles.productName}>{item.productName}</Text>
-        <View style={styles.productPriceContainer}>
-          <Text style={styles.productPriceCurrency}>$</Text>
-          <Text style={styles.productPrice}>{item.productPrice}</Text>
+      <View className='mt-[5px] flex-row justify-between'>
+        <Text className='text-2xl'>{item.productName}</Text>
+        <View className='flex-row items-center'>
+          <Text className='text-lg mr-[1px]'>$</Text>
+          <Text className='text-2xl'>{item.productPrice}</Text>
         </View>
       </View>
       <Text
-        style={styles.btn}
+        className='self-center bg-[#ffd814] py-[6px] px-[30px] rounded-xl mt-[10px]'
         onPress={() => console.log(item.productDescription)}
       >
         Add to Cart
@@ -35,7 +35,6 @@ export const ProductList = ({ data }) => {
 
   return (
     <FlatList
-      style={styles.list}
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
@@ -44,46 +43,4 @@ export const ProductList = ({ data }) => {
   )
 }
 
-const styles = StyleSheet.create({
-  list: {
-    gap: 20,
-  },
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
-    margin: 10,
-    borderRadius: 5,
-  },
-  containerContent: {
-    marginTop: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  uploadedImage: {
-    height: 150,
-    resizeMode: 'cover',
-  },
-  productName: {
-    fontSize: 20,
-  },
-  productPriceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  productPriceCurrency: {
-    fontSize: 12,
-    marginRight: 1,
-  },
-  productPrice: {
-    fontSize: 20,
-  },
-  btn: {
-    alignSelf: 'center',
-    backgroundColor: '#ffd814',
-    paddingVertical: 6,
-    paddingHorizontal: 30,
-    borderRadius: 20,
-    marginTop: 10,
-  },
-})
+

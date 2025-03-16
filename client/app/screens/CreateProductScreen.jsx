@@ -11,89 +11,55 @@ export default function CreateProductScreen() {
   const [productQuantity, setProductQuantity] = useState('')
 
   return (
-    <View>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductName(text)}
-        placeholder='name'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductPrice(text)}
-        placeholder='price'
-        keyboardType='numeric'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductCategory(text)}
-        placeholder='category'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductDescription(text)}
-        placeholder='desc'
-        keyboardType='letter'
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setProductQuantity(text)}
-        placeholder='quantity'
-        keyboardType='numeric'
-      />
-      <Button
-        title='Select Image'
-        onPress={async () => {
-          await uploadData(
-            `http://${ip}:5000/material-delivery/new-product`,
-            productName,
-            productPrice,
-            productCategory,
-            productDescription,
-            productQuantity
-          )
-          getData()
-        }}
-      />
+    <View className='flex-1 p-10 bg-bg-color '>
+      <View className='bg-white flex gap-10'>
+        <TextInput
+          className=''
+          onChangeText={(text) => setProductName(text)}
+          placeholder='name'
+          keyboardType='letter'
+        />
+        <TextInput
+          className=''
+          onChangeText={(text) => setProductPrice(text)}
+          placeholder='price'
+          keyboardType='numeric'
+        />
+        <TextInput
+          className=''
+          onChangeText={(text) => setProductCategory(text)}
+          placeholder='category'
+          keyboardType='letter'
+        />
+        <TextInput
+          className=''
+          onChangeText={(text) => setProductDescription(text)}
+          placeholder='desc'
+          keyboardType='letter'
+        />
+        <TextInput
+          className=''
+          onChangeText={(text) => setProductQuantity(text)}
+          placeholder='quantity'
+          keyboardType='numeric'
+        />
+        <Text
+          onPress={async () => {
+            await uploadData(
+              `http://${ip}:5000/material-delivery/new-product`,
+              productName,
+              productPrice,
+              productCategory,
+              productDescription,
+              productQuantity
+            )
+            getData()
+          }}
+        >
+          Select Image:
+        </Text>
+        <Text className='bg-yellow-500'>Create Product</Text>
+      </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  previewContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  previewImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 10,
-  },
-  uploadedTitle: {
-    marginTop: 20,
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  uploadedImage: {
-    width: 100,
-    height: 100,
-    marginRight: 10,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-})

@@ -21,33 +21,16 @@ export default function HomeScreen() {
   const { data } = useGetProducts()
 
   return (
-    <View style={styles.container}>
+    <View className='bg-bg-color flex-1'>
       <TouchableOpacity
-        style={styles.addItemBtn}
+        className='justify-center items-center py-5'
         onPress={() => navigation.navigate('screens/CreateProductScreen')}
       >
         <Ionicons name='add-circle-outline' size={120} color='gray' />
-        <Text style={styles.btnText}>Add Product</Text>
+        <Text className='text-xl text-gray-500'>Add Product</Text>
       </TouchableOpacity>
       <ProductList data={data} property='productName' />
       <Navbar />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ebebeb',
-  },
-  addItemBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-  },
-  btnText: {
-    fontSize: 20,
-    fontWeight: 500,
-    color: 'gray',
-  },
-})
