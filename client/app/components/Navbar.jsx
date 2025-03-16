@@ -7,7 +7,8 @@ export default function Navbar() {
 
   return (
     <View>
-      <Text onPress={() => navigation.navigate('screens/SignupScreen')}>Navbar</Text>
+      <Text onPress={() => navigation.navigate('screens/SignupScreen')}>Signup</Text>
+      <Text onPress={() => navigation.navigate('screens/SigninScreen')}>Signin</Text>
     </View>
   )
 }

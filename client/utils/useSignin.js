@@ -2,9 +2,10 @@ import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../context/authContext'
 import { useContext } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useSignin = () => {
-  const { user, setUser } = useContext(AuthContext)
+  // const { user, setUser } = useContext(AuthContext)
   const navigation = useNavigation()
 
   const signin = async (email, password) => {
@@ -13,7 +14,7 @@ export const useSignin = () => {
         email,
         password,
       })
-      localStorage.setItem('user', JSON.stringify(res.data))
+      await AsyncStorage.setItem('user', JSON.stringify(res.data))
       setUser(res.data)
       navigation.navigate('screens/SigninScreen')
     } catch (error) {
