@@ -10,7 +10,7 @@ import {
   FlatList,
 } from 'react-native'
 
-export const ProductList = ({ data }) => {
+export default function ProductList({ data }) {
   const renderItem = ({ item }) => (
     <View className='flex-1 p-7 bg-white'>
       <Image
@@ -25,7 +25,7 @@ export const ProductList = ({ data }) => {
         </View>
       </View>
       <Text
-        className='self-center bg-[#ffd814] py-[6px] px-[30px] rounded-xl mt-[10px]'
+        className='self-center bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
         onPress={() => console.log(item.productDescription)}
       >
         Add to Cart

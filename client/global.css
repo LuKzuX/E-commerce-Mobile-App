@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 :root {
-    --bg-color: #ebebeb
+    --bg-gray: #ebebeb;
+    --bg-yellow: #ffd814
 }

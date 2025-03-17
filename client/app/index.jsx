@@ -13,7 +13,7 @@ import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import useGetProducts from '../utils/useGetProducts.js'
-import { ProductList } from './components/ProductList.jsx'
+import ProductList from './components/ProductList.jsx'
 import Navbar from './components/Navbar.jsx'
 
 export default function HomeScreen() {
@@ -21,7 +21,7 @@ export default function HomeScreen() {
   const { data } = useGetProducts()
 
   return (
-    <View className='bg-bg-color flex-1'>
+    <View className='bg-bg-gray flex-1'>
       <TouchableOpacity
         className='justify-center items-center py-5'
         onPress={() => navigation.navigate('screens/CreateProductScreen')}
