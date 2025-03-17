@@ -1,9 +1,11 @@
-import { uploadData } from '../../utils/uploadData.js'
+import {useUploadData} from "@/utils/uploadData.js"
 import { ip } from '../../getIp.js'
-import { View, Text, StyleSheet, Button, Image, TextInput } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, Button, Image, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'
 
+
 export default function CreateProductScreen() {
+  const {uploadData, handleUpload, success, uri} = useUploadData()
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
   const [productCategory, setProductCategory] = useState('')
@@ -11,55 +13,66 @@ export default function CreateProductScreen() {
   const [productQuantity, setProductQuantity] = useState('')
 
   return (
-    <View className='flex-1 p-10 bg-bg-color '>
-      <View className='bg-white flex gap-10'>
+    <ScrollView className='flex-1 p-10 bg-bg-gray'>
+      <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
-          className=''
+          className='border-b text-text-small-medium'
           onChangeText={(text) => setProductName(text)}
           placeholder='name'
           keyboardType='letter'
         />
         <TextInput
-          className=''
+          className='border-b text-text-small-medium '
           onChangeText={(text) => setProductPrice(text)}
           placeholder='price'
           keyboardType='numeric'
         />
         <TextInput
-          className=''
+          className='border-b text-text-small-medium'
           onChangeText={(text) => setProductCategory(text)}
           placeholder='category'
           keyboardType='letter'
         />
         <TextInput
-          className=''
+          className='border-b text-text-small-medium'
           onChangeText={(text) => setProductDescription(text)}
           placeholder='desc'
           keyboardType='letter'
         />
         <TextInput
-          className=''
+          className='border-b text-text-small-medium'
           onChangeText={(text) => setProductQuantity(text)}
           placeholder='quantity'
           keyboardType='numeric'
         />
         <Text
           onPress={async () => {
-            await uploadData(
+            await uploadData()
+          }}
+          className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
+        >
+          Select Image:
+        </Text>
+        {uri ? (
+          <Image source={{ uri }} style={{ width: "100%", height: 150, objectFit: 'contain' }} />
+        ) : null}
+        <Text
+          onPress={async () => {
+            await handleUpload(
               `http://${ip}:5000/material-delivery/new-product`,
               productName,
               productPrice,
               productCategory,
               productDescription,
-              productQuantity
+              productQuantity,
             )
-            getData()
           }}
+          className='text-center bg-bg-yellow py-6 text-text-medium rounded-xl'
         >
-          Select Image:
+          Create Product
         </Text>
-        <Text className='bg-yellow-500'>Create Product</Text>
+        <Text>{success}</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }

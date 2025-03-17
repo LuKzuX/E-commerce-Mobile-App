@@ -4,5 +4,10 @@
 
 :root {
     --bg-gray: #ebebeb;
-    --bg-yellow: #ffd814
+    --bg-yellow: #ffd814;
+    --text-small: 15px;
+    --text-small-medium: 20px;
+    --text-medium: 25px;
+    --text-medium-large: 30px;
+    --text-large: 35px
 }
