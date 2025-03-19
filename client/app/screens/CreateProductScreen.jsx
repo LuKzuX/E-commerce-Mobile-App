@@ -67,7 +67,7 @@ export default function CreateProductScreen() {
               productQuantity,
             )
           }}
-          className='text-center bg-bg-yellow py-6 text-text-medium rounded-xl'
+          className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
         >
           Create Product
         </Text>

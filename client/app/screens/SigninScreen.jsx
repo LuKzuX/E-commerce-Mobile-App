@@ -1,31 +1,39 @@
 import { useSignin } from '../../utils/useSignin'
-import { View, Text, TextInput, Button, } from 'react-native'
+import { View, Text, TextInput, Button, ScrollView } from 'react-native'
 import { useState } from 'react'
 
 export default function SigninScreen() {
-  const [username, setUsername] = useState('')
+  const [email, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const { signin } = useSignin()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    await signin(username, password)
+  const handleSubmit = async () => {
+    await signin(email, password)
   }
 
   return (
-    <View >
-      <Text >Sign In</Text>
-      <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Sign In" onPress={handleSubmit} />
-    </View>
+    <ScrollView className='flex-1 p-10 bg-bg-gray'>
+      <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
+        <TextInput
+          className='border-b text-text-small-medium'
+          placeholder='Username'
+          value={email}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          className='border-b text-text-small-medium'
+          placeholder='Password'
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <Text
+          className='text-center self-center bg-green-400 py-6 px-12 text-text-medium rounded-xl'
+          onPress={handleSubmit}
+        >
+          Signin
+        </Text>
+      </View>
+    </ScrollView>
   )
 }

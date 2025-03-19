@@ -23,8 +23,8 @@ export const createUser = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).send("this user does not exist");
     }
