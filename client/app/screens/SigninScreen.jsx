@@ -1,11 +1,12 @@
-import { useSignin } from '../../utils/useSignin'
+import { useAuthContext } from '@/context/authContext.jsx'
 import { View, Text, TextInput, Button, ScrollView } from 'react-native'
 import { useState } from 'react'
+import { AuthContext } from '@/context/authContext.jsx'
 
 export default function SigninScreen() {
   const [email, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { signin } = useSignin()
+  const { signin } = useAuthContext()
 
   const handleSubmit = async () => {
     await signin(email, password)

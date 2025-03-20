@@ -2,26 +2,26 @@ import "../global.css"
 import { Stack } from 'expo-router'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from './index'
+import HomeScreen from '.'
 import SignupScreen from './screens/SignupScreen'
 import SigninScreen from './screens/SigninScreen'
 import CreateProductScreen from './screens/CreateProductScreen'
-import { AuthProvider } from '../context/authContext'
+import { AuthContextProvider } from '../context/authContext.jsx'
 
 
 export default function App() {
   const Stack = createNativeStackNavigator()
 
   return (
-    <AuthProvider>
+    <AuthContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen name='Home' component={HomeScreen} />
+        <Stack.Navigator initialRouteName="/">
+          <Stack.Screen name='/' component={HomeScreen} />
           <Stack.Screen name='Signup' component={SignupScreen} />
           <Stack.Screen name='Signin' component={SigninScreen} />
           <Stack.Screen name='CreateProduct' component={CreateProductScreen} />
         </Stack.Navigator>
       </NavigationContainer>
-    </AuthProvider>
+    </AuthContextProvider>
   )
 }

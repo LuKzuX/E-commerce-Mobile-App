@@ -9,7 +9,6 @@ export default function useGetProducts() {
     try {
       const products = await axios.get(`http://${ip}:5000/material-delivery/`)
       setData(products.data)
-      console.log(products.data)
     } catch (error) {
       console.log(error)
     }
