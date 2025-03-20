@@ -1,6 +1,5 @@
 import "../global.css";
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native'
 import HomeScreen from '../app/(tabs)/index'
 import SignupScreen from '../app/(tabs)/SignupScreen'
 import SigninScreen from '../app/(tabs)/SigninScreen'
