@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/context/authContext.jsx'
+import { useAuthContext } from '../context/authContext.jsx'
 import { View, Text, TextInput, ScrollView } from 'react-native'
 import { useState } from 'react'
 
