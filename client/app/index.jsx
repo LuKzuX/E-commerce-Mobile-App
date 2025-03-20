@@ -20,6 +20,11 @@ import { useAuthContext } from '../context/authContext.jsx'
 export default function HomeScreen() {
   const navigation = useNavigation()
   const { data } = useGetProducts()
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    console.log('Current User:', user); // Log the user to verify
+  }, [user]);
 
   return (
     <View className='bg-bg-gray flex-1'>
