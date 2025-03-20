@@ -1,4 +1,4 @@
-import {useUploadData} from "@/utils/uploadData.js"
+import {useUploadData} from "../../utils/uploadData.js"
 import { ip } from '../../getIp.js'
 import { View, Text, ScrollView, StyleSheet, Button, Image, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'

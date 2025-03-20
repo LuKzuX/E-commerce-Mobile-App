@@ -1,4 +1,4 @@
-import { ip } from '../getIp.js'
+import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 

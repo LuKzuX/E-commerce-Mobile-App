@@ -1,4 +1,4 @@
-import { ip } from '../getIp.js'
+import { ip } from '../../getIp.js'
 import {
   View,
   Text,
@@ -12,10 +12,10 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import useGetProducts from '../utils/useGetProducts.js'
-import ProductList from './components/ProductList.jsx'
-import Navbar from './components/Navbar.jsx'
-import { useAuthContext } from './context/authContext.jsx'
+import useGetProducts from '../../utils/useGetProducts.js'
+import ProductList from '../../components/ProductList.jsx'
+import Navbar from '../../components/Navbar.jsx' 
+import { useAuthContext } from '../../context/authContext.jsx'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
