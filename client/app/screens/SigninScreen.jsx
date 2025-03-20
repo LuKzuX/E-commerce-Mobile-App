@@ -1,7 +1,6 @@
 import { useAuthContext } from '@/context/authContext.jsx'
-import { View, Text, TextInput, Button, ScrollView } from 'react-native'
+import { View, Text, TextInput, ScrollView } from 'react-native'
 import { useState } from 'react'
-import { useAuthContext } from '@/context/authContext.jsx'
 
 export default function SigninScreen() {
   const [email, setUsername] = useState('')

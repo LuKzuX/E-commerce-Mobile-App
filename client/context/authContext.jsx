@@ -9,7 +9,7 @@ export const useAuthContext = () => {
 }
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("aaaa")
 
   const signin = async (email, password) => {
     try {
@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
     const getUserSession = async () => {
       try {
         const savedUser = await AsyncStorage.getItem('user')
-        console.log({savedUser})
+
         if (savedUser) {
           setUser(JSON.parse(savedUser));
         }
