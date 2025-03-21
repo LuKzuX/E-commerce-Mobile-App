@@ -13,18 +13,18 @@ import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import useGetProducts from '../../utils/useGetProducts.js'
-import ProductList from '../../components/ProductList.jsx'
-import Navbar from '../../components/Navbar.jsx' 
+import ProductList from '../components/ProductList.jsx'
+import Navbar from '../components/Navbar.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
   const { data } = useGetProducts()
-  const { user } = useAuthContext();
+  const { user } = useAuthContext()
 
   useEffect(() => {
-    console.log('Current User:', user); // Log the user to verify
-  }, [user]);
+    console.log('Current User:', user) // Log the user to verify
+  }, [user])
 
   return (
     <View className='bg-bg-gray flex-1'>

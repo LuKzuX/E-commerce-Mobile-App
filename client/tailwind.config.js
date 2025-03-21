@@ -4,7 +4,19 @@ module.exports = {
     content: ["./app/**/*.{js,jsx,ts,tsx}"],
     presets: [require("nativewind/preset")],
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+          "bg-gray": "var(--bg-gray)",
+          "bg-yellow": "var(--bg-yellow)"
+        },
+        fontSize: {
+          "text-small": "var(--text-small)",
+          "text-small-medium": "var(--text-small-medium)",
+          "text-medium": "var(--text-medium)",
+          "text-medium-large": "var(--text-medium-large)",
+          "text-large": "var(--text-large)",
+        }
+      },
     },
     plugins: [],
   }
