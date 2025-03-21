@@ -3,7 +3,7 @@ import { View, Text, TextInput, ScrollView } from 'react-native'
 import { useState } from 'react'
 
 export default function SigninScreen() {
-  const [email, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { signin } = useAuthContext()
 
@@ -16,9 +16,9 @@ export default function SigninScreen() {
       <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
           className='border-b text-text-small-medium'
-          placeholder='Username'
+          placeholder='Email'
           value={email}
-          onChangeText={setUsername}
+          onChangeText={setEmail}
         />
         <TextInput
           className='border-b text-text-small-medium'

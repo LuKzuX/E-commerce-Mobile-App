@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../app/(tabs)/index'
 import SignupScreen from '../app/(tabs)/SignupScreen'
 import SigninScreen from '../app/(tabs)/SigninScreen'
+import UserScreen from '../app/(tabs)/UserScreen' 
 import CreateProductScreen from '../app/(tabs)/CreateProductScreen'
 import { AuthContextProvider } from '../context/authContext'
 
@@ -15,6 +16,7 @@ export default function App() {
           <Stack.Screen name='/' component={HomeScreen} />
           <Stack.Screen name='Signup' component={SignupScreen} />
           <Stack.Screen name='Signin' component={SigninScreen} />
+          <Stack.Screen name='User' component={UserScreen} />
           <Stack.Screen name='CreateProduct' component={CreateProductScreen} />
         </Stack.Navigator>
     </AuthContextProvider>

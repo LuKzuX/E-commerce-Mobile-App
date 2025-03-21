@@ -22,12 +22,9 @@ export default function HomeScreen() {
   const { data } = useGetProducts()
   const { user } = useAuthContext()
 
-  useEffect(() => {
-    console.log('Current User:', user) // Log the user to verify
-  }, [user])
-
   return (
     <View className='bg-bg-gray flex-1'>
+      { //user && user.user.isAdmin &&
       <TouchableOpacity
         className='justify-center items-center py-5'
         onPress={() => navigation.navigate('screens/CreateProductScreen')}
@@ -35,6 +32,7 @@ export default function HomeScreen() {
         <Ionicons name='add-circle-outline' size={120} color='gray' />
         <Text className='text-xl text-gray-500'>Add Product</Text>
       </TouchableOpacity>
+}
       <ProductList data={data} property='productName' />
       <Navbar />
     </View>
