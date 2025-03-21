@@ -1,6 +1,9 @@
 import { createContext, useContext } from 'react'
 import { useEffect, useState } from 'react'
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'
+import { ip } from '../getIp.js'
+import { useNavigation } from '@react-navigation/native'
 
 export const AuthContext = createContext({})
 
@@ -9,6 +12,7 @@ export const useAuthContext = () => {
 }
 
 export const AuthContextProvider = ({ children }) => {
+  const navigation = useNavigation()
   const [user, setUser] = useState("aaaa")
 
   const signin = async (email, password) => {
@@ -19,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
       })
       await AsyncStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data)
+      navigation.navigate('/')
     } catch (error) {
       console.log(error)
     }

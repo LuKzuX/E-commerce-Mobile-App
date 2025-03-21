@@ -2,7 +2,7 @@ import path from "path"
 import express from "express";
 export const router = express.Router();
 import multer from "multer";
-import { userAuth } from "../middlewares/userAuth.js";
+import { adminAuth, userAuth } from "../middlewares/userAuth.js";
 import {
   createUser,
   loginUser,
@@ -37,7 +37,7 @@ const upload = multer({ storage, limits: {
   fieldSize: 50000000
 } });
 
-// User authentication routes
+// User routes
 router.post(`/signup`, createUser);
 router.post(`/signin`, loginUser);
 router.patch(`/user`, userAuth, updateUserInfo);
@@ -53,6 +53,8 @@ router.delete("/cart/:id", userAuth, removeProductFromCart);
 router.post(
   `/new-product`,
   upload.single("productImage"),
+  userAuth,
+  adminAuth,
   createProduct
 );
 router.get("/", getAllProducts);

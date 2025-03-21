@@ -18,6 +18,7 @@ export const getAllProducts = async (req, res, next) => {
       .limit(productsPerPage)
       .skip(productsPerPage * (page - 1))
       .sort('productPrice')
+      
     res.json(products)
   } catch (error) {
     res.send(error)
