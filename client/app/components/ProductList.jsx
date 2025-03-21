@@ -1,4 +1,4 @@
-import { ip } from '../getIp'
+import { ip } from '../../getIp.js'
 import {
   View,
   Text,
