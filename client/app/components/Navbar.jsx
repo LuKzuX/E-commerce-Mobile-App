@@ -13,27 +13,37 @@ export default function Navbar() {
     <View>
       <View className='flex flex-row justify-evenly bg-white pb-1'>
         <View className='w-[40px] flex flex-col items-center'>
-          {route.name == '/' && (
-            <View className='w-full h-[2px] bg-black mb-[2px]'></View>
+          {route.name === '/' && (
+            <View className='w-full h-[2px] bg-black'></View>
           )}
-          <AntDesign name='home' size={30} color='black' />
+          <AntDesign className='mt-[2px]' name='home' size={30} color='black' />
           <Text>Home</Text>
         </View>
 
         <View className='w-[40px] flex flex-col items-center'>
-          {route.name == '/' && (
-            <View className='w-full h-[2px] bg-black mb-[2px]'></View>
+          {route.name === '/Cart' && (
+            <View className='w-full h-[2px] bg-black'></View>
           )}
-          <Ionicons name='cart-outline' size={30} color='black' />
+          <Ionicons
+            className='mt-[2px]'
+            name='cart-outline'
+            size={30}
+            color='black'
+          />
           <Text>Cart</Text>
         </View>
         <View className='w-[40px] flex flex-col items-center'>
-          <View
-            className={`${
-              route.name === 'User' ? 'bg-white' : 'bg-black'
-            }w-full h-[2px] mb-[2px]`}
-          ></View>
-          <Feather onPress={() => navigation.navigate("User")} name='user' size={30} color='black' />
+          {route.name === 'User' && (
+            <View className='w-full h-[2px] bg-black'></View>
+          )}
+
+          <Feather
+            className='mt-[2px]'
+            onPress={() => navigation.navigate('User')}
+            name='user'
+            size={30}
+            color='black'
+          />
           <Text>You</Text>
         </View>
       </View>

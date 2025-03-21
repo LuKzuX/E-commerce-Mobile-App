@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import useGetProducts from '../../utils/useGetProducts.js'
 import ProductList from '../components/ProductList.jsx'
-import Navbar from '../components/Navbar.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
 
 export default function HomeScreen() {
@@ -34,7 +33,6 @@ export default function HomeScreen() {
       </TouchableOpacity>
 }
       <ProductList data={data} property='productName' />
-      <Navbar />
     </View>
   )
 }
