@@ -12,7 +12,7 @@ import {
 
 export default function ProductList({ data }) {
   const renderItem = ({ item }) => (
-    <ScrollView className='flex-1 p-7 bg-white'>
+    <ScrollView className='flex-1 pb-0 px-7 bg-white'>
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
         className='h-[150px] object-cover'

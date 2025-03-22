@@ -24,15 +24,7 @@ export default function HomeScreen() {
 
   return (
     <View className='bg-bg-gray flex-1'>
-      { //user && user.user.isAdmin &&
-      <TouchableOpacity
-        className='justify-center items-center py-5'
-        onPress={() => navigation.navigate('CreateProduct')}
-      >
-        <Ionicons name='add-circle-outline' size={120} color='gray' />
-        <Text className='text-xl text-gray-500'>Add Product</Text>
-      </TouchableOpacity>
-}
+      <View></View>
       <ProductList data={data} property='productName' />
     </View>
   )
