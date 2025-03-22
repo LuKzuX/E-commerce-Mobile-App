@@ -15,6 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import useGetProducts from '../../utils/useGetProducts.js'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
+import Navbar from '../components/Navbar.jsx'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
@@ -26,7 +27,7 @@ export default function HomeScreen() {
       { //user && user.user.isAdmin &&
       <TouchableOpacity
         className='justify-center items-center py-5'
-        onPress={() => navigation.navigate('screens/CreateProductScreen')}
+        onPress={() => navigation.navigate('CreateProduct')}
       >
         <Ionicons name='add-circle-outline' size={120} color='gray' />
         <Text className='text-xl text-gray-500'>Add Product</Text>
