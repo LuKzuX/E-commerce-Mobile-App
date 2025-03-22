@@ -21,7 +21,7 @@ export function Tabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, size, focused }) => {
           let iconName
           if (route.name === 'Home') {
             iconName = 'home-sharp'
@@ -29,8 +29,26 @@ export function Tabs() {
             iconName = 'person-circle-outline'
           } else if (route.name === 'Cart') {
             iconName = 'cart-outline'
+          } else if (route.name === 'CreateProduct') {
+            iconName = 'add-circle-outline'
           }
-          return <Ionicons name={iconName} size={size} color={color} />
+          return (
+            <View style={{ alignItems: 'center' }}>
+              {/* Line on top of the icon */}
+              {focused && (
+                <View
+                  style={{
+                    height: 2,
+                    width: 36,
+                    backgroundColor: color,
+                    position: 'absolute',
+                    top: -6,
+                  }}
+                />
+              )}
+              <Ionicons name={iconName} size={size} color={color} />
+            </View>
+          )
         },
         tabBarLabelStyle: {
           fontSize: 12, // Adjust font size
@@ -40,9 +58,24 @@ export function Tabs() {
         tabBarInactiveTintColor: 'gray', // Inactive tab text/icon color
       })}
     >
-      <Tab.Screen name='Home' component={HomeScreen} />
-      <Tab.Screen name='User' component={UserScreen} />
-      {/* <Tab.Screen name='Cart' component={Cart} /> */}
+      <Tab.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{ title: 'Home' }}
+      />
+      <Tab.Screen
+        name='User'
+        component={UserScreen}
+        options={{ title: 'You' }}
+      />
+      {
+        <Tab.Screen
+          name='CreateProduct'
+          component={CreateProductScreen}
+          options={{ title: 'New Product' }}
+        />
+      }
+      {/* <Tab.Screen name='Cart' component={Cart} />  */}
     </Tab.Navigator>
   )
 }
@@ -51,11 +84,15 @@ export default function App() {
   return (
     <AuthContextProvider>
       <Stack.Navigator>
-        <Stack.Screen name='Tabs' component={Tabs} options={{headerShown: false}}/>
+        <Stack.Screen
+          name='Tabs'
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name='Home' component={HomeScreen} />
         <Stack.Screen name='Signup' component={SignupScreen} />
         <Stack.Screen name='Signin' component={SigninScreen} />
-        <Stack.Screen name='User' component={UserScreen} />
+        {/* <Stack.Screen name='Cart' component={Cart} /> */}
         <Stack.Screen name='CreateProduct' component={CreateProductScreen} />
       </Stack.Navigator>
     </AuthContextProvider>
