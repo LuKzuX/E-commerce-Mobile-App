@@ -3,14 +3,10 @@ import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 export default function UserScreen() {
   const navigation = useNavigation()
-  const route = useRoute()
-  console.log(route.name);
-  
-
   return (
     <View>
       <ScrollView>
-        <Text>User Screen</Text>
+        <Text onPress={() => navigation.navigate('Signin')}>Signin</Text>
       </ScrollView>
     </View>
   )
