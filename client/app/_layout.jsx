@@ -8,7 +8,6 @@ import CreateProductScreen from './(tabs)/CreateProductScreen'
 import { AuthContextProvider } from '../context/authContext'
 import { useAuthContext } from '../context/authContext'
 import { View, StyleSheet } from 'react-native'
-import Navbar from './components/Navbar'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -17,6 +16,8 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 export function Tabs() {
+  const { user } = useAuthContext()
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -68,13 +69,13 @@ export function Tabs() {
         component={UserScreen}
         options={{ title: 'You' }}
       />
-      {
+      {user && user.isAdmin && (
         <Tab.Screen
           name='CreateProduct'
           component={CreateProductScreen}
           options={{ title: 'New Product' }}
         />
-      }
+      )}
       {/* <Tab.Screen name='Cart' component={Cart} />  */}
     </Tab.Navigator>
   )
@@ -89,11 +90,27 @@ export default function App() {
           component={Tabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name='Home' component={HomeScreen} />
-        <Stack.Screen name='Signup' component={SignupScreen} />
-        <Stack.Screen name='Signin' component={SigninScreen} />
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Signup'
+          component={SignupScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Signin'
+          component={SigninScreen}
+          options={{ headerShown: false }}
+        />
         {/* <Stack.Screen name='Cart' component={Cart} /> */}
-        <Stack.Screen name='CreateProduct' component={CreateProductScreen} />
+        <Stack.Screen
+          name='CreateProduct'
+          component={CreateProductScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </AuthContextProvider>
   )

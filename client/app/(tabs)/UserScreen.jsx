@@ -5,9 +5,10 @@ export default function UserScreen() {
   const navigation = useNavigation()
   return (
     <View>
-      <ScrollView>
-        <Text onPress={() => navigation.navigate('Signin')}>Signin</Text>
-      </ScrollView>
+      <View className='flex flex-col items-center justify-center'>
+        <Text onPress={() => navigation.navigate('Signin')} className='bg-green-400'>Signin</Text>
+        <Text onPress={() => navigation.navigate('Signup')} className='bg-blue-400'>Signup</Text>
+      </View>
     </View>
   )
 }

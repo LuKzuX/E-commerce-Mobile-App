@@ -12,7 +12,7 @@ export default function SigninScreen() {
   }
 
   return (
-    <ScrollView className='flex-1 p-10 bg-bg-gray'>
+    <View className='flex-1 p-10 bg-bg-gray'>
       <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
           className='border-b text-text-small-medium'
@@ -34,6 +34,6 @@ export default function SigninScreen() {
           Signin
         </Text>
       </View>
-    </ScrollView>
+    </View>
   )
 }
