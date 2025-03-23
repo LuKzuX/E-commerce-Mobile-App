@@ -29,6 +29,8 @@ export default function UserScreen() {
     }
   }
 
+  //fecth uswer info and set the states to the user fields
+
   return (
     <View>
       <View className='mt-10 px-6'>
