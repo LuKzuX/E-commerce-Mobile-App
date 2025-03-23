@@ -13,7 +13,7 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const navigation = useNavigation()
-  const [user, setUser] = useState("aaaa")
+  const [user, setUser] = useState({})
 
   const signin = async (email, password) => {
     try {

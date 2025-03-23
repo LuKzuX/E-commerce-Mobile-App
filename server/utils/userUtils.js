@@ -1,5 +1,5 @@
 export const addressObject = (
-  countryName,
+  countryName = "",
   areaCodeInput = "",
   stateInput = "",
   cityInput = "",

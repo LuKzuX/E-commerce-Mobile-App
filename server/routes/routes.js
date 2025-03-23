@@ -4,6 +4,8 @@ export const router = express.Router()
 import multer from 'multer'
 import { adminAuth, userAuth } from '../middlewares/userAuth.js'
 import {
+  getUser,
+  getUserToUpdate,
   createUser,
   loginUser,
   updateUserInfo,
@@ -41,9 +43,10 @@ const upload = multer({
 })
 
 // User routes
+router.get(`/user`, userAuth, getUser)
 router.post(`/signup`, createUser)
 router.post(`/signin`, loginUser)
-router.patch(`/user`, userAuth, updateUserInfo)
+router.patch(`/user`, userAuth, getUserToUpdate, updateUserInfo)
 
 // Cart routes
 router.get('/cart', userAuth, getCartProducts)

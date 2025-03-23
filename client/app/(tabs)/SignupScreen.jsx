@@ -1,13 +1,15 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { useState } from 'react'
+import { useSignup } from '../../utils/useSignup'
 
 export default function SignupScreen() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const signup = useSignup()
 
-  const handleSubmit = async () => {
-    await signin(email, password)
+  const handleSubmit = (username, email, password) => {
+    signup(username, email, password)
   }
 
   return (
@@ -18,7 +20,6 @@ export default function SignupScreen() {
           placeholder='Username'
           value={username}
           onChangeText={setUsername}
-          secureTextEntry
         />
         <TextInput
           className='border-b text-text-small-medium'
@@ -35,7 +36,7 @@ export default function SignupScreen() {
         />
         <Text
           className='text-center self-center bg-blue-400 py-6 px-12 text-text-medium rounded-xl'
-          onPress={handleSubmit}
+          onPress={() => handleSubmit(username, email, password)}
         >
           Signup
         </Text>

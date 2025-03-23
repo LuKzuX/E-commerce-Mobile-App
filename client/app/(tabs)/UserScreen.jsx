@@ -2,9 +2,11 @@ import { ScrollView, View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
 import useUpdaterUser from '../../utils/useUpdateUser.js'
+import axios from 'axios'
+import { ip } from '../../getIp.js'
 
 export default function UserScreen() {
   const { user } = useAuthContext()
@@ -21,6 +23,33 @@ export default function UserScreen() {
   const [street, setStreet] = useState('')
   const [state, setState] = useState('')
 
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await axios.get(
+          `http://${ip}:5000/material-delivery/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+        setUsername(res.data.username)
+        setEmail(res.data.email)
+        setPassword(res.data.password)
+        setCountry(res.data.address.country)
+        setAreaCode(res.data.address.areaCode)
+        setCity(res.data.address.city)
+        setStreet(res.data.address.street)
+        setState(res.data.address.state)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getUserData()
+  }, [])
+
   const toggleUserEdit = () => {
     if (isEditing) {
       setIsEditing(false)
@@ -28,8 +57,6 @@ export default function UserScreen() {
       setIsEditing(true)
     }
   }
-
-  //fecth uswer info and set the states to the user fields
 
   return (
     <View>
@@ -65,25 +92,15 @@ export default function UserScreen() {
             {isEditing && (
               <TextInput
                 value={email}
-                onChangeText={(text) => setUsername(text)}
+                onChangeText={(text) => setEmail(text)}
                 className='text-gray-900 text-base text-text-small'
               ></TextInput>
             )}
           </View>
           <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>Street</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {street}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={email}
-                onChangeText={(text) => setUsername(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
+            <Text onPress='' className='bg-red-500'>
+              Change Password
+            </Text>
           </View>
 
           {!isEditing && (
