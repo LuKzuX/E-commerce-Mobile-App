@@ -4,11 +4,22 @@ import { useRoute } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useState } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
+import useUpdaterUser from '../../utils/useUpdateUser.js'
 
 export default function UserScreen() {
   const { user } = useAuthContext()
   const [isEditing, setIsEditing] = useState(false)
+  const navigation = useNavigation()
+  const updateUserInfo = useUpdaterUser()
+
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [country, setCountry] = useState('')
+  const [areaCode, setAreaCode] = useState('')
+  const [city, setCity] = useState('')
+  const [street, setStreet] = useState('')
+  const [state, setState] = useState('')
 
   const toggleUserEdit = () => {
     if (isEditing) {
@@ -18,7 +29,6 @@ export default function UserScreen() {
     }
   }
 
-  const navigation = useNavigation()
   return (
     <View>
       <View className='mt-10 px-6'>
@@ -31,12 +41,12 @@ export default function UserScreen() {
             <Text className='text-gray-500 text-sm'>Username</Text>
             {!isEditing && (
               <Text className='text-gray-900 text-base text-text-small'>
-                {user.user.username}
+                {username}
               </Text>
             )}
             {isEditing && (
               <TextInput
-                defaultValue={user.user.username}
+                value={username}
                 onChangeText={(text) => setUsername(text)}
                 autoFocus
                 className='text-gray-900 text-base text-text-small'
@@ -47,12 +57,12 @@ export default function UserScreen() {
             <Text className='text-gray-500 text-sm'>Email</Text>
             {!isEditing && (
               <Text className='text-gray-900 text-base text-text-small'>
-                {user.user.email}
+                {email}
               </Text>
             )}
             {isEditing && (
               <TextInput
-                defaultValue={user.user.email}
+                value={email}
                 onChangeText={(text) => setUsername(text)}
                 className='text-gray-900 text-base text-text-small'
               ></TextInput>
@@ -62,12 +72,12 @@ export default function UserScreen() {
             <Text className='text-gray-500 text-sm'>Street</Text>
             {!isEditing && (
               <Text className='text-gray-900 text-base text-text-small'>
-                {user.user.address.street}
+                {street}
               </Text>
             )}
             {isEditing && (
               <TextInput
-                defaultValue={user.user.username}
+                value={email}
                 onChangeText={(text) => setUsername(text)}
                 className='text-gray-900 text-base text-text-small'
               ></TextInput>
@@ -91,7 +101,18 @@ export default function UserScreen() {
                 Cancel
               </Text>
               <Text
-                onPress={toggleUserEdit}
+                onPress={() => {
+                  updateUserInfo(
+                    username,
+                    email,
+                    password,
+                    country,
+                    areaCode,
+                    city,
+                    street,
+                    state
+                  )
+                }}
                 className='bg-green-400 w-44 text-center py-4 rounded-md text-text-small-medium'
               >
                 Save Changes

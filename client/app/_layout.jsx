@@ -7,9 +7,8 @@ import UserScreen from './(tabs)/UserScreen'
 import CreateProductScreen from './(tabs)/CreateProductScreen'
 import { AuthContextProvider } from '../context/authContext'
 import { useAuthContext } from '../context/authContext'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 const Tab = createBottomTabNavigator()

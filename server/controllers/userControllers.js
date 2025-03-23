@@ -77,6 +77,6 @@ export const updateUserInfo = async (req, res, next) => {
     );
     res.json(user);
   } catch (error) {
-    res.json({ error: error.message });
+    res.json(error);
   }
 };
