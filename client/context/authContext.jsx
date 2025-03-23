@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
       })
       await AsyncStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data)
-      navigation.navigate('/')
+      navigation.navigate('Tabs')
     } catch (error) {
       console.log(error)
     }
