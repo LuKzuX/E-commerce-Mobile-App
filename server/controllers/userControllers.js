@@ -9,7 +9,6 @@ export const getUser = async (req, res, next) => {
   try {
     const _id = req.user.user._id
     const user = await User.findOne({ _id })
-    req.password = user.password
     res.json(user)
   } catch (error) {
     return res.status(401).send(error)
@@ -20,16 +19,12 @@ export const getUserToUpdate = async (req, res, next) => {
   try {
     const _id = req.user.user._id
     const user = await User.findOne({ _id })
-    const { password, newPassword } = req.body
-    if (!password || !newPassword) {
-      console.log(req.password)
+    console.log(user)
 
-      return next()
-    }
     req.password = user.password
     next()
   } catch (error) {
-    return res.status(401).send('error')
+    return res.status(401).send(error)
   }
 }
 
@@ -73,7 +68,7 @@ export const loginUser = async (req, res, next) => {
 
 export const updateUserInfo = async (req, res, next) => {
   try {
-    let hashedPassword = ''
+    let hashedPassword = undefined
     const { _id } = req.user.user
     const {
       username,
@@ -90,7 +85,7 @@ export const updateUserInfo = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10)
 
     if (password == '' || newPassword == '') {
-      hashedPassword = bcrypt.hashSync(req.password, salt)
+      hashedPassword = req.password
     } else if (!bcrypt.compareSync(password, req.password)) {
       return res.send('incorrect password')
     } else {

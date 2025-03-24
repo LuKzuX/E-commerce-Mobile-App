@@ -6,8 +6,9 @@ export default function useUpdateUser() {
   const { user } = useAuthContext()
   const updateUserInfo = async (
     username,
-    email,
     password,
+    newPassword,
+    email,
     country,
     areaCode,
     city,
@@ -15,12 +16,13 @@ export default function useUpdateUser() {
     state
   ) => {
     try {
-      const res = await axios.patch(
+      await axios.patch(
         `http://${ip}:5000/material-delivery/user`,
         {
           username,
-          email,
           password,
+          newPassword,
+          email,
           country,
           areaCode,
           city,
@@ -33,7 +35,6 @@ export default function useUpdateUser() {
           },
         }
       )
-      console.log(res)
     } catch (error) {
       console.log(error)
     }

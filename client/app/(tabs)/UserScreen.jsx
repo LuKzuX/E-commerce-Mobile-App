@@ -105,40 +105,50 @@ export default function UserScreen() {
               ></TextInput>
             )}
           </View>
-          <View className='border-b border-gray-200 pb-3'>
-            {!isEditingPassword && (
-              <Text onPress={togglePasswordEdit} className='bg-red-500'>
-                Change Password
-              </Text>
-            )}
-            {isEditingPassword && (
-              <Text
-                onPress={() => {
-                  togglePasswordEdit(), setPassword(''), setNewPassword('')
-                }}
-                className='bg-red-500'
-              >
-                cancel
-              </Text>
-            )}
-            {isEditingPassword && (
-              <View>
-                <Text className='text-gray-500 text-sm'>Current Password</Text>
-                <TextInput
-                  autoFocus
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  className='text-gray-900 text-base text-text-small'
-                ></TextInput>
-                <Text className='text-gray-500 text-sm'>New Password</Text>
-                <TextInput
-                  value={newPassword}
-                  onChangeText={(text) => setNewPassword(text)}
-                  className='text-gray-900 text-base text-text-small'
-                ></TextInput>
-              </View>
-            )}
-          </View>
+
+          {isEditing && (
+            <View className='border-b border-gray-200 pb-3'>
+              {!isEditingPassword && (
+                <Text
+                  onPress={togglePasswordEdit}
+                  className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                >
+                  Change Password
+                </Text>
+              )}
+
+              {isEditingPassword && (
+                <Text
+                  onPress={() => {
+                    togglePasswordEdit(), setPassword(''), setNewPassword('')
+                  }}
+                  className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                >
+                  Cancel
+                </Text>
+              )}
+
+              {isEditingPassword && (
+                <View>
+                  <Text className='text-gray-500 text-sm '>
+                    Current Password
+                  </Text>
+                  <TextInput
+                    autoFocus
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
+                    className='text-gray-900 text-base text-text-small border-b border-gray-200'
+                  ></TextInput>
+                  <Text className='text-gray-500 text-sm'>New Password</Text>
+                  <TextInput
+                    value={newPassword}
+                    onChangeText={(text) => setNewPassword(text)}
+                    className='text-gray-900 text-base text-text-small border-b border-gray-200'
+                  ></TextInput>
+                </View>
+              )}
+            </View>
+          )}
 
           {!isEditing && (
             <Text
