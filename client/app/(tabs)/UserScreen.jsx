@@ -69,199 +69,208 @@ export default function UserScreen() {
 
   return (
     <View>
-      <View className='mt-10 px-6'>
-        <View className='bg-white p-5 rounded-2xl shadow-md border border-gray-200 gap-4'>
-          <Text className='text-lg font-semibold text-gray-900 mb-4'>
-            Account Information
-          </Text>
+      {user && (
+        <View className='mt-10 px-6'>
+          <View className='bg-white p-5 rounded-2xl shadow-md border border-gray-200 gap-4'>
+            <Text className='text-lg font-semibold text-gray-900 mb-4'>
+              Account Information
+            </Text>
 
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>Username</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {username}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={username}
-                onChangeText={(text) => setUsername(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
-          </View>
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>Email</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {email}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
-          </View>
-
-          {isEditing && (
-            <View className=''>
-              {!isEditingPassword && (
-                <Text
-                  onPress={togglePasswordEdit}
-                  className='self-start bg-red-500 px-3 py-4 rounded-xl'
-                >
-                  Change Password
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>Username</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {username}
                 </Text>
               )}
+              {isEditing && (
+                <TextInput
+                  value={username}
+                  onChangeText={(text) => setUsername(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>Email</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {email}
+                </Text>
+              )}
+              {isEditing && (
+                <TextInput
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
 
-              {isEditingPassword && (
+            {isEditing && (
+              <View className=''>
+                {!isEditingPassword && (
+                  <Text
+                    onPress={togglePasswordEdit}
+                    className='self-start bg-red-500 px-3 py-4 rounded-xl'
+                  >
+                    Change Password
+                  </Text>
+                )}
+
+                {isEditingPassword && (
+                  <Text
+                    onPress={() => {
+                      togglePasswordEdit(), setPassword(''), setNewPassword('')
+                    }}
+                    className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                  >
+                    Cancel
+                  </Text>
+                )}
+
+                {isEditingPassword && (
+                  <View>
+                    <Text className='text-gray-500 text-sm'>
+                      Current Password
+                    </Text>
+                    <TextInput
+                      autoFocus
+                      value={password}
+                      onChangeText={(text) => setPassword(text)}
+                      className='text-gray-900 text-base text-text-small border-b border-gray-200'
+                    ></TextInput>
+                    <Text className='text-gray-500 text-sm'>New Password</Text>
+                    <TextInput
+                      value={newPassword}
+                      onChangeText={(text) => setNewPassword(text)}
+                      className='text-gray-900 text-base text-text-small border-b border-gray-200'
+                    ></TextInput>
+                  </View>
+                )}
+              </View>
+            )}
+
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>Street</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {street}
+                </Text>
+              )}
+              {isEditing && (
+                <TextInput
+                  value={street}
+                  onChangeText={(text) => setStreet(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>City</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {city}
+                </Text>
+              )}
+              {isEditing && (
+                <TextInput
+                  value={city}
+                  onChangeText={(text) => setCity(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>State</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {state}
+                </Text>
+              )}
+              {isEditing && (
+                <TextInput
+                  value={state}
+                  onChangeText={(text) => setState(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
+            <View className='border-b border-gray-200 pb-3'>
+              <Text className='text-gray-500 text-sm'>Area Code</Text>
+              {!isEditing && (
+                <Text className='text-gray-900 text-base text-text-small'>
+                  {areaCode}
+                </Text>
+              )}
+              {isEditing && (
+                <TextInput
+                  value={areaCode}
+                  onChangeText={(text) => setAreaCode(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              )}
+            </View>
+
+            {!isEditing && (
+              <Text
+                onPress={toggleUserEdit}
+                className='bg-bg-yellow mt-8 py-6 px-12 rounded-xl text-text-medium text-center'
+              >
+                Edit Account
+              </Text>
+            )}
+            {isEditing && (
+              <View className='flex-row gap-6 justify-center mt-8'>
                 <Text
-                  onPress={() => {
-                    togglePasswordEdit(), setPassword(''), setNewPassword('')
-                  }}
-                  className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                  onPress={toggleUserEdit}
+                  className='bg-red-500 w-44 text-center py-4 rounded-md text-text-small-medium'
                 >
                   Cancel
                 </Text>
-              )}
-
-              {isEditingPassword && (
-                <View>
-                  <Text className='text-gray-500 text-sm'>
-                    Current Password
-                  </Text>
-                  <TextInput
-                    autoFocus
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}
-                    className='text-gray-900 text-base text-text-small border-b border-gray-200'
-                  ></TextInput>
-                  <Text className='text-gray-500 text-sm'>New Password</Text>
-                  <TextInput
-                    value={newPassword}
-                    onChangeText={(text) => setNewPassword(text)}
-                    className='text-gray-900 text-base text-text-small border-b border-gray-200'
-                  ></TextInput>
-                </View>
-              )}
-            </View>
-          )}
-
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>Street</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {street}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={street}
-                onChangeText={(text) => setStreet(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
+                <Text
+                  onPress={() => {
+                    updateUserInfo(
+                      username,
+                      password,
+                      newPassword,
+                      email,
+                      country,
+                      state,
+                      city,
+                      street,
+                      areaCode
+                    )
+                  }}
+                  className='bg-green-400 w-44 text-center py-4 rounded-md text-text-small-medium'
+                >
+                  Save Changes
+                </Text>
+              </View>
             )}
           </View>
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>City</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {city}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={city}
-                onChangeText={(text) => setCity(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
-          </View>
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>State</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {state}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={state}
-                onChangeText={(text) => setState(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
-          </View>
-          <View className='border-b border-gray-200 pb-3'>
-            <Text className='text-gray-500 text-sm'>Area Code</Text>
-            {!isEditing && (
-              <Text className='text-gray-900 text-base text-text-small'>
-                {areaCode}
-              </Text>
-            )}
-            {isEditing && (
-              <TextInput
-                value={areaCode}
-                onChangeText={(text) => setAreaCode(text)}
-                className='text-gray-900 text-base text-text-small'
-              ></TextInput>
-            )}
-          </View>
-
-          {!isEditing && (
-            <Text
-              onPress={toggleUserEdit}
-              className='bg-bg-yellow mt-8 py-6 px-12 rounded-xl text-text-medium text-center'
-            >
-              Edit Account
-            </Text>
-          )}
-          {isEditing && (
-            <View className='flex-row gap-6 justify-center mt-8'>
-              <Text
-                onPress={toggleUserEdit}
-                className='bg-red-500 w-44 text-center py-4 rounded-md text-text-small-medium'
-              >
-                Cancel
-              </Text>
-              <Text
-                onPress={() => {
-                  updateUserInfo(
-                    username,
-                    password,
-                    newPassword,
-                    email,
-                    country,
-                    state,
-                    city,
-                    street,
-                    areaCode
-                  )
-                }}
-                className='bg-green-400 w-44 text-center py-4 rounded-md text-text-small-medium'
-              >
-                Save Changes
-              </Text>
-            </View>
-          )}
         </View>
-      </View>
+      )}
 
-      <View className='h-screen flex flex-col items-center gap-10 my-20'>
-        <Text
-          onPress={() => navigation.navigate('Signin')}
-          className='bg-green-400 py-6 px-12 rounded-xl text-text-medium'
-        >
-          Signin
-        </Text>
-        <Text
-          onPress={() => navigation.navigate('Signup')}
-          className='bg-blue-400 py-6 px-12 rounded-xl text-text-medium'
-        >
-          Signup
+      {!user && (
+        <View className='h-screen flex flex-col items-center gap-10 my-20'>
+          <Text
+            onPress={() => navigation.navigate('Signin')}
+            className='bg-green-400 py-6 px-12 rounded-xl text-text-medium'
+          >
+            Signin
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('Signup')}
+            className='bg-blue-400 py-6 px-12 rounded-xl text-text-medium'
+          >
+            Signup
+          </Text>
+        </View>
+      )}
+      <View>
+        <Text className='self-center bg-red-500 py-6 px-12 rounded-xl text-text-medium mt-10'>
+          Logout
         </Text>
       </View>
     </View>
