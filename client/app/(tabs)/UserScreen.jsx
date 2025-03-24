@@ -1,6 +1,5 @@
 import { ScrollView, View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { useRoute } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useEffect, useState } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
@@ -68,7 +67,7 @@ export default function UserScreen() {
   }
 
   return (
-    <View>
+    <ScrollView>
       {user && (
         <View className='mt-10 px-6'>
           <View className='bg-white p-5 rounded-2xl shadow-md border border-gray-200 gap-4'>
@@ -273,6 +272,6 @@ export default function UserScreen() {
           Logout
         </Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }

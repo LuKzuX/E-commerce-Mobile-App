@@ -13,7 +13,7 @@ export default function useUpdateUser() {
     state,
     city,
     street,
-    areaCode,
+    areaCode
   ) => {
     try {
       await axios.patch(
