@@ -1,7 +1,7 @@
 import { ScrollView, View, Text } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
 import useUpdaterUser from '../../utils/useUpdateUser.js'
 import axios from 'axios'
@@ -45,12 +45,15 @@ export default function UserScreen() {
     }
   }
 
-  useEffect(() => {
-    const a = async () => {
-      await getUserData()
-    }
-    a()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      const a = async () => {
+        setIsEditing(false)
+        await getUserData()
+      }
+      a()
+    }, [])
+  )
 
   const toggleUserEdit = async () => {
     if (isEditing) {
