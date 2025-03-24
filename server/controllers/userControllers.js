@@ -19,8 +19,6 @@ export const getUserToUpdate = async (req, res, next) => {
   try {
     const _id = req.user.user._id
     const user = await User.findOne({ _id })
-    console.log(user)
-
     req.password = user.password
     next()
   } catch (error) {

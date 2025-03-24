@@ -8,7 +8,7 @@ import axios from 'axios'
 import { ip } from '../../getIp.js'
 
 export default function UserScreen() {
-  const { user } = useAuthContext()
+  const { user, logout } = useAuthContext()
   const [isEditing, setIsEditing] = useState(false)
   const navigation = useNavigation()
   const updateUserInfo = useUpdaterUser()
@@ -35,13 +35,15 @@ export default function UserScreen() {
             },
           }
         )
-        setUsername(res.data.username)
-        setEmail(res.data.email)
-        setCountry(res.data.address.country)
-        setState(res.data.address.state)
-        setCity(res.data.address.city)
-        setStreet(res.data.address.street)
-        setAreaCode(res.data.address.areaCode)
+        if (user !== Object) {
+          setUsername(res.data.username)
+          setEmail(res.data.email)
+          setCountry(res.data.address.country)
+          setState(res.data.address.state)
+          setCity(res.data.address.city)
+          setStreet(res.data.address.street)
+          setAreaCode(res.data.address.areaCode)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -64,6 +66,10 @@ export default function UserScreen() {
     } else {
       setIsEditingPassword(true)
     }
+  }
+
+  const handleLogout = async () => {
+    await logout()
   }
 
   return (
@@ -268,7 +274,10 @@ export default function UserScreen() {
         </View>
       )}
       <View>
-        <Text className='self-center bg-red-500 py-6 px-12 rounded-xl text-text-medium mt-10'>
+        <Text
+          onPress={handleLogout}
+          className='self-center bg-red-500 py-6 px-12 rounded-xl text-text-medium mt-10'
+        >
           Logout
         </Text>
       </View>
