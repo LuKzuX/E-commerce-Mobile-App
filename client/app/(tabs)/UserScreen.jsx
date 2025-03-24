@@ -107,7 +107,7 @@ export default function UserScreen() {
           </View>
 
           {isEditing && (
-            <View className='border-b border-gray-200 pb-3'>
+            <View className=''>
               {!isEditingPassword && (
                 <Text
                   onPress={togglePasswordEdit}
@@ -130,7 +130,7 @@ export default function UserScreen() {
 
               {isEditingPassword && (
                 <View>
-                  <Text className='text-gray-500 text-sm '>
+                  <Text className='text-gray-500 text-sm'>
                     Current Password
                   </Text>
                   <TextInput
