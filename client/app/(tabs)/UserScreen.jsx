@@ -111,7 +111,7 @@ export default function UserScreen() {
               {!isEditingPassword && (
                 <Text
                   onPress={togglePasswordEdit}
-                  className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                  className='self-start bg-red-500 px-3 py-4 rounded-xl'
                 >
                   Change Password
                 </Text>
