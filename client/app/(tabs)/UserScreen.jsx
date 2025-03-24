@@ -39,10 +39,10 @@ export default function UserScreen() {
         setUsername(res.data.username)
         setEmail(res.data.email)
         setCountry(res.data.address.country)
-        setAreaCode(res.data.address.areaCode)
+        setState(res.data.address.state)
         setCity(res.data.address.city)
         setStreet(res.data.address.street)
-        setState(res.data.address.state)
+        setAreaCode(res.data.address.areaCode)
       } catch (error) {
         console.log(error)
       }
@@ -150,6 +150,67 @@ export default function UserScreen() {
             </View>
           )}
 
+          <View className='border-b border-gray-200 pb-3'>
+            <Text className='text-gray-500 text-sm'>Street</Text>
+            {!isEditing && (
+              <Text className='text-gray-900 text-base text-text-small'>
+                {street}
+              </Text>
+            )}
+            {isEditing && (
+              <TextInput
+                value={street}
+                onChangeText={(text) => setStreet(text)}
+                className='text-gray-900 text-base text-text-small'
+              ></TextInput>
+            )}
+          </View>
+          <View className='border-b border-gray-200 pb-3'>
+            <Text className='text-gray-500 text-sm'>City</Text>
+            {!isEditing && (
+              <Text className='text-gray-900 text-base text-text-small'>
+                {city}
+              </Text>
+            )}
+            {isEditing && (
+              <TextInput
+                value={city}
+                onChangeText={(text) => setCity(text)}
+                className='text-gray-900 text-base text-text-small'
+              ></TextInput>
+            )}
+          </View>
+          <View className='border-b border-gray-200 pb-3'>
+            <Text className='text-gray-500 text-sm'>State</Text>
+            {!isEditing && (
+              <Text className='text-gray-900 text-base text-text-small'>
+                {state}
+              </Text>
+            )}
+            {isEditing && (
+              <TextInput
+                value={state}
+                onChangeText={(text) => setState(text)}
+                className='text-gray-900 text-base text-text-small'
+              ></TextInput>
+            )}
+          </View>
+          <View className='border-b border-gray-200 pb-3'>
+            <Text className='text-gray-500 text-sm'>Area Code</Text>
+            {!isEditing && (
+              <Text className='text-gray-900 text-base text-text-small'>
+                {areaCode}
+              </Text>
+            )}
+            {isEditing && (
+              <TextInput
+                value={areaCode}
+                onChangeText={(text) => setAreaCode(text)}
+                className='text-gray-900 text-base text-text-small'
+              ></TextInput>
+            )}
+          </View>
+
           {!isEditing && (
             <Text
               onPress={toggleUserEdit}
@@ -173,12 +234,11 @@ export default function UserScreen() {
                     password,
                     newPassword,
                     email,
-                    password,
                     country,
-                    areaCode,
+                    state,
                     city,
                     street,
-                    state
+                    areaCode
                   )
                 }}
                 className='bg-green-400 w-44 text-center py-4 rounded-md text-text-small-medium'

@@ -10,10 +10,10 @@ export default function useUpdateUser() {
     newPassword,
     email,
     country,
-    areaCode,
+    state,
     city,
     street,
-    state
+    areaCode,
   ) => {
     try {
       await axios.patch(
@@ -24,10 +24,10 @@ export default function useUpdateUser() {
           newPassword,
           email,
           country,
-          areaCode,
+          state,
           city,
           street,
-          state,
+          areaCode,
         },
         {
           headers: {

@@ -98,6 +98,7 @@ export const updateUserInfo = async (req, res, next) => {
         $set: {
           username,
           password: hashedPassword,
+          newPassword,
           email,
           address: {
             country,
