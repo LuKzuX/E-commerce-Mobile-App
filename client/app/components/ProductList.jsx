@@ -12,7 +12,10 @@ import {
 
 export default function ProductList({ data }) {
   const renderItem = ({ item }) => (
-    <ScrollView className='flex-1 pb-0 px-7 py-10 bg-white'>
+    <TouchableOpacity
+      onPress={() => console.log(item.productDescription)}
+      className='flex-1 pb-0 px-7 py-10 bg-white'
+    >
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
         className='h-[150px] object-cover'
@@ -26,11 +29,11 @@ export default function ProductList({ data }) {
       </View>
       <Text
         className='self-center bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-        onPress={() => console.log(item.productImage)}
+        onPress={() => console.log("'added' to cart")}
       >
         Add to Cart
       </Text>
-    </ScrollView>
+    </TouchableOpacity>
   )
 
   return (
