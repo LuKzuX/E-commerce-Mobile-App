@@ -1,3 +1,5 @@
+//verify if new password is equal to curr password
+
 import { User } from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
@@ -10,7 +12,7 @@ export const getUser = async (req, res, next) => {
     req.password = user.password
     res.json(user)
   } catch (error) {
-    return res.status(401).send('error')
+    return res.status(401).send(error)
   }
 }
 
@@ -18,6 +20,12 @@ export const getUserToUpdate = async (req, res, next) => {
   try {
     const _id = req.user.user._id
     const user = await User.findOne({ _id })
+    const { password, newPassword } = req.body
+    if (!password || !newPassword) {
+      console.log(req.password)
+
+      return next()
+    }
     req.password = user.password
     next()
   } catch (error) {
@@ -65,6 +73,7 @@ export const loginUser = async (req, res, next) => {
 
 export const updateUserInfo = async (req, res, next) => {
   try {
+    let hashedPassword = ''
     const { _id } = req.user.user
     const {
       username,
@@ -77,11 +86,17 @@ export const updateUserInfo = async (req, res, next) => {
       street,
       state,
     } = req.body
-    if (!bcrypt.compareSync(password, req.password)) {
-      return res.send('incorrect opld password')
-    }
+
     const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(newPassword, salt)
+
+    if (password == '' || newPassword == '') {
+      hashedPassword = bcrypt.hashSync(req.password, salt)
+    } else if (!bcrypt.compareSync(password, req.password)) {
+      return res.send('incorrect password')
+    } else {
+      hashedPassword = bcrypt.hashSync(newPassword, salt)
+    }
+
     const user = await User.findByIdAndUpdate(
       { _id: _id },
       {

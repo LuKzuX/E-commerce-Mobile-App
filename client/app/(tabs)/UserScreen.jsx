@@ -17,6 +17,8 @@ export default function UserScreen() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [isEditingPassword, setIsEditingPassword] = useState(false)
   const [country, setCountry] = useState('')
   const [areaCode, setAreaCode] = useState('')
   const [city, setCity] = useState('')
@@ -36,7 +38,6 @@ export default function UserScreen() {
         )
         setUsername(res.data.username)
         setEmail(res.data.email)
-        setPassword(res.data.password)
         setCountry(res.data.address.country)
         setAreaCode(res.data.address.areaCode)
         setCity(res.data.address.city)
@@ -55,6 +56,14 @@ export default function UserScreen() {
       setIsEditing(false)
     } else {
       setIsEditing(true)
+    }
+  }
+
+  const togglePasswordEdit = () => {
+    if (isEditingPassword) {
+      setIsEditingPassword(false)
+    } else {
+      setIsEditingPassword(true)
     }
   }
 
@@ -77,7 +86,6 @@ export default function UserScreen() {
               <TextInput
                 value={username}
                 onChangeText={(text) => setUsername(text)}
-                autoFocus
                 className='text-gray-900 text-base text-text-small'
               ></TextInput>
             )}
@@ -98,9 +106,38 @@ export default function UserScreen() {
             )}
           </View>
           <View className='border-b border-gray-200 pb-3'>
-            <Text onPress='' className='bg-red-500'>
-              Change Password
-            </Text>
+            {!isEditingPassword && (
+              <Text onPress={togglePasswordEdit} className='bg-red-500'>
+                Change Password
+              </Text>
+            )}
+            {isEditingPassword && (
+              <Text
+                onPress={() => {
+                  togglePasswordEdit(), setPassword(''), setNewPassword('')
+                }}
+                className='bg-red-500'
+              >
+                cancel
+              </Text>
+            )}
+            {isEditingPassword && (
+              <View>
+                <Text className='text-gray-500 text-sm'>Current Password</Text>
+                <TextInput
+                  autoFocus
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+                <Text className='text-gray-500 text-sm'>New Password</Text>
+                <TextInput
+                  value={newPassword}
+                  onChangeText={(text) => setNewPassword(text)}
+                  className='text-gray-900 text-base text-text-small'
+                ></TextInput>
+              </View>
+            )}
           </View>
 
           {!isEditing && (
@@ -123,6 +160,8 @@ export default function UserScreen() {
                 onPress={() => {
                   updateUserInfo(
                     username,
+                    password,
+                    newPassword,
                     email,
                     password,
                     country,
