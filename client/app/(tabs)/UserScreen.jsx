@@ -1,4 +1,4 @@
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useEffect, useState } from 'react'
@@ -24,39 +24,41 @@ export default function UserScreen() {
   const [street, setStreet] = useState('')
   const [state, setState] = useState('')
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const res = await axios.get(
-          `http://${ip}:5000/material-delivery/user`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        )
-        if (user !== Object) {
-          setUsername(res.data.username)
-          setEmail(res.data.email)
-          setCountry(res.data.address.country)
-          setState(res.data.address.state)
-          setCity(res.data.address.city)
-          setStreet(res.data.address.street)
-          setAreaCode(res.data.address.areaCode)
-        }
-      } catch (error) {
-        console.log(error)
+  const getUserData = async () => {
+    try {
+      const res = await axios.get(`http://${ip}:5000/material-delivery/user`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      if (user) {
+        setUsername(res.data.username)
+        setEmail(res.data.email)
+        setCountry(res.data.address.country)
+        setState(res.data.address.state)
+        setCity(res.data.address.city)
+        setStreet(res.data.address.street)
+        setAreaCode(res.data.address.areaCode)
       }
+    } catch (error) {
+      console.log('no user logged')
     }
+  }
 
-    getUserData()
+  useEffect(() => {
+    const a = async () => {
+      await getUserData()
+    }
+    a()
   }, [])
 
-  const toggleUserEdit = () => {
+  const toggleUserEdit = async () => {
     if (isEditing) {
       setIsEditing(false)
+      await getUserData()
     } else {
-      setIsEditing(true)
+      await setIsEditing(true)
+      getUserData()
     }
   }
 
@@ -90,6 +92,7 @@ export default function UserScreen() {
               )}
               {isEditing && (
                 <TextInput
+                  autoFocus
                   value={username}
                   onChangeText={(text) => setUsername(text)}
                   className='text-gray-900 text-base text-text-small'
