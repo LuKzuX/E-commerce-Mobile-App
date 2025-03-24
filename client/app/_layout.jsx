@@ -16,7 +16,7 @@ const Stack = createStackNavigator()
 
 export function Tabs() {
   const { user } = useAuthContext()
-
+  
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -68,7 +68,7 @@ export function Tabs() {
         component={UserScreen}
         options={{ title: 'You' }}
       />
-      {user && user.isAdmin && (
+      {user && user.user.isAdmin && (
         <Tab.Screen
           name='CreateProduct'
           component={CreateProductScreen}

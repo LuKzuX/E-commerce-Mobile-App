@@ -1,60 +1,97 @@
-import {useUploadData} from "../../utils/uploadData.js"
-import { ip } from '../../getIp.js'
-import { View, Text, ScrollView, StyleSheet, Button, Image, TextInput } from 'react-native'
-import { useState, useEffect } from 'react'
-
+import { useUploadData } from "../../utils/uploadData.js";
+import { ip } from "../../getIp.js";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Button,
+  Image,
+  TextInput,
+} from "react-native";
+import { useState, useEffect } from "react";
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function CreateProductScreen() {
-  const {uploadData, handleUpload, success, uri} = useUploadData()
-  const [productName, setProductName] = useState('')
-  const [productPrice, setProductPrice] = useState('')
-  const [productCategory, setProductCategory] = useState('')
-  const [productDescription, setProductDescription] = useState('')
-  const [productQuantity, setProductQuantity] = useState('')
+  const { uploadData, handleUpload, success, uri } = useUploadData();
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [productCategory, setProductCategory] = useState([
+    { label: "RC", value: "rc" },
+    { label: "Computers", value: "computers" },
+    { label: "Smartphones", value: "smartphones" },
+    { label: "Home Appliances", value: "home-appliances" },
+    { label: "Fashion", value: "fashion" },
+    { label: "Books", value: "books" },
+    { label: "Toys", value: "toys" },
+    { label: "Sports & Outdoors", value: "sports-outdoors" },
+    { label: "Automotive", value: "automotive" },
+    { label: "Beauty & Personal Care", value: "beauty-personal-care" },
+    { label: "Groceries", value: "groceries" },
+    { label: "Health & Wellness", value: "health-wellness" },
+    { label: "Furniture", value: "furniture" },
+    { label: "Music & Instruments", value: "music-instruments" },
+    { label: "Movies & Entertainment", value: "movies-entertainment" },
+    { label: "Food & Beverage", value: "food-beverage" },
+    { label: "Baby & Kids", value: "baby-kids" },
+    { label: "Office Supplies", value: "office-supplies" },
+  ]);
+
+  const [productDescription, setProductDescription] = useState("");
+  const [productQuantity, setProductQuantity] = useState("");
 
   return (
-    <ScrollView className='flex-1 p-10 bg-bg-gray'>
-      <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
+    <View className="flex-1 p-10 bg-bg-gray">
+      <View className="bg-white flex flex-col gap-10 p-6 shadow-md">
         <TextInput
-          className='border-b text-text-small-medium'
+          className="border-b text-text-small-medium"
           onChangeText={(text) => setProductName(text)}
-          placeholder='name'
-          keyboardType='letter'
+          placeholder="name"
+          keyboardType="letter"
         />
         <TextInput
-          className='border-b text-text-small-medium '
+          className="border-b text-text-small-medium "
           onChangeText={(text) => setProductPrice(text)}
-          placeholder='price'
-          keyboardType='numeric'
+          placeholder="price"
+          keyboardType="numeric"
         />
-        <TextInput
-          className='border-b text-text-small-medium'
-          onChangeText={(text) => setProductCategory(text)}
-          placeholder='category'
-          keyboardType='letter'
+        <DropDownPicker
+          placeholder="category"
+          open={open}
+          value={value}
+          items={productCategory}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setProductCategory}
         />
+
         <TextInput
-          className='border-b text-text-small-medium'
+          className="border-b text-text-small-medium"
           onChangeText={(text) => setProductDescription(text)}
-          placeholder='desc'
-          keyboardType='letter'
+          placeholder="desc"
+          keyboardType="letter"
         />
         <TextInput
-          className='border-b text-text-small-medium'
+          className="border-b text-text-small-medium"
           onChangeText={(text) => setProductQuantity(text)}
-          placeholder='quantity'
-          keyboardType='numeric'
+          placeholder="quantity"
+          keyboardType="numeric"
         />
         <Text
           onPress={async () => {
-            await uploadData()
+            await uploadData();
           }}
-          className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
+          className="py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl"
         >
           Select Image:
         </Text>
         {uri ? (
-          <Image source={{ uri }} style={{ width: "100%", height: 150, objectFit: 'contain' }} />
+          <Image
+            source={{ uri }}
+            style={{ width: "100%", height: 150, objectFit: "contain" }}
+          />
         ) : null}
         <Text
           onPress={async () => {
@@ -64,15 +101,15 @@ export default function CreateProductScreen() {
               productPrice,
               productCategory,
               productDescription,
-              productQuantity,
-            )
+              productQuantity
+            );
           }}
-          className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
+          className="text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl"
         >
           Create Product
         </Text>
         <Text>{success}</Text>
       </View>
-    </ScrollView>
-  )
+    </View>
+  );
 }

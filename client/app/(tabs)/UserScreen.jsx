@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useEffect, useState } from 'react'
@@ -57,7 +57,7 @@ export default function UserScreen() {
       setIsEditing(false)
       await getUserData()
     } else {
-      await setIsEditing(true)
+      setIsEditing(true)
       getUserData()
     }
   }
