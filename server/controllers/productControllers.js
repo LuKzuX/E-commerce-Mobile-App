@@ -17,7 +17,7 @@ export const getAllProducts = async (req, res, next) => {
     })
       .limit(productsPerPage)
       .skip(productsPerPage * (page - 1))
-      .sort('productPrice')
+      .sort(sort)
       
     res.json(products)
   } catch (error) {

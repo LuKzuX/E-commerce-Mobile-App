@@ -15,23 +15,6 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function HomeStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name='Home'
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='ProductDetails'
-        component={ProductDetails}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  )
-}
-
 function Tabs() {
   return (
     <Tab.Navigator
@@ -95,8 +78,8 @@ export default function App() {
     <AuthContextProvider>
       <Stack.Navigator >
         <Stack.Screen
-          name='Tabs'
-          component={Tabs}
+          name='Home'
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
