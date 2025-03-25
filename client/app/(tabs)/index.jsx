@@ -32,7 +32,7 @@ export default function HomeScreen() {
           placeholder='Search'
         ></TextInput>
       </SafeAreaView>
-      <ProductList data={data} property='productName' />
+      <ProductList data={data} />
     </View>
   )
 }

@@ -56,7 +56,7 @@ function Tabs() {
     >
       <Tab.Screen
         name='Home'
-        component={HomeStack}
+        component={HomeScreen}
         options={{ title: 'Home' }}
       />
       <Tab.Screen
@@ -76,10 +76,15 @@ function Tabs() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <Stack.Navigator >
+      <Stack.Navigator>
         <Stack.Screen
-          name='Home'
-          component={HomeScreen}
+          name='Tabs'
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ProductDetails'
+          component={ProductDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

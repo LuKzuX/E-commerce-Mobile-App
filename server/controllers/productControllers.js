@@ -5,8 +5,8 @@ import path from 'path'
 
 export const getAllProducts = async (req, res, next) => {
   const page = req.query.p || 1
-  const find = req.query.f || ''
-  const sort = req.query.s || ''
+  const find = req.query.f || ""
+  const sort = req.query.s || null
   const numFilterMin = req.query.minprice || 0
   const numFilterMax = req.query.maxprice || 1000000
   const productsPerPage = 12
