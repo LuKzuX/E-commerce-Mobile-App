@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator()
 
 function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         name='Home'
         component={HomeScreen}
@@ -36,6 +36,7 @@ function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: ({ color, size, focused }) => {
           let iconName
           if (route.name === 'Home') {
@@ -92,7 +93,7 @@ function Tabs() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen
           name='Tabs'
           component={Tabs}
