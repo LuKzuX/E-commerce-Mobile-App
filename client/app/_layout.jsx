@@ -5,7 +5,7 @@ import SignupScreen from './(tabs)/SignupScreen'
 import SigninScreen from './(tabs)/SigninScreen'
 import UserScreen from './(tabs)/UserScreen'
 import CreateProductScreen from './(tabs)/CreateProductScreen'
-import ProductDetails from "./(tabs)/ProductDetails"
+import ProductDetails from './(tabs)/ProductDetails'
 import { AuthContextProvider } from '../context/authContext'
 import { useAuthContext } from '../context/authContext'
 import { View } from 'react-native'
@@ -17,7 +17,7 @@ const Stack = createStackNavigator()
 
 export function Tabs() {
   const { user } = useAuthContext()
-  
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -35,7 +35,6 @@ export function Tabs() {
           }
           return (
             <View style={{ alignItems: 'center' }}>
-              {/* Line on top of the icon */}
               {focused && (
                 <View
                   style={{
@@ -110,11 +109,12 @@ export default function App() {
           component={CreateProductScreen}
           options={{ headerShown: false }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name='ProductDetails'
           component={ProductDetails}
           options={{ headerShown: false }}
         />
+        
       </Stack.Navigator>
     </AuthContextProvider>
   )
