@@ -1,4 +1,5 @@
 import { ip } from '../../getIp.js'
+import { useNavigation } from '@react-navigation/native'
 import {
   View,
   Text,
@@ -11,9 +12,11 @@ import {
 } from 'react-native'
 
 export default function ProductList({ data }) {
+  const navigation = useNavigation()
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => console.log(item.productDescription)}
+      onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
       className='flex-1 pb-0 px-7 py-10 bg-white'
     >
       <Image
