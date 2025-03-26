@@ -17,7 +17,7 @@ export default function CreateProductScreen() {
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(null)
+  const [productCategoryValue, setValue] = useState(null)
   const [productCategory, setProductCategory] = useState([
     { label: 'Remote Control', value: 'remote-control' },
     { label: 'Computers', value: 'computers' },
@@ -60,7 +60,7 @@ export default function CreateProductScreen() {
         <DropDownPicker
           placeholder='category'
           open={open}
-          value={value}
+          value={productCategoryValue}
           items={productCategory}
           setOpen={setOpen}
           setValue={setValue}
@@ -79,27 +79,29 @@ export default function CreateProductScreen() {
           placeholder='quantity'
           keyboardType='numeric'
         />
-        <Text
-          onPress={async () => {
-            await uploadData()
-          }}
-          className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
-        >
-          Select Image:
-        </Text>
-        {uri ? (
-          <Image
-            source={{ uri }}
-            style={{ width: '100%', height: 150, objectFit: 'contain' }}
-          />
-        ) : null}
+        <View className='flex-row items-center justify-between'>
+          <Text
+            onPress={async () => {
+              await uploadData()
+            }}
+            className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
+          >
+            Select Image:
+          </Text>
+          {uri ? (
+            <Image
+              source={{ uri }}
+              style={{ width: 90, height: 90, objectFit: 'cover' }}
+            />
+          ) : null}
+        </View>
         <Text
           onPress={async () => {
             await handleUpload(
               `http://${ip}:5000/material-delivery/new-product`,
               productName,
               productPrice,
-              productCategory,
+              productCategoryValue,
               productDescription,
               productQuantity
             )

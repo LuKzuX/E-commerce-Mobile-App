@@ -1,10 +1,12 @@
 import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
 import { useState } from 'react'
+import { useAuthContext } from '../context/authContext'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')
   const [success, setSuccess] = useState("")
+  const { user } = useAuthContext()
 
   const uploadData = async () => {
     try {
@@ -46,6 +48,7 @@ export const useUploadData = () => {
       await axios.post(route, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${user.token}`,
         },
       })
       setSuccess("created")

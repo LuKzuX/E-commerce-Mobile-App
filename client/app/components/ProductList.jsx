@@ -32,7 +32,7 @@ export default function ProductList({ data }) {
       </View>
       <Text
         className='self-center bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-        onPress={() => console.log("'added' to cart")}
+        onPress={() => console.log(item.productName)}
       >
         Add to Cart
       </Text>

@@ -92,8 +92,7 @@ export const updateProduct = async (req, res, next) => {
 export const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params
-    const { _id } = req.user.user
-    const deletedProduct = await Product.findById({ _id: id })
+    const deletedProduct = await Product.findByIdAndDelete({ _id: id })
 
     const imagePath = path.join(
       './images/',
@@ -105,9 +104,8 @@ export const deleteProduct = async (req, res, next) => {
         return
       }
     })
-    console.log(imagePath)
 
-    res.send(deletedProduct)
+    res.send('deleted')
   } catch (error) {
     res.send(error)
   }

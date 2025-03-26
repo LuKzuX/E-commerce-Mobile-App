@@ -3,13 +3,15 @@ import { useState, useEffect } from 'react'
 import { useRoute } from '@react-navigation/native'
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
+import useDeleteProduct from '../../utils/useDeleteProduct'
 import { ip } from '../../getIp'
 
 export default function ProductDetails() {
   const route = useRoute()
   const { id } = route.params
   const { data } = useGetProductDetails(id)
-
+  const deleteProduct = useDeleteProduct()
+  
   return (
     <ScrollView className='bg-bg-gray'>
       {data[0] && (
@@ -40,11 +42,21 @@ export default function ProductDetails() {
               <Text className='text-gray-500 text-text-small'>Category: </Text>
               <Text className='text-text-small'>{data[0].productCategory}</Text>
             </View>
-            {data[0].productQuantity <= 50 && data[0].productQuantity >= 1 && <Text className='text-text-small text-yellow-500'>Low on Stock</Text>}
-            {data[0].productQuantity <= 0 && <Text className='text-text-small text-red-500'>Sold Out</Text>}
-            {data[0].productQuantity >= 100 && <Text className='text-text-small text-green-700'>In Stock</Text>}
+            {data[0].productQuantity <= 50 && data[0].productQuantity >= 1 && (
+              <Text className='text-text-small text-yellow-500'>
+                Low on Stock
+              </Text>
+            )}
+            {data[0].productQuantity <= 0 && (
+              <Text className='text-text-small text-red-500'>Sold Out</Text>
+            )}
+            {data[0].productQuantity >= 100 && (
+              <Text className='text-text-small text-green-700'>In Stock</Text>
+            )}
           </View>
-
+          <View>
+            <Text onPress={() => deleteProduct(id)}>Delete Product</Text>
+          </View>
           <View className='mt-6 space-y-3'>
             <TouchableOpacity className='bg-bg-yellow p-4 rounded-lg items-center shadow-md'>
               <Text className='text-lg font-semibold text-text-dark'>
