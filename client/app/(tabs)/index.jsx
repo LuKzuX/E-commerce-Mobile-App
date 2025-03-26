@@ -19,16 +19,11 @@ import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
 
 export default function HomeScreen() {
-  const navigation = useNavigation()
   const { data, getData } = useGetProducts()
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState('')
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   return (
     <View className='bg-bg-gray flex-1'>
