@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 export default function CreateProductScreen() {
-  const { uploadData, handleUpload, success, uri } = useUploadData()
+  const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
   const [open, setOpen] = useState(false)
@@ -104,7 +104,38 @@ export default function CreateProductScreen() {
               productCategoryValue,
               productDescription,
               productQuantity
-            )
+            ),
+              setProductName('')
+            setProductPrice('')
+            setProductCategory([
+              { label: 'Remote Control', value: 'remote-control' },
+              { label: 'Computers', value: 'computers' },
+              { label: 'Smartphones', value: 'smartphones' },
+              { label: 'Home Appliances', value: 'home-appliances' },
+              { label: 'Fashion', value: 'fashion' },
+              { label: 'Books', value: 'books' },
+              { label: 'Toys', value: 'toys' },
+              { label: 'Sports & Outdoors', value: 'sports-outdoors' },
+              { label: 'Automotive', value: 'automotive' },
+              {
+                label: 'Beauty & Personal Care',
+                value: 'beauty-personal-care',
+              },
+              { label: 'Groceries', value: 'groceries' },
+              { label: 'Health & Wellness', value: 'health-wellness' },
+              { label: 'Furniture', value: 'furniture' },
+              { label: 'Music & Instruments', value: 'music-instruments' },
+              {
+                label: 'Movies & Entertainment',
+                value: 'movies-entertainment',
+              },
+              { label: 'Food & Beverage', value: 'food-beverage' },
+              { label: 'Baby & Kids', value: 'baby-kids' },
+              { label: 'Office Supplies', value: 'office-supplies' },
+            ])
+            setProductDescription('')
+            setProductQuantity('')
+            setUri('')
           }}
           className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
         >

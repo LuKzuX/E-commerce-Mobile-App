@@ -56,5 +56,5 @@ export const useUploadData = () => {
       console.error(error)
     }
   }
-  return {uploadData, handleUpload, success, uri}
+  return {uploadData, handleUpload, success, uri, setUri}
 }
