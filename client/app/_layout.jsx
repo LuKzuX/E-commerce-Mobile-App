@@ -69,6 +69,14 @@ function Tabs() {
         component={CreateProductScreen}
         options={{ title: 'Create Product' }}
       />
+      <Tab.Screen
+        name='ProductDetails'
+        component={ProductDetails}
+        options={{
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' },
+        }}
+      />
     </Tab.Navigator>
   )
 }

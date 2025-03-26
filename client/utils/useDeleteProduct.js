@@ -1,7 +1,3 @@
-export default function useGetProductDetails(id) {
-    
-
+export default function useDeleteProduct(id) {
   
-    return { data }
-  }
-  
+}
