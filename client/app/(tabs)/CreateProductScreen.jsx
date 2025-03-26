@@ -1,4 +1,4 @@
-import { useUploadData } from '../../utils/uploadData.js'
+import { useUploadData } from '../../utils/useUploadData.js'
 import { ip } from '../../getIp.js'
 import {
   View,
