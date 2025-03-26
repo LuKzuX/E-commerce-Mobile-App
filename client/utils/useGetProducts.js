@@ -5,18 +5,16 @@ import axios from 'axios'
 export default function useGetProducts() {
   const [data, setData] = useState([])
 
-  const getData = async () => {
+  const getData = async (page = 1, find = '', sort) => {
     try {
-      const products = await axios.get(`http://${ip}:5000/material-delivery/`)
+      const products = await axios.get(
+        `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}`
+      )
       setData(products.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
-
-  return { data }
+  return { data, getData }
 }
