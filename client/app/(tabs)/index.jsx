@@ -41,7 +41,7 @@ export default function HomeScreen() {
           title='press'
         ></Button>
       </SafeAreaView>
-      <ProductList data={data} />
+      <ProductList data={data} getData={getData} />
     </View>
   )
 }
