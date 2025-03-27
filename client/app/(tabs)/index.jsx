@@ -25,6 +25,10 @@ export default function HomeScreen() {
   const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState('')
 
+  useEffect(() => {
+    getData()
+  },[searchValue])
+
   return (
     <View className='bg-bg-gray flex-1'>
       <SafeAreaView>

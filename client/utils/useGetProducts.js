@@ -16,9 +16,5 @@ export default function useGetProducts() {
     }
   }
 
-  useEffect(() => {
-    getData()
-  }, [data])
-
   return { data, getData }
 }
