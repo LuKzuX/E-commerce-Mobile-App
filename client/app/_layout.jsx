@@ -11,6 +11,7 @@ import { AuthContextProvider } from '../context/authContext'
 import { useAuthContext } from '../context/authContext'
 import { View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import UpdateProductScreen from "./(tabs)/UpdateProductScreen"
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -85,6 +86,14 @@ export default function App() {
         <Stack.Screen
           name='ProductDetails'
           component={ProductDetails}
+          options={{
+            title: 'Back',
+            headerBackTitle: 'Back',
+          }}
+        />
+          <Stack.Screen
+          name='UpdateProduct'
+          component={UpdateProductScreen}
           options={{
             title: 'Back',
             headerBackTitle: 'Back',

@@ -5,12 +5,14 @@ import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
 import { ip } from '../../getIp'
+import { useNavigation } from '@react-navigation/native'
 
 export default function ProductDetails() {
   const route = useRoute()
   const { id } = route.params
   const { data } = useGetProductDetails(id)
   const deleteProduct = useDeleteProduct()
+  const navigation = useNavigation()
 
   return (
     <ScrollView className='bg-bg-gray'>
@@ -81,7 +83,7 @@ export default function ProductDetails() {
               Delete Product
             </Text>
             <Text
-              onPress={() => deleteProduct(id)}
+              onPress={() => navigation.navigate('UpdateProduct')}
               className='bg-orange-400 px-6 py-3 rounded-md'
             >
               Update Product
