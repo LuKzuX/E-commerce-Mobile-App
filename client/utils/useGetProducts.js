@@ -5,7 +5,7 @@ import axios from 'axios'
 export default function useGetProducts() {
   const [data, setData] = useState([])
 
-  const getData = async (page = 1, find = '', sort) => {
+  const getData = async (page = 1, find = '', sort = '') => {
     try {
       const products = await axios.get(
         `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}`
