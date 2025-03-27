@@ -11,9 +11,6 @@ import {
   TextInput,
 } from 'react-native'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useNavigation } from '@react-navigation/native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import useGetProducts from '../../utils/useGetProducts.js'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
