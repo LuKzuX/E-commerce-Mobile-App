@@ -27,7 +27,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     getData()
-  },[searchValue])
+  }, [])
 
   return (
     <View className='bg-bg-gray flex-1'>
