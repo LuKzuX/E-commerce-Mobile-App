@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
+import { useProductContext } from '@/context/productContext.jsx'
 
 export default function CreateProductScreen() {
   const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
@@ -41,6 +42,7 @@ export default function CreateProductScreen() {
 
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
+  const { getData } = useProductContext()
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
@@ -136,6 +138,7 @@ export default function CreateProductScreen() {
             setProductDescription('')
             setProductQuantity('')
             setUri('')
+            getData()
           }}
           className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
         >

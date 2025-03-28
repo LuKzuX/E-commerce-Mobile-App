@@ -8,6 +8,7 @@ import UserScreen from './(tabs)/UserScreen'
 import CreateProductScreen from './(tabs)/CreateProductScreen'
 import ProductDetails from './(tabs)/ProductDetails'
 import { AuthContextProvider } from '../context/authContext'
+import { ProductContextProvider } from '../context/productContext'
 import { useAuthContext } from '../context/authContext'
 import { View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -69,14 +70,6 @@ function Tabs() {
         component={CreateProductScreen}
         options={{ title: 'Create Product' }}
       />
-      <Tab.Screen
-        name='ProductDetails'
-        component={ProductDetails}
-        options={{
-          tabBarButton: () => null,
-          tabBarItemStyle: { display: 'none' },
-        }}
-      />
     </Tab.Navigator>
   )
 }
@@ -84,28 +77,34 @@ function Tabs() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='Tabs'
-          component={Tabs}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='ProductDetails'
-          component={ProductDetails}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='Signup'
-          component={SignupScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='Signin'
-          component={SigninScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
+      <ProductContextProvider>
+        <Stack.Navigator>
+          <Stack.Screen
+            name='Tabs'
+            component={Tabs}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='ProductDetails'
+            component={ProductDetails}
+            options={{ 
+              headerShown: true,
+              title: 'Product Details',
+              headerBackTitle: 'Back'
+            }}
+          />
+          <Stack.Screen
+            name='Signup'
+            component={SignupScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Signin'
+            component={SigninScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </ProductContextProvider>
     </AuthContextProvider>
   )
 }

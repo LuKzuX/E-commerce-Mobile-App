@@ -2,7 +2,6 @@ import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
 import { useState } from 'react'
 import { useAuthContext } from '../context/authContext'
-import useGetProducts from './useGetProducts'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')
@@ -34,7 +33,6 @@ export const useUploadData = () => {
     description,
     quantity
   ) => {
-    const { data, getData } = useGetProducts()
     const formData = new FormData()
     formData.append('productImage', {
       uri: uri,
@@ -53,7 +51,6 @@ export const useUploadData = () => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      getData()
       setSuccess("created")
       
     } catch (error) {

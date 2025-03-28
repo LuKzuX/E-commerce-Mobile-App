@@ -11,12 +11,12 @@ import {
   FlatList,
 } from 'react-native'
 
-export default function ProductList({ data, getData }) {
+export default function ProductList({ data }) {
   const navigation = useNavigation()
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('ProductDetails', { id: item._id, getData })}
+      onPress={() => navigation.navigate('ProductDetails', { id: item._id})}
       className='flex-1 pb-0 px-7 py-10 bg-white'
     >
       <Image

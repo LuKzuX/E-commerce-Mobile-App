@@ -11,12 +11,12 @@ import {
   TextInput,
 } from 'react-native'
 import { useState, useEffect } from 'react'
-import useGetProducts from '../../utils/useGetProducts.js'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
+import { useProductContext } from '../../context/productContext'
 
 export default function HomeScreen() {
-  const { data, getData } = useGetProducts()
+  const { products, getData } = useProductContext()
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [searchValue, setSearchValue] = useState('')
@@ -41,7 +41,7 @@ export default function HomeScreen() {
           title='press'
         ></Button>
       </SafeAreaView>
-      <ProductList data={data} getData={getData} />
+      <ProductList data={products}/>
     </View>
   )
 }
