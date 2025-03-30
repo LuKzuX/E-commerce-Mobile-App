@@ -87,10 +87,10 @@ export default function App() {
           <Stack.Screen
             name='ProductDetails'
             component={ProductDetails}
-            options={{ 
+            options={{
               headerShown: true,
               title: 'Product Details',
-              headerBackTitle: 'Back'
+              headerBackTitle: 'Back',
             }}
           />
           <Stack.Screen
