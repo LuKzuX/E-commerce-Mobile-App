@@ -16,13 +16,16 @@ import { useProductContext } from '@/context/productContext.jsx'
 import { useUploadData } from '@/utils/useUploadData.js'
 import { useAuthContext } from '../../context/authContext.jsx'
 import DropDownPicker from 'react-native-dropdown-picker'
+import { useRoute, useNavigation } from '@react-navigation/native'
+import axios from 'axios'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
-  const { id } = route.parans
-  const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
+  const { id } = route.params
+  const { success, uri, setUri } = useUploadData()
   const { user } = useAuthContext()
   const { getData } = useProductContext()
+  const { updateProduct } = useUpdateProduct()
 
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
@@ -51,38 +54,43 @@ export default function UpdateProductScreen() {
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
 
-  const getProductData = async () => {
-    try {
-      const res = await axios.get(`http://${ip}:5000/material-delivery/`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      if (user) {
-        setUsername(res.data.username)
-        setEmail(res.data.email)
-        setCountry(res.data.address.country)
-        setState(res.data.address.state)
-        setCity(res.data.address.city)
-        setStreet(res.data.address.street)
-        setAreaCode(res.data.address.areaCode)
+  useEffect(() => {
+    const getProductData = async () => {
+      try {
+        const res = await axios.get(
+          `http://${ip}:5000/material-delivery/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+        setProductName(res.data[0].productName)
+        setProductPrice(String(res.data[0].productPrice))
+        setValue(res.data[0].productCategory)
+        setProductDescription(res.data[0].productDescription)
+        setProductQuantity(String(res.data[0].productQuantity))
+        setUri({ uri: `http://${ip}:5000/` + res.data[0].productImage })
+      } catch (error) {
+        console.log(error)
       }
-    } catch (error) {
-      console.log('no user logged')
     }
-  }
+    getProductData()
+  }, [])
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
       <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
           className='border-b text-text-small-medium'
+          value={productName}
           onChangeText={(text) => setProductName(text)}
           placeholder='name'
           keyboardType='letter'
         />
         <TextInput
           className='border-b text-text-small-medium '
+          value={productPrice}
           onChangeText={(text) => setProductPrice(text)}
           placeholder='price'
           keyboardType='numeric'
@@ -99,12 +107,14 @@ export default function UpdateProductScreen() {
 
         <TextInput
           className='border-b text-text-small-medium'
+          value={productDescription}
           onChangeText={(text) => setProductDescription(text)}
           placeholder='desc'
           keyboardType='letter'
         />
         <TextInput
           className='border-b text-text-small-medium'
+          value={productQuantity}
           onChangeText={(text) => setProductQuantity(text)}
           placeholder='quantity'
           keyboardType='numeric'
@@ -120,22 +130,22 @@ export default function UpdateProductScreen() {
           </Text>
           {uri ? (
             <Image
-              source={{ uri }}
+              source={uri}
               style={{ width: 90, height: 90, objectFit: 'cover' }}
             />
           ) : null}
         </View>
         <Text
           onPress={async () => {
-            await handleUpload(
-              `http://${ip}:5000/material-delivery/new-product`,
+            updateProduct(
+              id,
               productName,
               productPrice,
-              productCategoryValue,
+              productCategory,
               productDescription,
               productQuantity
-            ),
-              getData()
+            )
+            getData()
           }}
           className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
         >
