@@ -7,6 +7,7 @@ import SigninScreen from './(tabs)/SigninScreen'
 import UserScreen from './(tabs)/UserScreen'
 import CreateProductScreen from './(tabs)/CreateProductScreen'
 import ProductDetails from './(tabs)/ProductDetails'
+import UpdateProductScreen from './(tabs)/UpdateProductScreen'
 import { AuthContextProvider } from '../context/authContext'
 import { ProductContextProvider } from '../context/productContext'
 import { useAuthContext } from '../context/authContext'
@@ -92,6 +93,11 @@ export default function App() {
               title: 'Product Details',
               headerBackTitle: 'Back',
             }}
+          />
+            <Stack.Screen
+            name='UpdateProduct'
+            component={UpdateProductScreen}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name='Signup'
