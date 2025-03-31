@@ -22,7 +22,7 @@ import axios from 'axios'
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
-  const { success, uri, setUri } = useUploadData()
+  const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
   const { user } = useAuthContext()
   const { getData } = useProductContext()
   const { updateProduct } = useUpdateProduct()
@@ -137,15 +137,21 @@ export default function UpdateProductScreen() {
         </View>
         <Text
           onPress={async () => {
-            updateProduct(
-              id,
-              productName,
-              productPrice,
-              productCategory,
-              productDescription,
-              productQuantity
-            )
-            getData()
+            try {
+              await handleUpload(
+                `http://${ip}:5000/material-delivery/${id}`,
+                "patch",
+                productName,
+                productPrice,
+                productCategoryValue,
+                productDescription,
+                productQuantity
+              )
+              getData()
+              console.log('updated')
+            } catch (error) {
+              console.log(error)
+            }
           }}
           className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
         >
