@@ -5,7 +5,7 @@ import { useAuthContext } from '../context/authContext'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')
-  const [success, setSuccess] = useState("")
+  const [success, setSuccess] = useState('')
   const { user } = useAuthContext()
 
   const uploadData = async () => {
@@ -45,17 +45,52 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
+      await axios.post(route, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      setSuccess('created')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleUploadUpdate = async (
+    route,
+    name,
+    price,
+    category,
+    description,
+    quantity
+  ) => {
+    const formData = new FormData()
+
+    formData.append('productImage', {
+      uri: uri,
+      name: 'uploaded_image.jpg',
+      type: 'image/jpeg',
+    })
+
+    formData.append('productName', name)
+    formData.append('productPrice', price)
+    formData.append('productCategory', category)
+    formData.append('productDescription', description)
+    formData.append('productQuantity', quantity)
+    try {
       await axios.patch(route, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user.token}`,
         },
       })
-      setSuccess("created")
-      
+      console.log(
+        'UPDATEDDDDDDDDDDD OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOHHHHH'
+      )
     } catch (error) {
       console.error(error)
     }
   }
-  return {uploadData, handleUpload, success, uri, setUri}
+  return { uploadData, handleUpload, handleUploadUpdate, success, uri, setUri }
 }

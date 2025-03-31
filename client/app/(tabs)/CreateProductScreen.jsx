@@ -101,7 +101,6 @@ export default function CreateProductScreen() {
           onPress={async () => {
             await handleUpload(
               `http://${ip}:5000/material-delivery/new-product`,
-              "post",
               productName,
               productPrice,
               productCategoryValue,

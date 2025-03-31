@@ -65,7 +65,13 @@ router.post(
 )
 router.get('/', getAllProducts)
 router.get('/:id', getProductDetails)
-router.patch('/:id', userAuth, adminAuth, updateProduct)
+router.patch(
+  '/:id',
+  upload.single('productImage'),
+  userAuth,
+  adminAuth,
+  updateProduct
+)
 router.delete('/:id', userAuth, adminAuth, deleteProduct)
 
 // Order routes

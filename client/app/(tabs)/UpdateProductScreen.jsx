@@ -22,10 +22,10 @@ import axios from 'axios'
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
-  const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
+  const { uploadData, handleUpload, handleUploadUpdate, success, uri, setUri } =
+    useUploadData()
   const { user } = useAuthContext()
   const { getData } = useProductContext()
-  const { updateProduct } = useUpdateProduct()
 
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
@@ -138,7 +138,7 @@ export default function UpdateProductScreen() {
         <Text
           onPress={async () => {
             try {
-              await handleUpload(
+              await handleUploadUpdate(
                 `http://${ip}:5000/material-delivery/${id}`,
                 productName,
                 productPrice,
