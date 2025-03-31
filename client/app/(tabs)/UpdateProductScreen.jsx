@@ -140,7 +140,6 @@ export default function UpdateProductScreen() {
             try {
               await handleUpload(
                 `http://${ip}:5000/material-delivery/${id}`,
-                "patch",
                 productName,
                 productPrice,
                 productCategoryValue,

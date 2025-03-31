@@ -5,7 +5,7 @@ import { useAuthContext } from '../context/authContext'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')
-  const [success, setSuccess] = useState('')
+  const [success, setSuccess] = useState("")
   const { user } = useAuthContext()
 
   const uploadData = async () => {
@@ -27,7 +27,6 @@ export const useUploadData = () => {
 
   const handleUpload = async (
     route,
-    method,
     name,
     price,
     category,
@@ -46,26 +45,17 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
-      if (method == 'post') {
-        await axios.post(route, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        setSuccess('created')
-      } else if (method == 'patch') {
-        await axios.patch(route, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        setSuccess('created')
-      }
+      await axios.patch(route, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      setSuccess("created")
+      
     } catch (error) {
       console.error(error)
     }
   }
-  return { uploadData, handleUpload, success, uri, setUri }
+  return {uploadData, handleUpload, success, uri, setUri}
 }
