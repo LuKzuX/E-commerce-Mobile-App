@@ -72,7 +72,7 @@ export default function UpdateProductScreen() {
         setValue(res.data[0].productCategory)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(String(res.data[0].productQuantity))
-        setUri(res.data[0].productImage)
+        setUri({ uri: `http://${ip}:5000/` + res.data[0].productImage })
       } catch (error) {
         console.log(error)
       }

@@ -38,15 +38,9 @@ export const useUploadData = () => {
     const formData = new FormData()
 
     let validUri = uri
-    if (
-      !uri.startsWith('file://') &&
-      !uri.startsWith('http://') &&
-      !uri.startsWith('https://')
-    ) {
-      // If `uri` is a relative path, prepend the base URL
-      validUri = `http://${ip}/${uri.replace(/\\/g, '/')}` // Replace backslashes with forward slashes
+    if (uri.uri) {
+      validUri = uri.uri
     }
-
     formData.append('productImage', {
       uri: validUri,
       name: 'uploaded_image.jpg', // Default name if extraction fails
@@ -64,6 +58,7 @@ export const useUploadData = () => {
           Authorization: `Bearer ${user.token}`,
         },
       })
+
       setSuccess('created')
     } catch (error) {
       console.error(error)
