@@ -147,7 +147,6 @@ export default function UpdateProductScreen() {
                 productQuantity
               )
               getData()
-              console.log('updated')
             } catch (error) {
               console.log(error)
             }

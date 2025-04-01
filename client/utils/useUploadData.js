@@ -59,7 +59,7 @@ export const useUploadData = () => {
         },
       })
 
-      setSuccess('created')
+      setSuccess('success')
     } catch (error) {
       console.error(error)
     }
