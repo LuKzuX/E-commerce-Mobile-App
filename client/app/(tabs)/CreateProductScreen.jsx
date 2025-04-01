@@ -93,7 +93,7 @@ export default function CreateProductScreen() {
           {uri ? (
             <Image
               source={{ uri }}
-              style={{ width: 90, height: 90, objectFit: 'cover' }}
+              style={{ width: 110, height: 110, objectFit: 'cover' }}
             />
           ) : null}
         </View>
