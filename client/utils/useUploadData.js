@@ -46,7 +46,6 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
-     
       console.log(uri)
 
       await axios[method](route, formData, {
