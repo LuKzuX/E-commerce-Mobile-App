@@ -240,8 +240,9 @@ export default function UserScreen() {
                   Cancel
                 </Text>
                 <Text
-                  onPress={() => {
-                    updateUserInfo(
+                  onPress={async () => {
+                    await toggleUserEdit()
+                    await updateUserInfo(
                       username,
                       password,
                       newPassword,
