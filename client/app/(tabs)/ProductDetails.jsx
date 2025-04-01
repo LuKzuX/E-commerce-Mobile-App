@@ -78,9 +78,9 @@ export default function ProductDetails() {
 
           <View className='flex-row items-center justify-center gap-4 px-6'>
             <Text
-              onPress={() => {
-                deleteProduct(id)
-                getData()
+              onPress={async () => {
+                await deleteProduct(id)
+                await getData()
               }}
               className='bg-red-500 px-6 py-3 rounded-md'
             >
