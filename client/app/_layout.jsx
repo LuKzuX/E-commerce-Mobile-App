@@ -71,6 +71,14 @@ function Tabs() {
         component={CreateProductScreen}
         options={{ title: 'Create Product' }}
       />
+      <Tab.Screen
+        name='ProductDetails'
+        component={ProductDetails}
+        options={{
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' },
+        }}
+      />
     </Tab.Navigator>
   )
 }
@@ -88,13 +96,13 @@ export default function App() {
           <Stack.Screen
             name='ProductDetails'
             component={ProductDetails}
-            options={{
+            options={{ 
               headerShown: true,
               title: 'Product Details',
-              headerBackTitle: 'Back',
+              headerBackTitle: 'Back'
             }}
           />
-            <Stack.Screen
+          <Stack.Screen
             name='UpdateProduct'
             component={UpdateProductScreen}
             options={{ headerShown: false }}

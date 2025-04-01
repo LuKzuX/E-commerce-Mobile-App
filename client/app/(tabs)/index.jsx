@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from 'react'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
-import { useProductContext } from '../../context/productContext'
+import { useProductContext } from '@/context/productContext.jsx'
 
 export default function HomeScreen() {
   const { products, getData } = useProductContext()
@@ -41,7 +41,7 @@ export default function HomeScreen() {
           title='press'
         ></Button>
       </SafeAreaView>
-      <ProductList data={products}/>
+      <ProductList data={products} getData={getData} />
     </View>
   )
 }

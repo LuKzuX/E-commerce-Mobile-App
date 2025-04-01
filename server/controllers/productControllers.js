@@ -85,7 +85,7 @@ export const updateProduct = async (req, res, next) => {
     )
     res.json(product)
   } catch (error) {
-    console.log(error)
+    res.send(error)
   }
 }
 

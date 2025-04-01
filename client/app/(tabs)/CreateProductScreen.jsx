@@ -101,13 +101,14 @@ export default function CreateProductScreen() {
           onPress={async () => {
             await handleUpload(
               `http://${ip}:5000/material-delivery/new-product`,
+              "post",
               productName,
               productPrice,
               productCategoryValue,
               productDescription,
               productQuantity
             ),
-              setProductName('')
+            setProductName('')
             setProductPrice('')
             setProductCategory([
               { label: 'Remote Control', value: 'remote-control' },

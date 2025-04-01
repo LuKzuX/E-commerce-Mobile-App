@@ -1,29 +1,17 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { useRoute, useNavigation } from '@react-navigation/native'
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
 import { ip } from '../../getIp'
-import {useProductContext} from '../../context/productContext'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function ProductDetails() {
   const route = useRoute()
-  const navigation = useNavigation()
   const { id } = route.params
   const { data } = useGetProductDetails(id)
   const deleteProduct = useDeleteProduct()
-  const { getData } = useProductContext()
-
-  const handleDelete = async () => {
-    try {
-      await deleteProduct(id)
-      getData() // Refresh the product list
-      navigation.goBack() // Go back to the previous screen
-    } catch (error) {
-      console.error('Error deleting product:', error)
-    }
-  }
+  const navigation = useNavigation()
 
   return (
     <ScrollView className='bg-bg-gray'>
@@ -87,18 +75,18 @@ export default function ProductDetails() {
           </View>
 
           <View className='flex-row items-center justify-center gap-4 px-6'>
-            <TouchableOpacity
-              onPress={handleDelete}
+            <Text
+              onPress={() => deleteProduct(id)}
               className='bg-red-500 px-6 py-3 rounded-md'
             >
-              <Text className='text-white font-semibold'>Delete Product</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              Delete Product
+            </Text>
+            <Text
               onPress={() => navigation.navigate('UpdateProduct', { id })}
               className='bg-orange-400 px-6 py-3 rounded-md'
             >
-              <Text className='text-white font-semibold'>Update Product</Text>
-            </TouchableOpacity>
+              Update Product
+            </Text>
           </View>
           <View className='mt-6 space-y-3'>
             <TouchableOpacity className='bg-bg-yellow p-4 rounded-lg items-center shadow-md'>

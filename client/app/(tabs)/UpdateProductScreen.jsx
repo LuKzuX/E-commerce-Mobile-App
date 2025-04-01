@@ -11,18 +11,18 @@ import {
   TextInput,
 } from 'react-native'
 import { useState, useEffect } from 'react'
-import useUpdateProduct from '../../utils/useUpdateProduct.js'
 import { useProductContext } from '@/context/productContext.jsx'
 import { useUploadData } from '@/utils/useUploadData.js'
 import { useAuthContext } from '../../context/authContext.jsx'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { useRoute, useNavigation } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import axios from 'axios'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
-  const { uploadData, handleUpload, handleUploadUpdate, success, uri, setUri } =
+  
+  const { uploadData, handleUpload, success, uri, setUri } =
     useUploadData()
   const { user } = useAuthContext()
   const { getData } = useProductContext()
@@ -54,6 +54,8 @@ export default function UpdateProductScreen() {
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
 
+  const [displayImage, setDisplayImage] = useState('')
+
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -70,7 +72,7 @@ export default function UpdateProductScreen() {
         setValue(res.data[0].productCategory)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(String(res.data[0].productQuantity))
-        setUri({ uri: `http://${ip}:5000/` + res.data[0].productImage })
+        setUri(res.data[0].productImage)
       } catch (error) {
         console.log(error)
       }
@@ -138,8 +140,9 @@ export default function UpdateProductScreen() {
         <Text
           onPress={async () => {
             try {
-              await handleUploadUpdate(
+              await handleUpload(
                 `http://${ip}:5000/material-delivery/${id}`,
+                'patch',
                 productName,
                 productPrice,
                 productCategoryValue,
