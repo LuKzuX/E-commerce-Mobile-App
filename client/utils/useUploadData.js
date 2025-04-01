@@ -2,6 +2,7 @@ import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
 import { useState } from 'react'
 import { useAuthContext } from '../context/authContext'
+import { ip } from '@/getIp'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')
@@ -35,8 +36,19 @@ export const useUploadData = () => {
     quantity
   ) => {
     const formData = new FormData()
+
+    let validUri = uri
+    if (
+      !uri.startsWith('file://') &&
+      !uri.startsWith('http://') &&
+      !uri.startsWith('https://')
+    ) {
+      // If `uri` is a relative path, prepend the base URL
+      validUri = `http://${ip}/${uri.replace(/\\/g, '/')}` // Replace backslashes with forward slashes
+    }
+
     formData.append('productImage', {
-      uri: uri,
+      uri: validUri,
       name: 'uploaded_image.jpg', // Default name if extraction fails
       type: 'image/jpeg', // Or 'image/png' based on the file type
     })
@@ -46,8 +58,6 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
-      console.log(uri)
-
       await axios[method](route, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
