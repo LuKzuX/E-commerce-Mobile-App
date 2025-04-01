@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
+import { useProductContext } from '@/context/productContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
@@ -12,6 +13,7 @@ export default function ProductDetails() {
   const { data } = useGetProductDetails(id)
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
+  const {getData} = useProductContext()
 
   return (
     <ScrollView className='bg-bg-gray'>
@@ -76,7 +78,10 @@ export default function ProductDetails() {
 
           <View className='flex-row items-center justify-center gap-4 px-6'>
             <Text
-              onPress={() => deleteProduct(id)}
+              onPress={() => {
+                deleteProduct(id)
+                getData()
+              }}
               className='bg-red-500 px-6 py-3 rounded-md'
             >
               Delete Product

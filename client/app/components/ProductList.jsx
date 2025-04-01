@@ -18,7 +18,7 @@ export default function ProductList({ data }) {
     <TouchableOpacity
       onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
       className='flex-1 pb-0 px-7 py-10 bg-white'
-    > 
+    >
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
         className='h-[150px] object-cover'

@@ -21,9 +21,8 @@ import axios from 'axios'
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
-  
-  const { uploadData, handleUpload, success, uri, setUri } =
-    useUploadData()
+
+  const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
   const { user } = useAuthContext()
   const { getData } = useProductContext()
 
@@ -53,8 +52,6 @@ export default function UpdateProductScreen() {
   ])
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
-
-  const [displayImage, setDisplayImage] = useState('')
 
   useEffect(() => {
     const getProductData = async () => {
