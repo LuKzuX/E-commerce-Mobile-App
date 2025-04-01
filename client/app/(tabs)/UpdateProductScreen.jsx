@@ -15,12 +15,13 @@ import { useProductContext } from '@/context/productContext.jsx'
 import { useUploadData } from '@/utils/useUploadData.js'
 import { useAuthContext } from '../../context/authContext.jsx'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { useRoute } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
+  const navigation = useNavigation()
 
   const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
   const { user } = useAuthContext()
@@ -146,7 +147,8 @@ export default function UpdateProductScreen() {
                 productDescription,
                 productQuantity
               )
-              getData()
+              navigation.navigate('ProductDetails', { id })
+              await getData()
             } catch (error) {
               console.log(error)
             }
