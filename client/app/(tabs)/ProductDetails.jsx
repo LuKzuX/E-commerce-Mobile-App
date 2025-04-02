@@ -13,7 +13,26 @@ export default function ProductDetails() {
   const { data } = useGetProductDetails(id)
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
-  const {getData} = useProductContext()
+  const { getData } = useProductContext()
+  const categories = [
+    { label: 'Computers', value: 'computers' },
+    { label: 'Smartphones', value: 'smartphones' },
+    { label: 'Home Appliances', value: 'home-appliances' },
+    { label: 'Toys', value: 'toys' },
+    { label: 'Automotive', value: 'automotive' },
+    { label: 'Furniture', value: 'furniture' },
+    { label: 'Food & Beverage', value: 'food-beverage' },
+    { label: 'Office Supplies', value: 'office-supplies' },
+  ]
+
+  const Cat = () => {
+    const a = categories.find((item) => data[0].productCategory == item.value)
+    return (
+      <View>
+        <Text>{a.label}</Text>
+      </View>
+    )
+  }
 
   return (
     <ScrollView className='bg-bg-gray'>
@@ -49,7 +68,7 @@ export default function ProductDetails() {
                 Category:{' '}
               </Text>
               <Text className='text-text-small text-gray-700'>
-                {data[0].productCategory}
+                <Cat></Cat>
               </Text>
             </View>
 
