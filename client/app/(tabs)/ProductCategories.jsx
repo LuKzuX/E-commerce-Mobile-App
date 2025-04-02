@@ -29,7 +29,7 @@ export default function ProductCategoriesScreen() {
 
   const renderItem = ({ item }) => (
     <ScrollView>
-      <TouchableOpacity className='flex items-center pb-0 px-7 py-10 bg-white'>
+      <TouchableOpacity className='flex items-center pb-2 py-12 bg-white'>
         <View>
           <Image
             source={item.image}
