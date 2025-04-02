@@ -82,14 +82,14 @@ export default function UpdateProductScreen() {
     <View className='flex-1 p-10 bg-bg-gray'>
       <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           value={productName}
           onChangeText={(text) => setProductName(text)}
           placeholder='name'
           keyboardType='letter'
         />
         <TextInput
-          className='border-b text-text-small-medium '
+          className='border-b text-text-small '
           value={productPrice}
           onChangeText={(text) => setProductPrice(text)}
           placeholder='price'
@@ -106,14 +106,14 @@ export default function UpdateProductScreen() {
         />
 
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           value={productDescription}
           onChangeText={(text) => setProductDescription(text)}
           placeholder='desc'
           keyboardType='letter'
         />
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           value={productQuantity}
           onChangeText={(text) => setProductQuantity(text)}
           placeholder='quantity'
@@ -124,7 +124,7 @@ export default function UpdateProductScreen() {
             onPress={async () => {
               await uploadData()
             }}
-            className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
+            className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
           >
             Select Image:
           </Text>
@@ -153,7 +153,7 @@ export default function UpdateProductScreen() {
               console.log(error)
             }
           }}
-          className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
+          className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
         >
           Update Product
         </Text>

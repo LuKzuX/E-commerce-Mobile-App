@@ -48,13 +48,13 @@ export default function CreateProductScreen() {
     <View className='flex-1 p-10 bg-bg-gray'>
       <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           onChangeText={(text) => setProductName(text)}
           placeholder='name'
           keyboardType='letter'
         />
         <TextInput
-          className='border-b text-text-small-medium '
+          className='border-b text-text-small '
           onChangeText={(text) => setProductPrice(text)}
           placeholder='price'
           keyboardType='numeric'
@@ -70,13 +70,13 @@ export default function CreateProductScreen() {
         />
 
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           onChangeText={(text) => setProductDescription(text)}
           placeholder='desc'
           keyboardType='letter'
         />
         <TextInput
-          className='border-b text-text-small-medium'
+          className='border-b text-text-small'
           onChangeText={(text) => setProductQuantity(text)}
           placeholder='quantity'
           keyboardType='numeric'
@@ -86,7 +86,7 @@ export default function CreateProductScreen() {
             onPress={async () => {
               await uploadData()
             }}
-            className='py-3 px-6 bg-blue-400 self-start text-text-small-medium rounded-xl'
+            className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
           >
             Select Image:
           </Text>
@@ -101,14 +101,14 @@ export default function CreateProductScreen() {
           onPress={async () => {
             await handleUpload(
               `http://${ip}:5000/material-delivery/new-product`,
-              "post",
+              'post',
               productName,
               productPrice,
               productCategoryValue,
               productDescription,
               productQuantity
             ),
-            setProductName('')
+              setProductName('')
             setProductPrice('')
             setProductCategory([
               { label: 'Remote Control', value: 'remote-control' },
@@ -141,7 +141,7 @@ export default function CreateProductScreen() {
             setUri('')
             getData()
           }}
-          className='text-center self-center bg-bg-yellow py-6 px-12 text-text-medium rounded-xl'
+          className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
         >
           Create Product
         </Text>
