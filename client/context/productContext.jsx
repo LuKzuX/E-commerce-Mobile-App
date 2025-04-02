@@ -7,7 +7,7 @@ const ProductContext = createContext()
 export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([])
 
-  const getData = async (page = 1, find = '', sort = '', category = null) => {
+  const getData = async (page = 1, find = '', sort = '', category = "") => {
     try {
       const response = await axios.get(
         `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}`
