@@ -7,10 +7,10 @@ const ProductContext = createContext()
 export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([])
 
-  const getData = async (page = 1, find = '', sort = '') => {
+  const getData = async (page = 1, find = '', sort = '', category = null) => {
     try {
       const response = await axios.get(
-        `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}`
+        `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}`
       )
       setProducts(response.data)
     } catch (error) {
@@ -28,4 +28,4 @@ export function ProductContextProvider({ children }) {
 export function useProductContext() {
   const context = useContext(ProductContext)
   return context
-} 
+}

@@ -6,6 +6,8 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { useProductContext } from '@/context/productContext'
 import car from '../../assets/images/car.webp'
 import computer from '../../assets/images/computer.webp'
 import smartphone from '../../assets/images/smartphone.webp'
@@ -16,6 +18,8 @@ import food from '../../assets/images/food.webp'
 import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
+  const { getData } = useProductContext()
+  const navigation = useNavigation()
   const categories = [
     { label: 'Computers', value: 'computers', image: computer },
     { label: 'Smartphones', value: 'smartphones', image: smartphone },
@@ -29,7 +33,13 @@ export default function ProductCategoriesScreen() {
 
   const renderItem = ({ item }) => (
     <ScrollView>
-      <TouchableOpacity className='flex items-center pb-2 py-12 bg-white'>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Home')
+          getData(1, '', '', item.value)
+        }}
+        className='flex items-center pb-2 py-12 bg-white'
+      >
         <View>
           <Image
             source={item.image}
