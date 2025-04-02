@@ -1,53 +1,45 @@
-import { ip } from '../../getIp.js'
 import {
   View,
   Text,
-  StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
-  TextInput,
   FlatList,
 } from 'react-native'
-import { useState, useEffect } from 'react'
-import ProductList from '../components/ProductList.jsx'
-import { useAuthContext } from '../../context/authContext.jsx'
-import { useProductContext } from '@/context/productContext.jsx'
+import car from '../../assets/images/car.webp'
+import computer from '../../assets/images/computer.webp'
+import smartphone from '../../assets/images/smartphone.webp'
+import fridge from '../../assets/images/fridge.jpg'
+import toy from '../../assets/images/toy.webp'
+import furniture from '../../assets/images/furniture.webp'
+import food from '../../assets/images/food.webp'
+import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
   const categories = [
-    { label: 'Remote Control', value: 'remote-control' },
-    { label: 'Computers', value: 'computers' },
-    { label: 'Smartphones', value: 'smartphones' },
-    { label: 'Home Appliances', value: 'home-appliances' },
-    { label: 'Fashion', value: 'fashion' },
-    { label: 'Books', value: 'books' },
-    { label: 'Toys', value: 'toys' },
-    { label: 'Sports & Outdoors', value: 'sports-outdoors' },
-    { label: 'Automotive', value: 'automotive' },
-    { label: 'Beauty & Personal Care', value: 'beauty-personal-care' },
-    { label: 'Groceries', value: 'groceries' },
-    { label: 'Health & Wellness', value: 'health-wellness' },
-    { label: 'Furniture', value: 'furniture' },
-    { label: 'Music & Instruments', value: 'music-instruments' },
-    { label: 'Movies & Entertainment', value: 'movies-entertainment' },
-    { label: 'Food & Beverage', value: 'food-beverage' },
-    { label: 'Baby & Kids', value: 'baby-kids' },
-    { label: 'Office Supplies', value: 'office-supplies' },
+    { label: 'Computers', value: 'computers', image: computer },
+    { label: 'Smartphones', value: 'smartphones', image: smartphone },
+    { label: 'Home Appliances', value: 'home-appliances', image: fridge },
+    { label: 'Toys', value: 'toys', image: toy },
+    { label: 'Automotive', value: 'automotive', image: car },
+    { label: 'Furniture', value: 'furniture', image: furniture },
+    { label: 'Food & Beverage', value: 'food-beverage', image: food },
+    { label: 'Office Supplies', value: 'office-supplies', image: office },
   ]
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity className='flex-1 pb-0 px-7 py-10 bg-white'>
-      <View>
-        {/* <Image
-        source={{ uri: `http://${ip}:5000/` + item.productImage }}
-        className='h-[150px] object-cover'
-      /> */}
-        <Text>{item.label}</Text>
-      </View>
-    </TouchableOpacity>
+    <ScrollView>
+      <TouchableOpacity className='flex items-center pb-0 px-7 py-10 bg-white'>
+        <View>
+          <Image
+            source={item.image}
+            className='h-[150px] w-[150px]'
+            resizeMode='contain'
+          />
+          <Text className='text-center text-text-small'>{item.label}</Text>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
   )
 
   return (
