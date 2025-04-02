@@ -5,20 +5,27 @@ import path from 'path'
 
 export const getAllProducts = async (req, res, next) => {
   const page = req.query.p || 1
-  const find = req.query.f || ""
+  const find = req.query.f || ''
   const sort = req.query.s || null
+  const category = req.query.c || null
   const numFilterMin = req.query.minprice || 0
   const numFilterMax = req.query.maxprice || 1000000
   const productsPerPage = 12
   try {
-    const products = await Product.find({
+    const query = {
       productName: { $regex: find, $options: 'i' },
       productPrice: { $gte: numFilterMin, $lte: numFilterMax },
-    })
+    }
+
+    if (category) {
+      query.productCategory = category
+    }
+
+    const products = await Product.find(query)
       .limit(productsPerPage)
       .skip(productsPerPage * (page - 1))
       .sort(sort)
-      
+
     res.json(products)
   } catch (error) {
     res.send(error)

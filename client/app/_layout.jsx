@@ -8,6 +8,7 @@ import UserScreen from './(tabs)/UserScreen'
 import CreateProductScreen from './(tabs)/CreateProductScreen'
 import ProductDetails from './(tabs)/ProductDetails'
 import UpdateProductScreen from './(tabs)/UpdateProductScreen'
+import ProductCategoriesScreen from './(tabs)/ProductCategories'
 import { AuthContextProvider } from '../context/authContext'
 import { ProductContextProvider } from '../context/productContext'
 import { useAuthContext } from '../context/authContext'
@@ -30,6 +31,8 @@ function Tabs() {
             iconName = 'person-circle-outline'
           } else if (route.name === 'CreateProduct') {
             iconName = 'add-circle-outline'
+          } else if (route.name === 'ProductCategories') {
+            iconName = 'pricetag-outline'
           }
           return (
             <View style={{ alignItems: 'center' }}>
@@ -62,15 +65,22 @@ function Tabs() {
         options={{ title: 'Home' }}
       />
       <Tab.Screen
+        name='ProductCategories'
+        component={ProductCategoriesScreen}
+        options={{ title: 'Explore' }}
+      />
+      <Tab.Screen
         name='User'
         component={UserScreen}
         options={{ title: 'User' }}
       />
+
       <Tab.Screen
         name='CreateProduct'
         component={CreateProductScreen}
         options={{ title: 'Create Product' }}
       />
+
       <Tab.Screen
         name='ProductDetails'
         component={ProductDetails}
@@ -96,10 +106,10 @@ export default function App() {
           <Stack.Screen
             name='ProductDetails'
             component={ProductDetails}
-            options={{ 
+            options={{
               headerShown: true,
               title: 'Product Details',
-              headerBackTitle: 'Back'
+              headerBackTitle: 'Back',
             }}
           />
           <Stack.Screen
