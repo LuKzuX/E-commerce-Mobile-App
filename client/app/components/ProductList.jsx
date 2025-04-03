@@ -21,7 +21,8 @@ export default function ProductList({ data }) {
     >
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
-        className='h-[150px] object-cover'
+        className='h-[150px]'
+         resizeMode='contain'
       />
       <View className='mt-[5px] flex-row justify-between'>
         <Text className='text-2xl'>{item.productName}</Text>
