@@ -22,13 +22,13 @@ export default function ProductList({ data }) {
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}
         className='h-[150px]'
-         resizeMode='contain'
+        resizeMode='contain'
       />
-      <View className='mt-[5px] flex-row justify-between'>
-        <Text className='text-2xl'>{item.productName}</Text>
+      <View className='mt-[5px] flex-col justify-between'>
+        <Text className='text-text-small-medium'>{item.productName}</Text>
         <View className='flex-row items-center'>
-          <Text className='text-lg mr-[1px]'>$</Text>
-          <Text className='text-2xl'>{item.productPrice}</Text>
+          <Text className='text-text-small mr-[1px]'>$</Text>
+          <Text className='text-green-600 text-2xl'>{item.productPrice}</Text>
         </View>
       </View>
       <Text
