@@ -17,8 +17,9 @@ export default function useGetProductDetails(id) {
   }
 
   useEffect(() => {
+    setData([])
     getProduct()
-  }, [])
+  }, [id])
 
   return { data }
 }

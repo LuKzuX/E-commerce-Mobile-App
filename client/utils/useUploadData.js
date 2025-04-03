@@ -35,6 +35,10 @@ export const useUploadData = () => {
     description,
     quantity
   ) => {
+    if (price == typeof String) {
+      setSuccess('type a valid price')
+      return
+    }
     const formData = new FormData()
 
     let validUri = uri
@@ -52,16 +56,15 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
-      const res = await axios[method](route, formData, {
+      await axios[method](route, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user.token}`,
         },
       })
-      console.log(res.data);
-      
+      setSuccess('created')
     } catch (error) {
-      console.error(error)
+      setSuccess('fill all the fields')
     }
   }
 

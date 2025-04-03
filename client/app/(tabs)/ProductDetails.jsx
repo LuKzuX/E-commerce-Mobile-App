@@ -42,7 +42,8 @@ export default function ProductDetails() {
           <View>
             <Image
               source={{ uri: `http://${ip}:5000/` + data[0].productImage }}
-              className='w-full h-96 rounded-md object-cover'
+              className='w-full h-[250px] rounded-md'
+               resizeMode='contain'
             />
           </View>
 
