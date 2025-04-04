@@ -26,7 +26,7 @@ export default function HomeScreen() {
   const [sortValue, setSortValue] = useState('')
 
   useEffect(() => {
-    getData()
+    getData(pageValue, searchValue, sortValue, category)
   }, [])
 
   return (
@@ -53,13 +53,13 @@ export default function HomeScreen() {
           />
         </View>
         {category && (
-          <View className='flex-row items-center bg-yellow-500 bg-opacity-[20%] p-2 rounded-lg m-2'>
+          <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
+            <Text className='text-text-small-medium'>{displayCat}</Text>
             <Ionicons
               name={'close-outline'}
-              size={20}
+              size={30}
               onPress={() => getData(pageValue, searchValue, sortValue, '')}
             />
-            <Text>{displayCat}</Text>
           </View>
         )}
       </SafeAreaView>

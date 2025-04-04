@@ -43,7 +43,6 @@ export default function UpdateProductScreen() {
   ])
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
-
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -67,6 +66,9 @@ export default function UpdateProductScreen() {
     }
     getProductData()
   }, [])
+
+  console.log(uri);
+  
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
@@ -119,7 +121,7 @@ export default function UpdateProductScreen() {
             >
               Select Image:
             </Text>
-            {uri ? (
+            {uri.uri ? (
               <Image
                 source={uri}
                 style={{ width: 110, height: 110, objectFit: 'cover' }}

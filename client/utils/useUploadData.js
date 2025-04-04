@@ -46,7 +46,7 @@ export const useUploadData = () => {
       validUri = uri.uri
     }
     formData.append('productImage', {
-      uri: validUri,
+      uri: {uri : validUri},
       name: 'uploaded_image.jpg', // Default name if extraction fails
       type: 'image/jpeg', // Or 'image/png' based on the file type
     })
