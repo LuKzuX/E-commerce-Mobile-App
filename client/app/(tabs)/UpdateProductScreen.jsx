@@ -69,7 +69,7 @@ export default function UpdateProductScreen() {
       }
     }
     getProductData()
-  }, [id])
+  }, [])
 
   
   return (
@@ -125,7 +125,7 @@ export default function UpdateProductScreen() {
             </Text>
             {uri ? (
               <Image
-                source={ uri }
+                source={{ uri }}
                 style={{ width: 110, height: 110, objectFit: 'cover' }}
               />
             ) : currentImage ? (
