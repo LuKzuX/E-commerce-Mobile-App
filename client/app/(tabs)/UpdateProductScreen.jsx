@@ -61,7 +61,7 @@ export default function UpdateProductScreen() {
         setValue(res.data[0].productCategory)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(String(res.data[0].productQuantity))
-        setCurrentImage({
+        setUri({
           uri: `http://${ip}:5000/` + res.data[0].productImage,
         })
       } catch (error) {
@@ -71,7 +71,6 @@ export default function UpdateProductScreen() {
     getProductData()
   }, [])
 
-  
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
       <DropDownPicker
@@ -123,17 +122,12 @@ export default function UpdateProductScreen() {
             >
               Select Image:
             </Text>
-            {uri ? (
+            {uri && (
               <Image
-                source={{ uri }}
+                source={uri.uri ? { uri: uri.uri } : { uri }}
                 style={{ width: 110, height: 110, objectFit: 'cover' }}
               />
-            ) : currentImage ? (
-              <Image
-                source={currentImage}
-                style={{ width: 110, height: 110, objectFit: 'cover' }}
-              />
-            ) : null}
+            )}
           </View>
           <Text
             onPress={async () => {
