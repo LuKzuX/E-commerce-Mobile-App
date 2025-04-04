@@ -43,6 +43,8 @@ export default function UpdateProductScreen() {
   ])
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
+  const [currentImage, setCurrentImage] = useState(null)
+
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -59,16 +61,15 @@ export default function UpdateProductScreen() {
         setValue(res.data[0].productCategory)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(String(res.data[0].productQuantity))
-        setUri({ uri: `http://${ip}:5000/` + res.data[0].productImage })
+        setCurrentImage({
+          uri: `http://${ip}:5000/` + res.data[0].productImage,
+        })
       } catch (error) {
         console.log(error)
       }
     }
     getProductData()
   }, [])
-
-  console.log(uri);
-  
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
@@ -121,9 +122,14 @@ export default function UpdateProductScreen() {
             >
               Select Image:
             </Text>
-            {uri.uri ? (
+            {uri ? (
               <Image
-                source={uri}
+                source={{ uri }}
+                style={{ width: 110, height: 110, objectFit: 'cover' }}
+              />
+            ) : currentImage ? (
+              <Image
+                source={currentImage}
                 style={{ width: 110, height: 110, objectFit: 'cover' }}
               />
             ) : null}
