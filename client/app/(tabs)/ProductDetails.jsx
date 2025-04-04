@@ -10,7 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 export default function ProductDetails() {
   const route = useRoute()
   const { id } = route.params
-  const { data } = useGetProductDetails(id)
+  const { data, setData } = useGetProductDetails(id)
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
   const { getData } = useProductContext()
@@ -43,7 +43,7 @@ export default function ProductDetails() {
             <Image
               source={{ uri: `http://${ip}:5000/` + data[0].productImage }}
               className='w-full h-[250px] rounded-md'
-               resizeMode='contain'
+              resizeMode='contain'
             />
           </View>
 
