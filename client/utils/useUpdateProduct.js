@@ -2,8 +2,10 @@ import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuthContext } from '../context/authContext'
+import { useRoute, useNavigation } from '@react-navigation/native'
 
 export default function useUpdateProduct() {
+  const navigation = useNavigation()
   const { user } = useAuthContext()
   const updateProduct = async (
     id,

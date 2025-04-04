@@ -69,8 +69,9 @@ export default function UpdateProductScreen() {
       }
     }
     getProductData()
-  }, [])
+  }, [id])
 
+  
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
       <DropDownPicker
@@ -124,7 +125,7 @@ export default function UpdateProductScreen() {
             </Text>
             {uri ? (
               <Image
-                source={{ uri }}
+                source={ uri }
                 style={{ width: 110, height: 110, objectFit: 'cover' }}
               />
             ) : currentImage ? (
@@ -146,7 +147,6 @@ export default function UpdateProductScreen() {
                   productDescription,
                   productQuantity
                 )
-                navigation.navigate('ProductDetails', { id })
                 await getData()
               } catch (error) {
                 console.log(error)
