@@ -7,6 +7,7 @@ const ProductContext = createContext()
 export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([])
   const [cat, setCat] = useState('')
+  const [displayCat, setDisplayCat] = useState('')
 
   const getData = async (page = 1, find = '', sort = '', category = '') => {
     try {
@@ -18,11 +19,10 @@ export function ProductContextProvider({ children }) {
     } catch (error) {
       console.log(error)
     }
-    return cat
   }
 
   return (
-    <ProductContext.Provider value={{ products, getData, category: cat }}>
+    <ProductContext.Provider value={{ products, getData, category: cat, displayCat, setDisplayCat }}>
       {children}
     </ProductContext.Provider>
   )

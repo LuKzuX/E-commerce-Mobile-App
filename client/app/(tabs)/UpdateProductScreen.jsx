@@ -70,85 +70,87 @@ export default function UpdateProductScreen() {
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
-      <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
-        <TextInput
-          className='border-b text-text-small'
-          value={productName}
-          onChangeText={(text) => setProductName(text)}
-          placeholder='name'
-          keyboardType='letter'
-        />
-        <TextInput
-          className='border-b text-text-small '
-          value={productPrice}
-          onChangeText={(text) => setProductPrice(text)}
-          placeholder='price'
-          keyboardType='numeric'
-        />
-        <DropDownPicker
-          placeholder='category'
-          open={open}
-          value={productCategoryValue}
-          items={productCategory}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setProductCategory}
-        />
-
-        <TextInput
-          className='border-b text-text-small'
-          value={productDescription}
-          onChangeText={(text) => setProductDescription(text)}
-          placeholder='desc'
-          keyboardType='letter'
-        />
-        <TextInput
-          className='border-b text-text-small'
-          value={productQuantity}
-          onChangeText={(text) => setProductQuantity(text)}
-          placeholder='quantity'
-          keyboardType='numeric'
-        />
-        <View className='flex-row items-center justify-between'>
+      <DropDownPicker
+        placeholder='category'
+        open={open}
+        value={productCategoryValue}
+        items={productCategory}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setProductCategory}
+      />
+      <ScrollView>
+        <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
+          <TextInput
+            className='border-b text-text-small'
+            value={productName}
+            onChangeText={(text) => setProductName(text)}
+            placeholder='name'
+            keyboardType='letter'
+          />
+          <TextInput
+            className='border-b text-text-small '
+            value={productPrice}
+            onChangeText={(text) => setProductPrice(text)}
+            placeholder='price'
+            keyboardType='numeric'
+          />
+          <TextInput
+            className='border-b text-text-small'
+            value={productDescription}
+            onChangeText={(text) => setProductDescription(text)}
+            placeholder='desc'
+            keyboardType='letter'
+            multiline
+          />
+          <TextInput
+            className='border-b text-text-small'
+            value={productQuantity}
+            onChangeText={(text) => setProductQuantity(text)}
+            placeholder='quantity'
+            keyboardType='numeric'
+          />
+          <View className='flex-row items-center justify-between'>
+            <Text
+              onPress={async () => {
+                await uploadData()
+              }}
+              className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
+            >
+              Select Image:
+            </Text>
+            {uri ? (
+              <Image
+                source={uri}
+                style={{ width: 110, height: 110, objectFit: 'cover' }}
+              />
+            ) : null}
+          </View>
           <Text
             onPress={async () => {
-              await uploadData()
+              try {
+                await handleUpload(
+                  `http://${ip}:5000/material-delivery/${id}`,
+                  'patch',
+                  productName,
+                  productPrice,
+                  productCategoryValue,
+                  productDescription,
+                  productQuantity
+                )
+                navigation.navigate('ProductDetails', { id })
+                await getData()
+              } catch (error) {
+                console.log(error)
+              }
             }}
-            className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
+            className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
           >
-            Select Image:
+            Update Product
           </Text>
-          {uri ? (
-            <Image
-              source={uri}
-              style={{ width: 110, height: 110, objectFit: 'cover' }}
-            />
-          ) : null}
+          <Text>{success}</Text>
         </View>
-        <Text
-          onPress={async () => {
-            try {
-              await handleUpload(
-                `http://${ip}:5000/material-delivery/${id}`,
-                'patch',
-                productName,
-                productPrice,
-                productCategoryValue,
-                productDescription,
-                productQuantity
-              )
-              navigation.navigate('ProductDetails', { id })
-              await getData()
-            } catch (error) {
-              console.log(error)
-            }
-          }}
-          className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
-        >
-          Update Product
-        </Text>
-        <Text>{success}</Text>
-      </View>
+      </ScrollView>
     </View>
   )
 }

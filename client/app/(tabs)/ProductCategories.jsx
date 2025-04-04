@@ -18,7 +18,7 @@ import food from '../../assets/images/food.webp'
 import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
-  const { getData } = useProductContext()
+  const { getData, setDisplayCat } = useProductContext()
   const navigation = useNavigation()
   const categories = [
     { label: 'Computers', value: 'computers', image: computer },
@@ -37,6 +37,7 @@ export default function ProductCategoriesScreen() {
         onPress={() => {
           navigation.navigate('Home')
           getData(1, '', '', item.value)
+          setDisplayCat(item.label)
         }}
         className='flex items-center pb-2 py-12 bg-white'
       >
