@@ -6,20 +6,23 @@ const ProductContext = createContext()
 
 export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([])
+  const [cat, setCat] = useState('')
 
-  const getData = async (page = 1, find = '', sort = '', category = "") => {
+  const getData = async (page = 1, find = '', sort = '', category = '') => {
     try {
       const response = await axios.get(
         `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}`
       )
       setProducts(response.data)
+      setCat(category)
     } catch (error) {
       console.log(error)
     }
+    return cat
   }
 
   return (
-    <ProductContext.Provider value={{ products, getData }}>
+    <ProductContext.Provider value={{ products, getData, category: cat }}>
       {children}
     </ProductContext.Provider>
   )
