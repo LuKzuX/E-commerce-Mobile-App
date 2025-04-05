@@ -113,7 +113,7 @@ export default function ProductDetails() {
                 await deleteProduct(id)
                 await getData()
               }}
-              className='bg-red-500 px-6 py-3 rounded-md'
+              className='bg-bg-red px-6 py-3 rounded-md'
             >
               Delete Product
             </Text>

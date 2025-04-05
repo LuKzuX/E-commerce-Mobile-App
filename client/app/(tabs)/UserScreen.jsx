@@ -123,7 +123,7 @@ export default function UserScreen() {
                 {!isEditingPassword && (
                   <Text
                     onPress={togglePasswordEdit}
-                    className='self-start bg-red-500 px-3 py-4 rounded-xl'
+                    className='self-start bg-bg-red px-3 py-4 rounded-lg'
                   >
                     Change Password
                   </Text>
@@ -134,7 +134,7 @@ export default function UserScreen() {
                     onPress={() => {
                       togglePasswordEdit(), setPassword(''), setNewPassword('')
                     }}
-                    className='self-start bg-red-500 px-3 py-4 rounded-xl mb-3'
+                    className='self-start bg-bg-red px-3 py-4 rounded-lg mb-3'
                   >
                     Cancel
                   </Text>
@@ -235,7 +235,7 @@ export default function UserScreen() {
               <View className='flex-row gap-6 justify-center mt-8'>
                 <Text
                   onPress={toggleUserEdit}
-                  className='bg-red-500 w-44 text-center py-4 rounded-md text-text-small-medium'
+                  className='bg-bg-red w-44 text-center py-4 rounded-md text-text-small-medium'
                 >
                   Cancel
                 </Text>
@@ -283,7 +283,7 @@ export default function UserScreen() {
       <View>
         <Text
           onPress={handleLogout}
-          className='self-center bg-red-500 py-6 px-12 rounded-xl text-text-medium mt-10'
+          className='self-center bg-bg-red py-6 px-12 rounded-xl text-text-medium mt-10'
         >
           Logout
         </Text>

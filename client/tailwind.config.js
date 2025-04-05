@@ -7,7 +7,8 @@ module.exports = {
       extend: {
         colors: {
           "bg-gray": "var(--bg-gray)",
-          "bg-yellow": "var(--bg-yellow)"
+          "bg-yellow": "var(--bg-yellow)",
+          "bg-red": "var(--bg-red)"
         },
         fontSize: {
           "text-small": "var(--text-small)",
