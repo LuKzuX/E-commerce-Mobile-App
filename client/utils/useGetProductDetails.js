@@ -17,6 +17,6 @@ export default function useGetProductDetails(id) {
       }
     }
     getProduct()
-  }, [data])
+  }, [id, data])
   return { data, setData }
 }

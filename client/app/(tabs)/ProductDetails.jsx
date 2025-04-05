@@ -41,7 +41,9 @@ export default function ProductDetails() {
     )
   }
 
- 
+  useEffect(() => {
+    setData([])
+  }, [id])
 
   return (
     <ScrollView className='bg-bg-gray'>
