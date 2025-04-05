@@ -4,10 +4,12 @@ import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
 import { useProductContext } from '@/context/productContext'
+import { useAuthContext } from '@/context/authContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function ProductDetails() {
+  const { user } = useAuthContext()
   const route = useRoute()
   const { id } = route.params
   const { data, setData } = useGetProductDetails(id)
@@ -107,23 +109,25 @@ export default function ProductDetails() {
             )}
           </View>
 
-          <View className='flex-row items-center justify-center gap-4 px-6'>
-            <Text
-              onPress={async () => {
-                await deleteProduct(id)
-                await getData()
-              }}
-              className='bg-bg-red px-6 py-3 rounded-md'
-            >
-              Delete Product
-            </Text>
-            <Text
-              onPress={() => navigation.navigate('UpdateProduct', { id })}
-              className='bg-orange-400 px-6 py-3 rounded-md'
-            >
-              Update Product
-            </Text>
-          </View>
+          {user.user.isAdmin && (
+            <View className='flex-row items-center justify-center gap-4 px-6'>
+              <Text
+                onPress={async () => {
+                  await deleteProduct(id)
+                  await getData()
+                }}
+                className='bg-bg-red px-6 py-3 rounded-md'
+              >
+                Delete Product
+              </Text>
+              <Text
+                onPress={() => navigation.navigate('UpdateProduct', { id })}
+                className='bg-orange-400 px-6 py-3 rounded-md'
+              >
+                Update Product
+              </Text>
+            </View>
+          )}
           <View className='mt-6 space-y-3'>
             <TouchableOpacity className='bg-bg-yellow p-4 rounded-lg items-center shadow-md'>
               <Text className='text-lg font-semibold text-text-dark'>
