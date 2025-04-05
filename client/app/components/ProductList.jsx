@@ -25,14 +25,16 @@ export default function ProductList({ data }) {
         resizeMode='contain'
       />
       <View className='mt-[5px] flex-col justify-between'>
-        <Text className='text-text-small-medium'>{item.productName}</Text>
+        <Text className='text-text-small'>{item.productName}</Text>
         <View className='flex-row items-center'>
-          <Text className='text-text-small mr-[1px]'>$</Text>
-          <Text className='text-green-600 text-2xl'>{item.productPrice}</Text>
+          <Text className='text-sm mr-[1px]'>$</Text>
+          <Text className='text-green-600 text-text-small'>
+            {item.productPrice}
+          </Text>
         </View>
       </View>
       <Text
-        className='self-center bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
+        className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
         onPress={() => console.log(item.productName)}
       >
         Add to Cart

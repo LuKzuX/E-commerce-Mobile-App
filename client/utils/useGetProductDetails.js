@@ -1,7 +1,6 @@
 import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 export default function useGetProductDetails(id) {
   const [data, setData] = useState([])
@@ -18,6 +17,6 @@ export default function useGetProductDetails(id) {
       }
     }
     getProduct()
-  }, [data])
+  }, [id])
   return { data, setData }
 }

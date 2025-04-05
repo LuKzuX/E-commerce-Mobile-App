@@ -26,13 +26,24 @@ export default function ProductDetails() {
   ]
 
   const Cat = () => {
-    const a = categories.find((item) => data[0].productCategory == item.value)
+    if (!data) {
+      return <Text>Loading...</Text>
+    }
+
+    const category = categories.find(
+      (item) => item.value === data[0].productCategory
+    )
+
     return (
       <View>
-        <Text>{a.label}</Text>
+        <Text>{category?.label || 'Unknown Category'}</Text>
       </View>
     )
   }
+
+  useEffect(() => {
+    setData([])
+  }, [id])
 
   return (
     <ScrollView className='bg-bg-gray'>
