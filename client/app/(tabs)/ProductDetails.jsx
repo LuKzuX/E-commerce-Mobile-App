@@ -63,13 +63,17 @@ export default function ProductDetails() {
           <View className='flex-col gap-4 p-4 bg-white rounded-lg shadow-md'>
             {/* Product Title and Price */}
             <View className='flex-row justify-between items-center'>
-              <Text className='text-text-medium font-bold text-gray-900'>
+              <Text className='text-text-small-medium font-bold text-gray-900 w-[70%]'>
                 {data[0].productName}
               </Text>
-              <Text className='text-text-medium font-semibold text-green-600'>
-                ${data[0].productPrice}
-              </Text>
+              <View className='flex-row items-center'>
+                <Text className='text-sm mr-[1px]'>$</Text>
+                <Text className='text-text-small-medium font-semibold text-green-600'>
+                  {data[0].productPrice}
+                </Text>
+              </View>
             </View>
+            <View className='h-[2px] bg-gray-300'></View>
 
             {/* Product Description */}
             <Text className='text-text-small text-gray-600'>
