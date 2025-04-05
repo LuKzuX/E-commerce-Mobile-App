@@ -56,16 +56,17 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
     try {
-      await axios[method](route, formData, {
+      const response = await axios[method](route, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user.token}`,
         },
       })
       setSuccess('created')
+      return response.data // Return the response data
     } catch (error) {
-      console.log(error);
-      
+      setSuccess('fill all the fields')
+      throw error // Throw the error to be caught by the caller
     }
   }
 

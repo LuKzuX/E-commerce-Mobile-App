@@ -132,7 +132,7 @@ export default function UpdateProductScreen() {
           <Text
             onPress={async () => {
               try {
-                await handleUpload(
+                const response = await handleUpload(
                   `http://${ip}:5000/material-delivery/${id}`,
                   'patch',
                   productName,
@@ -141,7 +141,9 @@ export default function UpdateProductScreen() {
                   productDescription,
                   productQuantity
                 )
-                await getData()
+                if (response) {
+                  await getData()
+                }
               } catch (error) {
                 console.log(error)
               }
