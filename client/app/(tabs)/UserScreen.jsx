@@ -226,7 +226,7 @@ export default function UserScreen() {
             {!isEditing && (
               <Text
                 onPress={toggleUserEdit}
-                className='bg-bg-yellow mt-8 py-6 px-12 rounded-xl text-text-medium text-center'
+                className='self-center bg-bg-yellow mt-8 py-4 px-12 rounded-xl text-text-small-medium text-center'
               >
                 Edit Account
               </Text>
@@ -268,13 +268,13 @@ export default function UserScreen() {
         <View className='h-screen flex flex-col items-center gap-10 my-20'>
           <Text
             onPress={() => navigation.navigate('Signin')}
-            className='bg-green-400 py-6 px-12 rounded-xl text-text-medium'
+            className='bg-green-400 py-4 px-8 rounded-xl text-text-small-medium'
           >
             Signin
           </Text>
           <Text
             onPress={() => navigation.navigate('Signup')}
-            className='bg-blue-400 py-6 px-12 rounded-xl text-text-medium'
+            className='bg-blue-400 py-4 px-8 rounded-xl text-text-small-medium'
           >
             Signup
           </Text>
@@ -283,7 +283,7 @@ export default function UserScreen() {
       <View>
         <Text
           onPress={handleLogout}
-          className='self-center bg-bg-red py-6 px-12 rounded-xl text-text-medium mt-10'
+          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small-medium mt-10'
         >
           Logout
         </Text>
