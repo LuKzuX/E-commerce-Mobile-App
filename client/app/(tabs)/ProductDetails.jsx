@@ -6,8 +6,10 @@ import useDeleteProduct from '../../utils/useDeleteProduct'
 import { useProductContext } from '@/context/productContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import useUpdateProduct from '../../utils/useUpdateProduct'
 
 export default function ProductDetails() {
+  const { updateProduct } = useUpdateProduct()
   const route = useRoute()
   const { id } = route.params
   const { data, setData } = useGetProductDetails(id)

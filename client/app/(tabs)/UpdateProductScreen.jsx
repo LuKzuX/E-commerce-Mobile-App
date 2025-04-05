@@ -142,6 +142,7 @@ export default function UpdateProductScreen() {
                   productQuantity
                 )
                 await getData()
+                navigation.navigate('Home')
               } catch (error) {
                 console.log(error)
               }
