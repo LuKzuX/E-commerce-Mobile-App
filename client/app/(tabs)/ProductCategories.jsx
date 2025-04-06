@@ -33,23 +33,25 @@ export default function ProductCategoriesScreen() {
 
   const renderItem = ({ item }) => (
     <ScrollView>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Home')
-          getData(1, '', '', item.value)
-          setDisplayCat(item.label)
-        }}
-        className='flex items-center pb-2 py-12 bg-white'
-      >
-        <View>
-          <Image
-            source={item.image}
-            className='h-[150px] w-[150px]'
-            resizeMode='contain'
-          />
-          <Text className='text-center text-text-small'>{item.label}</Text>
-        </View>
-      </TouchableOpacity>
+      <View className='bg-bg-gray p-3'>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Home')
+            getData(1, '', '', item.value)
+            setDisplayCat(item.label)
+          }}
+          className='flex items-center p-6 bg-white rounded-[60px]'
+        >
+          <View>
+            <Image
+              source={item.image}
+              className='h-[150px] w-[150px]'
+              resizeMode='contain'
+            />
+            <Text className='text-center text-text-small'>{item.label}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   )
 

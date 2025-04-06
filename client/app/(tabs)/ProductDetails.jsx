@@ -113,7 +113,7 @@ export default function ProductDetails() {
             )}
           </View>
 
-          {user.user.isAdmin && (
+          {user?.user.isAdmin && (
             <View className='flex-row items-center justify-center gap-4 px-6'>
               <Text
                 onPress={async () => {

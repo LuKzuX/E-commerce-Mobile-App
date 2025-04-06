@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
       )
       await AsyncStorage.setItem('user', JSON.stringify(res.data))
       setUser(res.data)
-      navigation.replace('Tabs')
+      navigation.navigate('Tabs')
     } catch (error) {
       console.log(error)
     }
