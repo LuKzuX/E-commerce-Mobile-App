@@ -22,7 +22,7 @@ export function ProductContextProvider({ children }) {
   }
 
   return (
-    <ProductContext.Provider value={{ products, getData, category: cat, displayCat, setDisplayCat }}>
+    <ProductContext.Provider value={{ products, setProducts, getData, category: cat, displayCat, setDisplayCat }}>
       {children}
     </ProductContext.Provider>
   )

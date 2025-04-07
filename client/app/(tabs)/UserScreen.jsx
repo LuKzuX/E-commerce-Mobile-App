@@ -82,7 +82,7 @@ export default function UserScreen() {
       {user && (
         <View className='mt-10 px-6'>
           <View className='bg-white p-5 rounded-2xl shadow-md border border-gray-200 gap-4'>
-            <Text className='text-lg font-semibold text-gray-900 mb-4'>
+            <Text className='text-text-small-medium font-semibold text-gray-900 mb-4'>
               Account Information
             </Text>
 
@@ -123,7 +123,7 @@ export default function UserScreen() {
                 {!isEditingPassword && (
                   <Text
                     onPress={togglePasswordEdit}
-                    className='self-start bg-bg-red px-3 py-4 rounded-lg'
+                    className='self-start bg-bg-yellow px-3 py-4 rounded-lg'
                   >
                     Change Password
                   </Text>
@@ -134,7 +134,7 @@ export default function UserScreen() {
                     onPress={() => {
                       togglePasswordEdit(), setPassword(''), setNewPassword('')
                     }}
-                    className='self-start bg-bg-red px-3 py-4 rounded-lg mb-3'
+                    className='self-start bg-bg-red px-3 py-4 rounded-lg mb-3 text-white'
                   >
                     Cancel
                   </Text>
@@ -149,7 +149,7 @@ export default function UserScreen() {
                       autoFocus
                       value={password}
                       onChangeText={(text) => setPassword(text)}
-                      className='text-gray-900 text-base text-text-small border-b border-gray-200'
+                      className='text-gray-900 text-base text-text-small border-b border-gray-200 '
                     ></TextInput>
                     <Text className='text-gray-500 text-sm'>New Password</Text>
                     <TextInput
@@ -232,10 +232,10 @@ export default function UserScreen() {
               </Text>
             )}
             {isEditing && (
-              <View className='flex-row gap-6 justify-center mt-8'>
+              <View className='flex-row items-center gap-6 justify-center mt-8'>
                 <Text
                   onPress={toggleUserEdit}
-                  className='bg-bg-red w-44 text-center py-4 rounded-md text-text-small-medium'
+                  className='bg-bg-red text-center py-4 px-8 rounded-md text-text-small text-white'
                 >
                   Cancel
                 </Text>
@@ -254,7 +254,7 @@ export default function UserScreen() {
                       areaCode
                     )
                   }}
-                  className='bg-green-400 w-44 text-center py-4 rounded-md text-text-small-medium'
+                  className='bg-green-400 text-center py-4 px-8 rounded-md text-text-small text-white'
                 >
                   Save Changes
                 </Text>
@@ -268,13 +268,13 @@ export default function UserScreen() {
         <View className='h-screen flex flex-col items-center gap-10 my-20'>
           <Text
             onPress={() => navigation.navigate('Signin')}
-            className='bg-green-400 py-4 px-8 rounded-xl text-text-small-medium'
+            className='bg-green-400 py-4 px-8 rounded-xl text-text-small'
           >
             Signin
           </Text>
           <Text
             onPress={() => navigation.navigate('Signup')}
-            className='bg-blue-400 py-4 px-8 rounded-xl text-text-small-medium'
+            className='bg-blue-400 py-4 px-8 rounded-xl text-text-small'
           >
             Signup
           </Text>
@@ -283,7 +283,7 @@ export default function UserScreen() {
       <View>
         <Text
           onPress={handleLogout}
-          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small-medium mt-10'
+          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small mt-10 text-white'
         >
           Logout
         </Text>

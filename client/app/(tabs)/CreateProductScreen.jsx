@@ -36,7 +36,7 @@ export default function CreateProductScreen() {
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
-      <View className='bg-white p-2 rounded-md'>
+      <View className='bg-white p-2 rounded-2xl'>
         <DropDownPicker
           placeholder='category'
           open={open}
@@ -79,14 +79,14 @@ export default function CreateProductScreen() {
                 onPress={async () => {
                   await uploadData()
                 }}
-                className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
+                className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl text-white font-semibold'
               >
                 Select Image:
               </Text>
               {uri ? (
                 <Image
                   source={{ uri }}
-                  style={{ width: 110, height: 110, objectFit: 'cover' }}
+                  style={{ width: 110, height: 110, objectFit: 'contain' }}
                 />
               ) : null}
             </View>
@@ -120,7 +120,7 @@ export default function CreateProductScreen() {
                   setUri('')
                 } catch (error) {}
               }}
-              className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
+              className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'
             >
               Create Product
             </Text>

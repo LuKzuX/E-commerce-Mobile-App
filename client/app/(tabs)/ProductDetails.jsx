@@ -120,13 +120,13 @@ export default function ProductDetails() {
                   await deleteProduct(id)
                   await getData()
                 }}
-                className='bg-bg-red px-6 py-3 rounded-md'
+                className='bg-bg-red px-6 py-3 rounded-md text-white font-semibold'
               >
                 Delete Product
               </Text>
               <Text
                 onPress={() => navigation.navigate('UpdateProduct', { id })}
-                className='bg-orange-400 px-6 py-3 rounded-md'
+                className='bg-orange-400 px-6 py-3 rounded-md text-white font-semibold'
               >
                 Update Product
               </Text>
@@ -134,7 +134,7 @@ export default function ProductDetails() {
           )}
           <View className='mt-6 space-y-3'>
             <TouchableOpacity className='bg-bg-yellow p-4 rounded-lg items-center shadow-md'>
-              <Text className='text-lg font-semibold text-text-dark'>
+              <Text className='text-lg font-bold text-text-dark'>
                 Add to Cart
               </Text>
             </TouchableOpacity>

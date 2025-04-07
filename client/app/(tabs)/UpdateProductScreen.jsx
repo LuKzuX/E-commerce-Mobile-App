@@ -45,7 +45,6 @@ export default function UpdateProductScreen() {
   ])
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
-  const [currentImage, setCurrentImage] = useState(null)
 
   useEffect(() => {
     const getProductData = async () => {
@@ -75,88 +74,90 @@ export default function UpdateProductScreen() {
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
-      <DropDownPicker
-        placeholder='category'
-        open={open}
-        value={productCategoryValue}
-        items={productCategory}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setProductCategory}
-      />
-      <ScrollView>
-        <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
-          <TextInput
-            className='border-b text-text-small'
-            value={productName}
-            onChangeText={(text) => setProductName(text)}
-            placeholder='name'
-            keyboardType='letter'
-          />
-          <TextInput
-            className='border-b text-text-small '
-            value={productPrice}
-            onChangeText={(text) => setProductPrice(text)}
-            placeholder='price'
-            keyboardType='numeric'
-          />
-          <TextInput
-            className='border-b text-text-small'
-            value={productDescription}
-            onChangeText={(text) => setProductDescription(text)}
-            placeholder='desc'
-            keyboardType='letter'
-            multiline
-          />
-          <TextInput
-            className='border-b text-text-small'
-            value={productQuantity}
-            onChangeText={(text) => setProductQuantity(text)}
-            placeholder='quantity'
-            keyboardType='numeric'
-          />
-          <View className='flex-row items-center justify-between'>
+      <View className='bg-white p-2 rounded-2xl'>
+        <DropDownPicker
+          placeholder='category'
+          open={open}
+          value={productCategoryValue}
+          items={productCategory}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setProductCategory}
+        />
+        <ScrollView>
+          <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
+            <TextInput
+              className='border-b text-text-small'
+              value={productName}
+              onChangeText={(text) => setProductName(text)}
+              placeholder='name'
+              keyboardType='letter'
+            />
+            <TextInput
+              className='border-b text-text-small '
+              value={productPrice}
+              onChangeText={(text) => setProductPrice(text)}
+              placeholder='price'
+              keyboardType='numeric'
+            />
+            <TextInput
+              className='border-b text-text-small'
+              value={productDescription}
+              onChangeText={(text) => setProductDescription(text)}
+              placeholder='desc'
+              keyboardType='letter'
+              multiline
+            />
+            <TextInput
+              className='border-b text-text-small'
+              value={productQuantity}
+              onChangeText={(text) => setProductQuantity(text)}
+              placeholder='quantity'
+              keyboardType='numeric'
+            />
+            <View className='flex-row items-center justify-between'>
+              <Text
+                onPress={async () => {
+                  await uploadData()
+                }}
+                className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl font-semibold'
+              >
+                Select Image:
+              </Text>
+              {uri && (
+                <Image
+                  source={uri.uri ? { uri: uri.uri } : { uri }}
+                  style={{ width: 110, height: 110, objectFit: 'contain' }}
+                />
+              )}
+            </View>
             <Text
               onPress={async () => {
-                await uploadData()
-              }}
-              className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl'
-            >
-              Select Image:
-            </Text>
-            {uri && (
-              <Image
-                source={uri.uri ? { uri: uri.uri } : { uri }}
-                style={{ width: 110, height: 110, objectFit: 'cover' }}
-              />
-            )}
-          </View>
-          <Text
-            onPress={async () => {
-              try {
-                const response = await handleUpload(
-                  `http://${ip}:5000/material-delivery/${id}`,
-                  'patch',
-                  productName,
-                  productPrice,
-                  productCategoryValue,
-                  productDescription,
-                  productQuantity
-                )
-                if (response) {
-                  await getData()
+                try {
+                  const response = await handleUpload(
+                    `http://${ip}:5000/material-delivery/${id}`,
+                    'patch',
+                    productName,
+                    productPrice,
+                    productCategoryValue,
+                    productDescription,
+                    productQuantity
+                  )
+                  if (response) {
+                    await getData()
+                  }
+                } catch (error) {
+                  console.log(error)
                 }
-              } catch (error) {
-                console.log(error)
-              }
-            }}
-            className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl'
-          >
-            Update Product
-          </Text>
-          <Text>{success}</Text>
-        </View>
-      </ScrollView>
+              }}
+              className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'
+            >
+              Update Product
+            </Text>
+            <Text>{success}</Text>
+          </View>
+        </ScrollView>
+      </View>
     </View>
   )
 }

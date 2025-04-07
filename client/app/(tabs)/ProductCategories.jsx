@@ -18,7 +18,7 @@ import food from '../../assets/images/food.webp'
 import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
-  const { getData, setDisplayCat } = useProductContext()
+  const { setProducts, getData, setDisplayCat } = useProductContext()
   const navigation = useNavigation()
   const categories = [
     { label: 'Computers', value: 'computers', image: computer },
@@ -36,21 +36,22 @@ export default function ProductCategoriesScreen() {
       <View className='bg-bg-gray p-3'>
         <TouchableOpacity
           onPress={() => {
+            setProducts([])
             navigation.navigate('Home')
             getData(1, '', '', item.value)
             setDisplayCat(item.label)
           }}
-          className='flex items-center p-6 bg-white rounded-[60px]'
+          className='flex items-center p-6 bg-white rounded-[100%]'
         >
           <View>
             <Image
               source={item.image}
-              className='h-[150px] w-[150px]'
+              className='h-[150px] w-[150px] rounded-[50px]'
               resizeMode='contain'
             />
-            <Text className='text-center text-text-small'>{item.label}</Text>
           </View>
         </TouchableOpacity>
+        <Text className='text-center text-text-small mt-2 font-bold'>{item.label}</Text>
       </View>
     </ScrollView>
   )
