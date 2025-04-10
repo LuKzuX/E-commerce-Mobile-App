@@ -1,21 +1,11 @@
-import { ip } from '../../getIp.js'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  TextInput,
-} from 'react-native'
+import { View, Text } from 'react-native'
 import { useState, useEffect } from 'react'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useProductContext } from '@/context/productContext.jsx'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import SearchBar from '../components/SearchBar.jsx'
 
 export default function HomeScreen() {
   const route = useRoute()
@@ -30,39 +20,19 @@ export default function HomeScreen() {
   }, [])
 
   return (
-    <View className='bg-bg-gray flex-1'>
-      <SafeAreaView>
-        <View className='relative'>
-          <TextInput
-            onKeyPress={(e) => {
-              if (e.nativeEvent.key === 'Enter') {
-                getData(pageValue, searchValue, sortValue, category)
-              }
-            }}
-            onChangeText={(text) => {
-              setSearchValue(text)
-            }}
-            className='bg-white p-2 m-2 rounded-lg border text-text-small-medium pr-16 h-[45px]'
-            placeholder='Search'
-          ></TextInput>
+    <View className='bg-bg-gray'>
+      <SearchBar></SearchBar>
+      {category && (
+        <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
+          <Text className='text-text-small-medium'>{displayCat}</Text>
           <Ionicons
-            className='absolute right-4 top-[25%]'
-            name={'search-outline'}
+            name={'close-outline'}
             size={30}
-            onPress={() => getData(pageValue, searchValue, sortValue, category)}
+            onPress={() => getData(pageValue, searchValue, sortValue, '')}
           />
         </View>
-        {category && (
-          <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
-            <Text className='text-text-small-medium'>{displayCat}</Text>
-            <Ionicons
-              name={'close-outline'}
-              size={30}
-              onPress={() => getData(pageValue, searchValue, sortValue, '')}
-            />
-          </View>
-        )}
-      </SafeAreaView>
+      )}
+
       <ProductList data={products} getData={getData} />
     </View>
   )
