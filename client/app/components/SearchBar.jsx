@@ -36,9 +36,7 @@ export default function SearchBar() {
             onSubmitEditing={(e) => {
               navigation.navigate('Home')
               getData(1, searchValue, '', '')
-            }}
-            onChangeText={(text) => {
-              setSearchValue(text)
+              setSearchValue(e.nativeEvent.text)
             }}
             className='bg-white p-3 m-2 border text-text-small pl-12 rounded-[15px] flex-1'
             placeholder='Search'
@@ -54,6 +52,11 @@ export default function SearchBar() {
           />
         </View>
       </SafeAreaView>
+      {searchValue && (
+        <View>
+          <Text>{searchValue}</Text>
+        </View>
+      )}
     </View>
   )
 }

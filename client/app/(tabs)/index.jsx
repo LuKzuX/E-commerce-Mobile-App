@@ -10,20 +10,26 @@ import SearchBar from '../components/SearchBar.jsx'
 export default function HomeScreen() {
   const route = useRoute()
   const { products, getData, category, displayCat } = useProductContext()
-  const [searchValue, setSearchValue] = useState('')
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
 
   useEffect(() => {
-    getData(pageValue, searchValue, sortValue, category)
+    getData(pageValue, "", sortValue, category)
   }, [])
 
   return (
     <View className='bg-bg-gray'>
       <SearchBar></SearchBar>
-      <View>
-        
+      <View className='flex-row'>
+        <View className='flex-row items-center'>
+          <Ionicons name='filter-outline'></Ionicons>
+          <Text>Filter</Text>
+        </View>
+        <View className='flex-row items-center'>
+          <Ionicons name='today-outline'></Ionicons>
+          <Text>Filter</Text>
+        </View>
       </View>
       {category && (
         <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
