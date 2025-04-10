@@ -22,6 +22,9 @@ export default function HomeScreen() {
   return (
     <View className='bg-bg-gray'>
       <SearchBar></SearchBar>
+      <View>
+        
+      </View>
       {category && (
         <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
           <Text className='text-text-small-medium'>{displayCat}</Text>
