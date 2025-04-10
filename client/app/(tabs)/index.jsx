@@ -20,30 +20,31 @@ export default function HomeScreen() {
   }, [])
 
   return (
-    <ScrollView className='bg-bg-gray'>
-      <SearchBar></SearchBar>
-      <View className='flex-row'>
-        <View className='flex-row items-center'>
-          <Ionicons name='filter-outline'></Ionicons>
-          <Text>Filter</Text>
+    <View>
+      <View className='bg-bg-gray'>
+        <SearchBar></SearchBar>
+        <View className='flex-row'>
+          <View className='flex-row items-center'>
+            <Ionicons name='filter-outline'></Ionicons>
+            <Text>Filter</Text>
+          </View>
+          <View className='flex-row items-center'>
+            <Ionicons name='today-outline'></Ionicons>
+            <Text>Filter</Text>
+          </View>
         </View>
-        <View className='flex-row items-center'>
-          <Ionicons name='today-outline'></Ionicons>
-          <Text>Filter</Text>
-        </View>
+        {category && (
+          <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
+            <Text className='text-text-small-medium'>{displayCat}</Text>
+            <Ionicons
+              name={'close-outline'}
+              size={30}
+              onPress={() => getData(pageValue, searchValue, sortValue, '')}
+            />
+          </View>
+        )}
       </View>
-      {category && (
-        <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
-          <Text className='text-text-small-medium'>{displayCat}</Text>
-          <Ionicons
-            name={'close-outline'}
-            size={30}
-            onPress={() => getData(pageValue, searchValue, sortValue, '')}
-          />
-        </View>
-      )}
-
       <ProductList data={products} getData={getData} />
-    </ScrollView>
+    </View>
   )
 }

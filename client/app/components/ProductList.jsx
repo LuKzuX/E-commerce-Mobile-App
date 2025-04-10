@@ -14,6 +14,10 @@ import {
 export default function ProductList({ data }) {
   const navigation = useNavigation()
 
+  const ThreeDots = ({ string }) => {
+    return <Text>{string}</Text>
+  }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
@@ -25,7 +29,7 @@ export default function ProductList({ data }) {
         resizeMode='contain'
       />
       <View className='mt-[5px] flex-col justify-between'>
-        <Text className='text-text-small'>{item.productName}</Text>
+        <ThreeDots string={item.productName}></ThreeDots>
         <View className='flex-row items-center'>
           <Text className='text-sm mr-[1px]'>$</Text>
           <Text className='text-green-600 text-text-small'>
