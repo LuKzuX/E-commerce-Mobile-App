@@ -6,6 +6,7 @@ import { useProductContext } from '@/context/productContext.jsx'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import SearchBar from '../components/SearchBar.jsx'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function HomeScreen() {
   const route = useRoute()
@@ -19,7 +20,7 @@ export default function HomeScreen() {
   }, [])
 
   return (
-    <View className='bg-bg-gray'>
+    <ScrollView className='bg-bg-gray'>
       <SearchBar></SearchBar>
       <View className='flex-row'>
         <View className='flex-row items-center'>
@@ -43,6 +44,6 @@ export default function HomeScreen() {
       )}
 
       <ProductList data={products} getData={getData} />
-    </View>
+    </ScrollView>
   )
 }
