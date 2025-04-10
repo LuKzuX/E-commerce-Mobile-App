@@ -7,6 +7,7 @@ import { useProductContext } from '@/context/productContext'
 import { useAuthContext } from '@/context/authContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import SearchBar from '../components/SearchBar'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -49,6 +50,7 @@ export default function ProductDetails() {
 
   return (
     <ScrollView className='bg-bg-gray'>
+      <SearchBar></SearchBar>
       {data[0] && (
         <View className='flex flex-col gap-6 p-6 bg-white rounded-lg'>
           {/* Product Image */}

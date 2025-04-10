@@ -11,11 +11,16 @@ import {
   StatusBar,
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
-
+import { useState } from 'react'
 import { useAuthContext } from '../../context/authContext'
+import { useProductContext } from '@/context/productContext'
+import { useNavigation } from '@react-navigation/native'
 
 export default function SearchBar() {
+  const navigation = useNavigation()
+  const [searchValue, setSearchValue] = useState('')
   const { user } = useAuthContext()
+  const { products, getData, category, displayCat } = useProductContext()
   return (
     <View>
       <StatusBar backgroundColor='#2563eb' barStyle='light-content' />
@@ -28,10 +33,9 @@ export default function SearchBar() {
             onPress={() => getData(pageValue, searchValue, sortValue, category)}
           />
           <TextInput
-            onKeyPress={(e) => {
-              if (e.nativeEvent.key === 'Enter') {
-                getData(pageValue, searchValue, sortValue, category)
-              }
+            onSubmitEditing={(e) => {
+              navigation.navigate('Home')
+              getData(1, searchValue, '', '')
             }}
             onChangeText={(text) => {
               setSearchValue(text)
@@ -44,7 +48,9 @@ export default function SearchBar() {
             color='white'
             name={'cart-outline'}
             size={30}
-            onPress={() => getData(pageValue, searchValue, sortValue, category)}
+            onPress={() => {
+              getData(pageValue, searchValue, sortValue, category)
+            }}
           />
         </View>
       </SafeAreaView>

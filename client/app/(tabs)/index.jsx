@@ -10,9 +10,9 @@ import SearchBar from '../components/SearchBar.jsx'
 export default function HomeScreen() {
   const route = useRoute()
   const { products, getData, category, displayCat } = useProductContext()
+  const [searchValue, setSearchValue] = useState('')
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
-  const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState('')
 
   useEffect(() => {
