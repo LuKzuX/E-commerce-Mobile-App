@@ -23,6 +23,9 @@ function Tabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarStyle: { // adds vertical padding inside the tab bar  // you can also use this if you want to raise the content above the screen edge
+          height: 55,          // optional: increase overall height for spacing
+        },
         tabBarIcon: ({ color, size, focused }) => {
           let iconName
           if (route.name === 'Home') {
@@ -40,7 +43,7 @@ function Tabs() {
                 <View
                   style={{
                     height: 2,
-                    width: 36,
+                    width: 46,
                     backgroundColor: color,
                     position: 'absolute',
                     top: -6,
