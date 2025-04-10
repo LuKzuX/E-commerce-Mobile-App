@@ -11,16 +11,17 @@ import {
   StatusBar,
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/authContext'
 import { useProductContext } from '@/context/productContext'
 import { useNavigation } from '@react-navigation/native'
 
 export default function SearchBar() {
   const navigation = useNavigation()
-  const [searchValue, setSearchValue] = useState('')
   const { user } = useAuthContext()
-  const { products, getData, category, displayCat } = useProductContext()
+  const { products, find, setFind, getData, category, displayCat } =
+    useProductContext()
+
   return (
     <View>
       <StatusBar backgroundColor='#2563eb' barStyle='light-content' />
@@ -30,13 +31,13 @@ export default function SearchBar() {
             className='absolute left-[7%] z-50'
             name={'search-outline'}
             size={25}
-            onPress={() => getData(pageValue, searchValue, sortValue, category)}
+            onPress={() => getData(1, find, '', '')}
           />
           <TextInput
-            onSubmitEditing={(e) => {
+            onSubmitEditing={async (e) => {
+              setFind(e.nativeEvent.text)
+              await getData(1, e.nativeEvent.text, '', '')
               navigation.navigate('Home')
-              getData(1, searchValue, '', '')
-              setSearchValue(e.nativeEvent.text)
             }}
             className='bg-white p-3 m-2 border text-text-small pl-12 rounded-[15px] flex-1'
             placeholder='Search'
@@ -47,14 +48,14 @@ export default function SearchBar() {
             name={'cart-outline'}
             size={30}
             onPress={() => {
-              getData(pageValue, searchValue, sortValue, category)
+              getData(pageValue, find, sortValue, category)
             }}
           />
         </View>
       </SafeAreaView>
-      {searchValue && (
+      {find && (
         <View>
-          <Text>{searchValue}</Text>
+          <Text>{find}</Text>
         </View>
       )}
     </View>

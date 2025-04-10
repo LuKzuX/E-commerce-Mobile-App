@@ -9,13 +9,13 @@ import SearchBar from '../components/SearchBar.jsx'
 
 export default function HomeScreen() {
   const route = useRoute()
-  const { products, getData, category, displayCat } = useProductContext()
+  const { products, getData, category, displayCat, find } = useProductContext()
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
 
   useEffect(() => {
-    getData(pageValue, "", sortValue, category)
+    getData(pageValue, find, sortValue, category)
   }, [])
 
   return (
