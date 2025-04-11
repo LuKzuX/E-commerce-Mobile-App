@@ -20,8 +20,8 @@ export default function HomeScreen() {
   }, [])
 
   return (
-    <View>
-      <View className='bg-bg-gray'>
+    <View className='flex-1'>
+      <View className='bg-white'>
         <SearchBar></SearchBar>
         <View className='flex-row'>
           <View className='flex-row items-center'>
