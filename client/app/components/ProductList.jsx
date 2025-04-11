@@ -15,13 +15,21 @@ export default function ProductList({ data }) {
   const navigation = useNavigation()
 
   const ThreeDots = ({ string }) => {
-    return <Text>{string}</Text>
+    if (string.length <= 17) {
+      return <Text>{string}</Text>
+    } else {
+      let newStr = ''
+      for (let i = 0; i < 17; i++) {
+        newStr += string[i]
+      }
+      return <Text>{newStr + '...'}</Text>
+    }
   }
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
-      className='flex-1 pb-0 px-7 py-10 bg-white'
+      className='flex w-1/2 px-7 py-10 bg-white'
     >
       <Image
         source={{ uri: `http://${ip}:5000/` + item.productImage }}

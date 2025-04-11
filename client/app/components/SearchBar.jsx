@@ -21,7 +21,7 @@ export default function SearchBar() {
   const { user } = useAuthContext()
   const { products, find, setFind, getData, category, displayCat } =
     useProductContext()
-
+  const [search, setSearch] = useState('')
   return (
     <View>
       <StatusBar backgroundColor='#2563eb' barStyle='light-content' />
@@ -34,6 +34,8 @@ export default function SearchBar() {
             onPress={() => getData(1, find, '', '')}
           />
           <TextInput
+            value={search}
+            onChangeText={setSearch}
             onSubmitEditing={async (e) => {
               setFind(e.nativeEvent.text)
               await getData(1, e.nativeEvent.text, '', '')
@@ -48,14 +50,24 @@ export default function SearchBar() {
             name={'cart-outline'}
             size={30}
             onPress={() => {
-              getData(pageValue, find, sortValue, category)
+              getData(pageValue, find, '', category)
             }}
           />
         </View>
       </SafeAreaView>
       {find && (
-        <View>
-          <Text>{find}</Text>
+        <View className='mx-4 my-2 flex-row items-center justify-between rounded-2xl bg-blue-100 px-4 py-2 shadow-sm'>
+          <Text className='text-sm font-medium text-blue-800'>{find}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setFind('')
+              setSearch('')
+              getData(1, '', '', category)
+            }}
+            className='ml-3 rounded-full p-1 bg-blue-200'
+          >
+            <Ionicons size={20} name='close-outline' color='#1e3a8a' />
+          </TouchableOpacity>
         </View>
       )}
     </View>

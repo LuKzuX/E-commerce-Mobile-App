@@ -16,21 +16,21 @@ export default function HomeScreen() {
   const [sortValue, setSortValue] = useState('')
 
   useEffect(() => {
-    getData(pageValue, find, sortValue, category)
+    getData(pageValue, find, "", category)
   }, [])
 
   return (
-    <View className='flex-1'>
+    <View className='flex-1 bg-white'>
       <View className='bg-white'>
         <SearchBar></SearchBar>
-        <View className='flex-row'>
-          <View className='flex-row items-center'>
-            <Ionicons name='filter-outline'></Ionicons>
+        <View className='flex-row border-b border-gray-300 justify-evenly'>
+          <View className='flex-row items-center p-4 gap-[1px]'>
+            <Ionicons size={25} name='filter-outline'></Ionicons>
             <Text>Filter</Text>
           </View>
-          <View className='flex-row items-center'>
-            <Ionicons name='today-outline'></Ionicons>
-            <Text>Filter</Text>
+          <View className='flex-row items-center p-4 gap-[1px]'>
+            <Ionicons size={25} name='today-outline'></Ionicons>
+            <Text>Sort</Text>
           </View>
         </View>
         {category && (
@@ -39,7 +39,7 @@ export default function HomeScreen() {
             <Ionicons
               name={'close-outline'}
               size={30}
-              onPress={() => getData(pageValue, searchValue, sortValue, '')}
+              onPress={() => getData(pageValue, '', sortValue, '')}
             />
           </View>
         )}
