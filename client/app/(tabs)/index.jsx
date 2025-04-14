@@ -31,19 +31,24 @@ export default function HomeScreen() {
   return (
     <View className='flex-1 bg-white'>
       <View className='bg-white'>
-        <SearchBar></SearchBar>
+        <SearchBar />
         <View className='flex-row border-b border-gray-300 justify-evenly'>
-          <View className='flex-row items-center p-4 gap-[1px]'>
-            <Ionicons size={25} name='filter-outline'></Ionicons>
-            <Text>Filter</Text>
-          </View>
           <TouchableOpacity
             onPress={() => {
-              handleSortMenu();
+              handleSortMenu()
             }}
-            className="flex-row items-center p-4 gap-[1px]"
+            className='flex-row items-center p-4 gap-[1px]'
           >
-            <Ionicons size={25} name="today-outline"></Ionicons>
+            <Ionicons size={25} name='filter-outline' />
+            <Text>Filter</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              handleSortMenu()
+            }}
+            className='flex-row items-center p-4 gap-[1px]'
+          >
+            <Ionicons size={25} name='today-outline' />
             <Text>Sort</Text>
           </TouchableOpacity>
         </View>
