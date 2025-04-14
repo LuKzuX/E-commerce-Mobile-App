@@ -75,7 +75,7 @@ export default function ProductDetails() {
                 </Text>
               </View>
             </View>
-            <View className='h-[2px] bg-gray-300'></View>
+            <View className='h-[1px] bg-gray-300'></View>
 
             {/* Product Description */}
             <Text className='text-text-small text-gray-600'>

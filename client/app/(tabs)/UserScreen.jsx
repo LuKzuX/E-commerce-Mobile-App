@@ -226,7 +226,7 @@ export default function UserScreen() {
             {!isEditing && (
               <Text
                 onPress={toggleUserEdit}
-                className='self-center bg-bg-yellow mt-8 py-4 px-12 rounded-xl text-text-small-medium text-center'
+                className='self-center bg-bg-yellow mt-8 py-4 px-12 rounded-xl text-text-small-medium font-bold text-center'
               >
                 Edit Account
               </Text>
@@ -283,7 +283,7 @@ export default function UserScreen() {
       <View>
         <Text
           onPress={handleLogout}
-          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small mt-10 text-white'
+          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small font-semibold mt-10 text-white'
         >
           Logout
         </Text>

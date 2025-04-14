@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
@@ -14,10 +14,19 @@ export default function HomeScreen() {
   const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
-
+  const [isSortOpen, setIsSortOpen] = useState(false)
   useEffect(() => {
-    getData(pageValue, find, "", category)
+    getData(pageValue, find, '', category)
   }, [])
+
+  const handleSortMenu = () => {
+    if (isSortOpen) {
+      setIsSortOpen(false)
+    } else {
+      setIsSortOpen(true)
+    }
+    console.log(isSortOpen)
+  }
 
   return (
     <View className='flex-1 bg-white'>
@@ -28,10 +37,15 @@ export default function HomeScreen() {
             <Ionicons size={25} name='filter-outline'></Ionicons>
             <Text>Filter</Text>
           </View>
-          <View className='flex-row items-center p-4 gap-[1px]'>
-            <Ionicons size={25} name='today-outline'></Ionicons>
+          <TouchableOpacity
+            onPress={() => {
+              handleSortMenu();
+            }}
+            className="flex-row items-center p-4 gap-[1px]"
+          >
+            <Ionicons size={25} name="today-outline"></Ionicons>
             <Text>Sort</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         {category && (
           <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
