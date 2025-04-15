@@ -7,6 +7,7 @@ import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import SearchBar from '../components/SearchBar.jsx'
 import { ScrollView } from 'react-native-gesture-handler'
+import Filter from '../components/filterComponent.jsx'
 
 export default function HomeScreen() {
   const route = useRoute()
@@ -63,6 +64,12 @@ export default function HomeScreen() {
           </View>
         )}
       </View>
+      <Filter
+        getData={getData}
+        find={find}
+        sortValue={sortValue}
+        category={category}
+      />
       <ProductList data={products} getData={getData} />
     </View>
   )
