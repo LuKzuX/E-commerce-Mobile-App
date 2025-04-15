@@ -16,6 +16,7 @@ export default function HomeScreen() {
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   useEffect(() => {
     getData(pageValue, find, '', category)
   }, [])
@@ -26,7 +27,13 @@ export default function HomeScreen() {
     } else {
       setIsSortOpen(true)
     }
-    console.log(isSortOpen)
+  }
+  const handleFilterMenu = () => {
+    if (isFil) {
+      setIsFilterOpen(false)
+    } else {
+      setIsFilterOpen(true)
+    }
   }
 
   return (
@@ -36,7 +43,7 @@ export default function HomeScreen() {
         <View className='flex-row border-b border-gray-300 justify-evenly'>
           <TouchableOpacity
             onPress={() => {
-              handleSortMenu()
+              handleFilterMenu()
             }}
             className='flex-row items-center p-4 gap-[1px]'
           >
