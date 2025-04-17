@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import { useState, useEffect } from 'react'
 import ProductList from '../components/ProductList.jsx'
 import { useAuthContext } from '../../context/authContext.jsx'
@@ -6,10 +6,15 @@ import { useProductContext } from '@/context/productContext.jsx'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import SearchBar from '../components/SearchBar.jsx'
-import { ScrollView } from 'react-native-gesture-handler'
-import Filter from '../components/filterComponent.jsx'
+import {
+  ScrollView,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
+import Filter from '../components/FilterComponent.jsx'
 
 export default function HomeScreen() {
+  const navigation = useNavigation()
   const route = useRoute()
   const { products, getData, category, displayCat, find } = useProductContext()
   const { user } = useAuthContext()
@@ -29,7 +34,7 @@ export default function HomeScreen() {
     }
   }
   const handleFilterMenu = () => {
-    if (isFil) {
+    if (isFilterOpen) {
       setIsFilterOpen(false)
     } else {
       setIsFilterOpen(true)
@@ -38,6 +43,12 @@ export default function HomeScreen() {
 
   return (
     <View className='flex-1 bg-white'>
+      {(isFilterOpen || isSortOpen) && (
+        <Pressable
+          className='absolute top-0 w-screen h-screen bg-black bg-black/50 z-10'
+          onPress={handleFilterMenu}
+        ></Pressable>
+      )}
       <View className='bg-white'>
         <SearchBar />
         <View className='flex-row border-b border-gray-300 justify-evenly'>
@@ -71,13 +82,15 @@ export default function HomeScreen() {
           </View>
         )}
       </View>
+      <ProductList data={products} getData={getData} />
       <Filter
         getData={getData}
         find={find}
         sortValue={sortValue}
         category={category}
+        isFilterOpen={isFilterOpen}
+        setIsFilterOpen={setIsFilterOpen}
       />
-      <ProductList data={products} getData={getData} />
     </View>
   )
 }

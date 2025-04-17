@@ -23,8 +23,9 @@ function Tabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: { // adds vertical padding inside the tab bar  // you can also use this if you want to raise the content above the screen edge
-          height: 55,          // optional: increase overall height for spacing
+        tabBarStyle: {
+          height: 55,
+          zIndex: 0,
         },
         tabBarIcon: ({ color, size, focused }) => {
           let iconName
