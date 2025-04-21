@@ -9,6 +9,10 @@ export default function Sort({
   category,
   isSortOpen,
   setIsSortOpen,
+  minValue,
+  setMinValue,
+  maxValue,
+  setMaxValue,
 }) {
   const slideAnim = useRef(new Animated.Value(-800)).current
   const properties = [
@@ -54,7 +58,7 @@ export default function Sort({
       </View>
       <Text
         onPress={() =>
-          getData(1, find, sortValue, category, "", "")
+          getData(1, find, sortValue, category, minValue, maxValue)
         }
         className='bg-blue-500 text-white text-center self-center px-12 p-4 text-text-small-medium font-bold mt-10 rounded-xl'
       >

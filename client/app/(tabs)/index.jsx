@@ -23,6 +23,8 @@ export default function HomeScreen() {
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [minValue, setMinValue] = useState('')
+  const [maxValue, setMaxValue] = useState('')
   useEffect(() => {
     getData(pageValue, find, '', category)
   }, [])
@@ -97,6 +99,10 @@ export default function HomeScreen() {
         category={category}
         isFilterOpen={isFilterOpen}
         setIsFilterOpen={setIsFilterOpen}
+        minValue={minValue}
+        setMinValue={setMinValue}
+        maxValue={maxValue}
+        setMaxValue={setMaxValue}
       />
       <Sort
         getData={getData}
@@ -105,6 +111,10 @@ export default function HomeScreen() {
         category={category}
         isSortOpen={isSortOpen}
         setIsSortOpen={setIsSortOpen}
+        minValue={minValue}
+        setMinValue={setMinValue}
+        maxValue={maxValue}
+        setMaxValue={setMaxValue}
       />
     </View>
   )
