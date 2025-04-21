@@ -12,6 +12,7 @@ import {
 } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import Filter from '../components/FilterComponent.jsx'
+import Sort from '../components/SortComponent.jsx'
 
 export default function HomeScreen() {
   const navigation = useNavigation()
@@ -43,10 +44,16 @@ export default function HomeScreen() {
 
   return (
     <View className='flex-1 bg-white'>
-      {(isFilterOpen || isSortOpen) && (
+      {isFilterOpen && (
         <Pressable
           className='absolute top-0 w-screen h-screen bg-black bg-black/50 z-10'
           onPress={handleFilterMenu}
+        ></Pressable>
+      )}
+       {isSortOpen && (
+        <Pressable
+          className='absolute top-0 w-screen h-screen bg-black bg-black/50 z-10'
+          onPress={handleSortMenu}
         ></Pressable>
       )}
       <View className='bg-white'>
@@ -90,6 +97,14 @@ export default function HomeScreen() {
         category={category}
         isFilterOpen={isFilterOpen}
         setIsFilterOpen={setIsFilterOpen}
+      />
+      <Sort
+        getData={getData}
+        find={find}
+        sortValue={sortValue}
+        category={category}
+        isSortOpen={isSortOpen}
+        setIsSortOpen={setIsSortOpen}
       />
     </View>
   )
