@@ -108,6 +108,7 @@ export default function HomeScreen() {
         getData={getData}
         find={find}
         sortValue={sortValue}
+        setSortValue={setSortValue}
         category={category}
         isSortOpen={isSortOpen}
         setIsSortOpen={setIsSortOpen}

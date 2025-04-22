@@ -6,6 +6,7 @@ export default function Sort({
   getData,
   find,
   sortValue,
+  setSortValue,
   category,
   isSortOpen,
   setIsSortOpen,
@@ -21,6 +22,7 @@ export default function Sort({
     { productPrice: 'Price Low to High' },
     { '-productPrice': 'Price High to Low' },
   ]
+
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: isSortOpen ? 0 : -800,
@@ -42,10 +44,18 @@ export default function Sort({
       ></Ionicons>
       <View className='flex-col gap-10'>
         {properties.map((obj) => {
-          const selected = ''
           const [key, label] = Object.entries(obj)[0]
+          let selected = sortValue === key
           return (
             <TouchableOpacity
+              onPress={() => {
+                if (!selected) {
+                  setSortValue(key)
+                }else{
+                  selected = ""
+                  setSortValue("")
+                }
+              }}
               className={`px-4 py-2 rounded-full border ${
                 selected ? 'bg-blue-600 border-blue-600' : 'border-gray-300'
               }`}
