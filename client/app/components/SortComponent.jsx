@@ -51,9 +51,9 @@ export default function Sort({
               onPress={() => {
                 if (!selected) {
                   setSortValue(key)
-                }else{
-                  selected = ""
-                  setSortValue("")
+                } else {
+                  selected = ''
+                  setSortValue('')
                 }
               }}
               className={`px-4 py-2 rounded-full border ${
@@ -61,7 +61,9 @@ export default function Sort({
               }`}
               key={key}
             >
-              <Text>{label}</Text>
+              <Text className={selected ? 'text-white' : 'text-black'}>
+                {label}
+              </Text>
             </TouchableOpacity>
           )
         })}
