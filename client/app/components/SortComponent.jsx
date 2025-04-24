@@ -68,14 +68,14 @@ export default function Sort({
           )
         })}
       </View>
-      <Text
+      <TouchableOpacity
         onPress={() =>
           getData(1, find, sortValue, category, minValue, maxValue)
         }
         className='bg-blue-500 text-white text-center self-center px-12 p-4 text-text-small-medium font-bold mt-10 rounded-xl'
       >
         Apply Filters
-      </Text>
+      </TouchableOpacity>
     </Animated.View>
   )
 }
