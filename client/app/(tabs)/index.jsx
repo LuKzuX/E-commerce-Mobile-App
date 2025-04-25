@@ -6,25 +6,19 @@ import { useProductContext } from '@/context/productContext.jsx'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import SearchBar from '../components/SearchBar.jsx'
-import {
-  ScrollView,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
 import Filter from '../components/FilterComponent.jsx'
 import Sort from '../components/SortComponent.jsx'
 
 export default function HomeScreen() {
-  const navigation = useNavigation()
   const route = useRoute()
   const { products, getData, category, displayCat, find } = useProductContext()
-  const { user } = useAuthContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
+
   useEffect(() => {
     getData(pageValue, find, '', category)
   }, [])
@@ -44,6 +38,7 @@ export default function HomeScreen() {
     }
   }
 
+ 
   return (
     <View className='flex-1 bg-white'>
       {isFilterOpen && (
@@ -52,7 +47,7 @@ export default function HomeScreen() {
           onPress={handleFilterMenu}
         ></Pressable>
       )}
-       {isSortOpen && (
+      {isSortOpen && (
         <Pressable
           className='absolute top-0 w-screen h-screen bg-black bg-black/50 z-10'
           onPress={handleSortMenu}

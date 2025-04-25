@@ -1,5 +1,6 @@
 import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
+import { useEffect, useState } from 'react'
 import {
   View,
   Text,
@@ -10,9 +11,18 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native'
+import { useQuery, useInfiniteQuery } from 'react-query'
 
-export default function ProductList({ data }) {
+export default function ProductList({ data, getData }) {
   const navigation = useNavigation()
+  const [pageValue, setPageValue] = useState(1)
+  const renderMoreData = () => {
+
+  }
+
+  useEffect(() => {
+    const moreData = getData(2)
+  }, [])
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -56,6 +66,8 @@ export default function ProductList({ data }) {
 
   return (
     <FlatList
+      onEndReached={renderMoreData}
+      onEndReachedThreshold={0.5}
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item._id}

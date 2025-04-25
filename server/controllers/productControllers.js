@@ -10,7 +10,7 @@ export const getAllProducts = async (req, res, next) => {
   const category = req.query.c || null
   const numFilterMin = req.query.minprice || 0
   const numFilterMax = req.query.maxprice || 1000000
-  const productsPerPage = 12
+  const productsPerPage = 4
   try {
     const query = {
       productName: { $regex: find, $options: 'i' },
