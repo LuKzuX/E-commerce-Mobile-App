@@ -11,7 +11,7 @@ import Sort from '../components/SortComponent.jsx'
 
 export default function HomeScreen() {
   const route = useRoute()
-  const { products, getData, category, displayCat, find } = useProductContext()
+  const { products, setProducts, getData, category, displayCat, find } = useProductContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
