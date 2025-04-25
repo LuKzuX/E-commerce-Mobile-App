@@ -17,13 +17,6 @@ export default function ProductList({ data, setData, getData }) {
   const navigation = useNavigation()
   const [pageValue, setPageValue] = useState(1)
 
-  useEffect(() => {
-    const handleLoadMore = async () => {
-     
-    }
-    handleLoadMore()
-  }, [])
-
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
       return <Text>{string}</Text>
@@ -34,6 +27,12 @@ export default function ProductList({ data, setData, getData }) {
       }
       return <Text>{newStr + '...'}</Text>
     }
+  }
+
+  const {
+    data,
+    error,
+    hasNextPagew
   }
 
   const renderItem = ({ item }) => (
