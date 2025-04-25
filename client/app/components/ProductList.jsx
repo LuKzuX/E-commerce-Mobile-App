@@ -13,14 +13,16 @@ import {
 } from 'react-native'
 import { useQuery, useInfiniteQuery } from 'react-query'
 
-export default function ProductList({ data, getData }) {
+export default function ProductList({ data, setData, getData }) {
   const navigation = useNavigation()
   const [pageValue, setPageValue] = useState(1)
 
-  const loadMoreData = async () => {
-    setPageValue((prev) => (prev += 1))
-    await getData(pageValue)
-  }
+  useEffect(() => {
+    const handleLoadMore = async () => {
+     
+    }
+    handleLoadMore()
+  }, [])
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -68,8 +70,6 @@ export default function ProductList({ data, getData }) {
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
       numColumns={2}
-      onEndReached={loadMoreData}
-      onEndReachedThreshold={0}
     />
   )
 }

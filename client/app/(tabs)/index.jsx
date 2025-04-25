@@ -11,7 +11,8 @@ import Sort from '../components/SortComponent.jsx'
 
 export default function HomeScreen() {
   const route = useRoute()
-  const { products, setProducts, getData, category, displayCat, find } = useProductContext()
+  const { products, setProducts, getData, category, displayCat, find } =
+    useProductContext()
   const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
@@ -38,7 +39,6 @@ export default function HomeScreen() {
     }
   }
 
- 
   return (
     <View className='flex-1 bg-white'>
       {isFilterOpen && (
@@ -86,7 +86,7 @@ export default function HomeScreen() {
           </View>
         )}
       </View>
-      <ProductList data={products} getData={getData} />
+      <ProductList data={products} setData={setProducts} getData={getData} />
       <Filter
         getData={getData}
         find={find}

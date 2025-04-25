@@ -17,6 +17,7 @@ export function ProductContextProvider({ children }) {
       )
       setProducts(response.data)
       setCat(category)
+      return response.data
     } catch (error) {
       console.log(error)
     }
