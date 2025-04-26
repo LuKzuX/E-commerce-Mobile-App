@@ -14,9 +14,20 @@ import { ProductContextProvider } from '../context/productContext'
 import { useAuthContext } from '../context/authContext'
 import { View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Optional: Configure global query options
+      staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
+      cacheTime: 1000 * 60 * 10, // Keep data in memory for 10 minutes
+    },
+  },
+});
+
 
 function Tabs() {
   return (
@@ -101,6 +112,7 @@ export default function App() {
   return (
     <AuthContextProvider>
       <ProductContextProvider>
+        <QueryClientProvider client={queryClient}>
         <Stack.Navigator>
           <Stack.Screen
             name='Tabs'
@@ -132,6 +144,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
+        </QueryClientProvider>
       </ProductContextProvider>
     </AuthContextProvider>
   )

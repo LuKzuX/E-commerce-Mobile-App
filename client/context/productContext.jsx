@@ -15,7 +15,6 @@ export function ProductContextProvider({ children }) {
       const response = await axios.get(
         `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
       )
-      setProducts(response.data)
       setCat(category)
       return response.data
     } catch (error) {

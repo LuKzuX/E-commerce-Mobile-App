@@ -86,7 +86,7 @@ export default function HomeScreen() {
           </View>
         )}
       </View>
-      <ProductList data={products} setData={setProducts} getData={getData} />
+      <ProductList products={products} setData={setProducts} getData={getData} />
       <Filter
         getData={getData}
         find={find}

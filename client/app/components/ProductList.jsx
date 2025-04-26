@@ -12,10 +12,11 @@ import {
   FlatList,
 } from 'react-native'
 import { useQuery, useInfiniteQuery } from 'react-query'
+import { useProductContext } from '@/context/productContext.jsx'
 
-export default function ProductList({ data, setData, getData }) {
+export default function ProductList({ products, setData, getData }) {
   const navigation = useNavigation()
-  const [pageValue, setPageValue] = useState(1)
+  const { find, sortValue, category } = useProductContext()
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -29,10 +30,20 @@ export default function ProductList({ data, setData, getData }) {
     }
   }
 
-  const {
-    data,
-    error,
-    hasNextPagew
+  const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['products'],
+    queryFn: ({ pageParam = 1 }) =>
+      getData(pageParam, find, sortValue, category),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 4 ? allPages.length + 1 : undefined //change this later
+    },
+  })
+  const allProducts = data?.pages?.flat() || []
+
+  const loadMoreData = () => {
+    if (hasNextPage) {
+      fetchNextPage()
+    }
   }
 
   const renderItem = ({ item }) => (
@@ -65,10 +76,12 @@ export default function ProductList({ data, setData, getData }) {
 
   return (
     <FlatList
-      data={data}
+      data={allProducts}
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
       numColumns={2}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.5}
     />
   )
 }
