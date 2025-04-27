@@ -16,6 +16,7 @@ export default function Sort({
   setMaxValue,
 }) {
   const slideAnim = useRef(new Animated.Value(-800)).current
+  const [sortValueLocal, setSortValueLocal] = useState('')
   const properties = [
     { productName: 'A-Z' },
     { '-productName': 'Z-A' },
@@ -45,15 +46,15 @@ export default function Sort({
       <View className='flex-col gap-10'>
         {properties.map((obj) => {
           const [key, label] = Object.entries(obj)[0]
-          let selected = sortValue === key
+          let selected = sortValueLocal === key
           return (
             <TouchableOpacity
               onPress={() => {
                 if (!selected) {
-                  setSortValue(key)
+                  setSortValueLocal(key)
                 } else {
                   selected = ''
-                  setSortValue('')
+                  setSortValueLocal('')
                 }
               }}
               className={`px-4 py-2 rounded-full border ${
@@ -69,9 +70,10 @@ export default function Sort({
         })}
       </View>
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
+          setSortValue(sortValueLocal)
           getData(1, find, sortValue, category, minValue, maxValue)
-        }
+        }}
         className='bg-blue-500 self-center px-12 p-4 mt-10 rounded-xl'
       >
         <Text className='text-white text-text-small-medium font-bold'>
