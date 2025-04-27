@@ -14,9 +14,8 @@ import {
 import { useQuery, useInfiniteQuery } from 'react-query'
 import { useProductContext } from '@/context/productContext.jsx'
 
-export default function ProductList({ products, setData, getData }) {
+export default function ProductList({ products, setData, getData, find, sortValue, category, minValue, maxValue }) {
   const navigation = useNavigation()
-  const { find, sortValue, category } = useProductContext()
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -31,11 +30,11 @@ export default function ProductList({ products, setData, getData }) {
   }
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['products'],
+    queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
-      getData(pageParam, find, sortValue, category),
+      getData(pageParam, find, sortValue, category, minValue, maxValue),
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 4 ? allPages.length + 1 : undefined //change this later
+      return lastPage.length === 8 ? allPages.length + 1 : undefined 
     },
   })
   const allProducts = data?.pages?.flat() || []

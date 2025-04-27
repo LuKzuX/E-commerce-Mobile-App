@@ -15,6 +15,8 @@ export default function Filter({
   setMaxValue,
 }) {
   const slideAnim = useRef(new Animated.Value(-800)).current
+  const [minValueFilter, setMinValueFilter] = useState("")
+  const [maxValueFilter, setMaxValueFilter] = useState("")
 
   useEffect(() => {
     Animated.timing(slideAnim, {
@@ -46,7 +48,7 @@ export default function Filter({
       ></Ionicons>
       <View className='flex-col gap-10'>
         {priceRanges.map(({ min, max }) => {
-          let selected = minValue === min && maxValue === max
+          let selected = minValueFilter === min && maxValueFilter === max
 
           return (
             <TouchableOpacity
@@ -56,12 +58,12 @@ export default function Filter({
               key={`${min}-${max}`}
               onPress={() => {
                 if (!selected) {
-                  setMinValue(min)
-                  setMaxValue(max)
+                  setMinValueFilter(min)
+                  setMaxValueFilter(max)
                 } else {
                   selected = ''
-                  setMinValue('')
-                  setMaxValue('')
+                  setMinValueFilter('')
+                  setMaxValueFilter('')
                 }
               }}
             >
@@ -74,7 +76,8 @@ export default function Filter({
       </View>
       <TouchableOpacity
         onPress={() =>{
-          getData(1, find, sortValue, category, minValue, maxValue)
+          setMinValue(minValueFilter)
+          setMaxValue(maxValueFilter)
           setIsFilterOpen(false)
         }}
         className='bg-blue-500 self-center px-12 p-4 mt-10 rounded-xl'
