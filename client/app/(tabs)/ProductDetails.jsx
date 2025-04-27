@@ -8,6 +8,7 @@ import { useAuthContext } from '@/context/authContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
+import { prettierPrice } from '@/utils/prettierPrice'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -71,7 +72,7 @@ export default function ProductDetails() {
               <View className='flex-row items-center'>
                 <Text className='text-sm mr-[1px]'>$</Text>
                 <Text className='text-text-small-medium font-semibold text-green-600'>
-                  {data[0].productPrice}
+                  {prettierPrice(data[0].productPrice)}
                 </Text>
               </View>
             </View>
