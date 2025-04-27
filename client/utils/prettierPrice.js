@@ -1,9 +1,14 @@
 export const prettierPrice = (price) => {
   let priceStr = price.toString()
-  for (let i = 0; i == priceStr.length; i++) {
-    if (i % 3 == 0) {
-      priceStr += '.'
+  let newStr = ''
+  let count = 0
+  for (let i = priceStr.length - 1; i >= 0; i--) {
+    newStr = priceStr[i] + newStr
+    count++
+    if (count % 3 == 0 && i !== 0) {
+      newStr = '.' + newStr
     }
   }
-  return priceStr 
+
+  return newStr
 }
