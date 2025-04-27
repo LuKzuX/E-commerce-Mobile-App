@@ -11,10 +11,19 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native'
-import { useQuery, useInfiniteQuery } from 'react-query'
-import { useProductContext } from '@/context/productContext.jsx'
+import { useInfiniteQuery } from 'react-query'
+import { prettierPrice } from '../../utils/prettierPrice.js'
 
-export default function ProductList({ products, setData, getData, find, sortValue, category, minValue, maxValue }) {
+export default function ProductList({
+  products,
+  setData,
+  getData,
+  find,
+  sortValue,
+  category,
+  minValue,
+  maxValue,
+}) {
   const navigation = useNavigation()
 
   const ThreeDots = ({ string }) => {
@@ -34,7 +43,7 @@ export default function ProductList({ products, setData, getData, find, sortValu
     queryFn: ({ pageParam = 1 }) =>
       getData(pageParam, find, sortValue, category, minValue, maxValue),
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 8 ? allPages.length + 1 : undefined 
+      return lastPage.length === 8 ? allPages.length + 1 : undefined
     },
   })
   const allProducts = data?.pages?.flat() || []
@@ -60,7 +69,7 @@ export default function ProductList({ products, setData, getData, find, sortValu
         <View className='flex-row items-center'>
           <Text className='text-sm mr-[1px]'>$</Text>
           <Text className='text-green-600 text-text-small'>
-            {item.productPrice}
+            {prettierPrice(item.productPrice)}
           </Text>
         </View>
       </View>

@@ -73,6 +73,7 @@ export default function Sort({
         onPress={() => {
           setSortValue(sortValueLocal)
           getData(1, find, sortValue, category, minValue, maxValue)
+          setIsSortOpen(false)
         }}
         className='bg-blue-500 self-center px-12 p-4 mt-10 rounded-xl'
       >

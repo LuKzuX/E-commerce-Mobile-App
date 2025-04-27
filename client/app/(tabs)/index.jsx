@@ -76,14 +76,16 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
         {category && (
-          <View className='flex-row justify-between items-center bg-[#FFCA75] p-2 px-3 rounded-lg m-2'>
-            <Text className='text-text-small-medium'>{displayCat}</Text>
-            <Ionicons
-              name={'close-outline'}
-              size={30}
-              onPress={() => getData(pageValue, '', sortValue, '')}
-            />
-          </View>
+       <View className="flex-row items-center justify-between bg-[#FFCA75] rounded-lg mx-2 my-2 px-4 py-3">
+       <Text className="text-base font-medium text-gray-800">{displayCat}</Text>
+       <Ionicons
+         name="close-outline"
+         size={26}
+         color="#333"
+         onPress={() => getData(pageValue, '', sortValue, '')}
+       />
+     </View>
+     
         )}
       </View>
       <ProductList 
