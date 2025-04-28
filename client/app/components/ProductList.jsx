@@ -1,18 +1,15 @@
 import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
-import { useEffect, useState } from 'react'
 import {
   View,
   Text,
-  StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
-  ScrollView,
   FlatList,
 } from 'react-native'
 import { useInfiniteQuery } from 'react-query'
 import { prettierPrice } from '../../utils/prettierPrice.js'
+import useAddProductToCart from "../../utils/useAddProductToCart.js"
 
 export default function ProductList({
   products,
@@ -25,6 +22,7 @@ export default function ProductList({
   maxValue,
 }) {
   const navigation = useNavigation()
+  const addProductToCart = useAddProductToCart()
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -68,14 +66,14 @@ export default function ProductList({
         <ThreeDots string={item.productName}></ThreeDots>
         <View className='flex-row items-center'>
           <Text className='text-sm mr-[1px]'>$</Text>
-          <Text className='text-green-600 text-text-small'>
+          <Text className='text-green-600 text-text-small font-semibold'>
             {prettierPrice(item.productPrice)}
           </Text>
         </View>
       </View>
       <Text
         className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-        onPress={() => console.log(item.productName)}
+        onPress={() => addProductToCart(item._id)}
       >
         Add to Cart
       </Text>

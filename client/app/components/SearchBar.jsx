@@ -49,9 +49,7 @@ export default function SearchBar() {
             color='white'
             name={'cart-outline'}
             size={30}
-            onPress={() => {
-              getData(pageValue, find, '', category)
-            }}
+            onPress={() => navigation.navigate('Cart')}
           />
         </View>
       </SafeAreaView>

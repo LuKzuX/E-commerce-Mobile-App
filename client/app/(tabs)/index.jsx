@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import { useState, useEffect } from 'react'
 import ProductList from '../components/ProductList.jsx'
-import { useAuthContext } from '../../context/authContext.jsx'
 import { useProductContext } from '@/context/productContext.jsx'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -10,10 +9,8 @@ import Filter from '../components/FilterComponent.jsx'
 import Sort from '../components/SortComponent.jsx'
 
 export default function HomeScreen() {
-  const route = useRoute()
   const { products, setProducts, getData, category, displayCat, find } =
     useProductContext()
-  const [pageValue, setPageValue] = useState(1)
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -21,7 +18,7 @@ export default function HomeScreen() {
   const [maxValue, setMaxValue] = useState('')
 
   useEffect(() => {
-    getData(pageValue, find, '', category)
+    getData(1, find, '', category)
   }, [])
 
   const handleSortMenu = () => {

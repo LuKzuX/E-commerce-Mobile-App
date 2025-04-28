@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
@@ -64,7 +63,6 @@ export default function ProductDetails() {
           </View>
 
           <View className='flex-col gap-4 p-4 bg-white rounded-lg shadow-md'>
-            {/* Product Title and Price */}
             <View className='flex-row justify-between items-center'>
               <Text className='text-text-small-medium font-bold text-gray-900 w-[70%]'>
                 {data[0].productName}

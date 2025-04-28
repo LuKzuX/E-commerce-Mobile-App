@@ -9,6 +9,7 @@ import CreateProductScreen from './(tabs)/CreateProductScreen'
 import ProductDetails from './(tabs)/ProductDetails'
 import UpdateProductScreen from './(tabs)/UpdateProductScreen'
 import ProductCategoriesScreen from './(tabs)/ProductCategories'
+import Cart from './(tabs)/Cart'
 import { AuthContextProvider } from '../context/authContext'
 import { ProductContextProvider } from '../context/productContext'
 import { useAuthContext } from '../context/authContext'
@@ -26,8 +27,7 @@ const queryClient = new QueryClient({
       cacheTime: 1000 * 60 * 10, // Keep data in memory for 10 minutes
     },
   },
-});
-
+})
 
 function Tabs() {
   return (
@@ -113,37 +113,42 @@ export default function App() {
     <AuthContextProvider>
       <ProductContextProvider>
         <QueryClientProvider client={queryClient}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name='Tabs'
-            component={Tabs}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ProductDetails'
-            component={ProductDetails}
-            options={{
-              headerShown: true,
-              title: 'Product Details',
-              headerBackTitle: 'Back',
-            }}
-          />
-          <Stack.Screen
-            name='UpdateProduct'
-            component={UpdateProductScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Signup'
-            component={SignupScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Signin'
-            component={SigninScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
+          <Stack.Navigator>
+            <Stack.Screen
+              name='Tabs'
+              component={Tabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='ProductDetails'
+              component={ProductDetails}
+              options={{
+                headerShown: true,
+                title: 'Product Details',
+                headerBackTitle: 'Back',
+              }}
+            />
+            <Stack.Screen
+              name='UpdateProduct'
+              component={UpdateProductScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Signup'
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Signin'
+              component={SigninScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Cart'
+              component={Cart}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
         </QueryClientProvider>
       </ProductContextProvider>
     </AuthContextProvider>
