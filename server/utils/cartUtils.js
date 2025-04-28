@@ -37,6 +37,11 @@ export const addSpecificProductQuantityToCart = (
   }
 };
 
+export const subtractProductQuantity = async (user,id) => {
+  const product = user.cart.find((obj) => obj._id == id)
+  
+}
+
 export const calculatePrice = async (user) => {
   const productIds = user.cart.map((obj) => obj._id.toString());
   const products = await Product.find({ _id: { $in: productIds } });
