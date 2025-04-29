@@ -1,17 +1,17 @@
-import { Product } from "../models/productSchema.js";
+import { Product } from '../models/productSchema.js'
 
 export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
-  let found = false;
+  let found = false
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
-      user.cart[i].quantity += 1;
-      found = true;
+      user.cart[i].quantity += 1
+      found = true
     }
   }
   if (!found) {
-    user.cart.push(productToBeAdded);
+    user.cart.push(productToBeAdded)
   }
-};
+}
 
 export const addSpecificProductQuantityToCart = (
   user,
@@ -19,38 +19,46 @@ export const addSpecificProductQuantityToCart = (
   quantity,
   product
 ) => {
-  let found = false;
-  let x = 0;
+  let found = false
+  let x = 0
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
-      user.cart[i].quantity = quantity;
-      found = true;
+      user.cart[i].quantity = quantity
+      found = true
     } else {
       if (user.cart.length > 1) {
-        x = user.cart.length - 1;
+        x = user.cart.length - 1
       }
     }
   }
   if (!found) {
-    user.cart.push(product);
-    user.cart[x].quantity = quantity;
+    user.cart.push(product)
+    user.cart[x].quantity = quantity
   }
-};
+}
 
-export const subtractProductQuantity = async (user,id) => {
+export const subtractProductQuantity = async (user, id) => {
   const product = user.cart.find((obj) => obj._id == id)
-  
 }
 
 export const calculatePrice = async (user) => {
-  const productIds = user.cart.map((obj) => obj._id.toString());
-  const products = await Product.find({ _id: { $in: productIds } });
+  const productIds = user.cart.map((obj) => obj._id.toString())
+  const products = await Product.find({ _id: { $in: productIds } })
+
+  const productsMap = {}
+  for (let i = 0; i < products.length; i++) {
+    productsMap[products[i]._id.toString()] = products[i]
+  }
+  
+  
   for (let i = 0; i < user.cart.length; i++) {
-    if (productIds[i].toString() == user.cart[i]._id.toString()) {
-      user.cart[i].totalPrice = 0;
-      user.cart[i].totalPrice =
-        products[i].productPrice * user.cart[i].quantity;
+    const product = productsMap[user.cart[i]._id.toString()] // productsMap.id
+    
+    if (product) {
+      user.cart[i].totalPrice = product.productPrice * user.cart[i].quantity
     }
   }
-  await user.save();
-};
+  console.log(user.cart);
+  
+  await user.save()
+}
