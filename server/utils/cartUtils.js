@@ -47,18 +47,16 @@ export const calculatePrice = async (user) => {
 
   const productsMap = {}
   for (let i = 0; i < products.length; i++) {
-    productsMap[products[i]._id.toString()] = products[i]
+    productsMap[products[i]._id.toString()] = products[i] //productsMap.id = {Obj}
   }
-  
-  
+
   for (let i = 0; i < user.cart.length; i++) {
-    const product = productsMap[user.cart[i]._id.toString()] // productsMap.id
-    
+    const product = productsMap[user.cart[i]._id.toString()] // product = {Obj}
+
     if (product) {
       user.cart[i].totalPrice = product.productPrice * user.cart[i].quantity
     }
   }
-  console.log(user.cart);
-  
+
   await user.save()
 }
