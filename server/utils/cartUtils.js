@@ -39,6 +39,13 @@ export const addSpecificProductQuantityToCart = (
 
 export const subtractProductQuantity = async (user, id) => {
   const product = user.cart.find((obj) => obj._id == id)
+  console.log(product);
+  
+  if (product.quantity <= 1) {
+    user.cart.filter((obj) => obj._id !== id)
+  } else {
+    product.quantity -= 1
+  }
 }
 
 export const calculatePrice = async (user) => {
