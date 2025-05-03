@@ -8,7 +8,7 @@ import { ip } from "../../getIp";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import SearchBar from "../components/SearchBar";
 import { prettierPrice } from "@/utils/prettierPrice";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 export default function ProductDetails() {
   const { user } = useAuthContext();
@@ -17,7 +17,7 @@ export default function ProductDetails() {
   const deleteProduct = useDeleteProduct();
   const navigation = useNavigation();
   const { getData, products } = useProductContext();
-  const { data, setData, getProduct } = useGetProductDetails();
+  const { data, setData } = useGetProductDetails(id);
   const categories = [
     { label: "Computers", value: "computers" },
     { label: "Smartphones", value: "smartphones" },
@@ -30,8 +30,8 @@ export default function ProductDetails() {
   ];
 
   useEffect(() => {
-    getProduct(id);
-  }, [products]);
+    setData([])
+  }, [id])
 
   const Cat = () => {
     if (!data) {

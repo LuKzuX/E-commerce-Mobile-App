@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useProductContext } from "@/context/productContext";
 
-export default function useGetProductDetails() {
+export default function useGetProductDetails(id) {
   const [data, setData] = useState([]);
   const { products, getData } = useProductContext();
 
   useEffect(() => {
-    const getProduct = async (id) => {
+    const getProduct = async () => {
       try {
         const product = await axios.get(
           `http://${ip}:5000/material-delivery/${id}`
@@ -19,6 +19,6 @@ export default function useGetProductDetails() {
       }
     };
     getProduct();
-  }, [id, products]);
-  return { data, setData, getData };
+  }, [id]); 
+  return { data, setData };
 }
