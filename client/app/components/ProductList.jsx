@@ -6,6 +6,7 @@ import { prettierPrice } from '../../utils/prettierPrice.js'
 import useAddProductToCart from '../../utils/useAddProductToCart.js'
 import { useAuthContext } from '@/context/authContext.jsx'
 import { useState, useEffect } from 'react'
+import useGetCartData from '../../utils/useGetCartData.js'
 
 export default function ProductList({
   products,
@@ -19,24 +20,20 @@ export default function ProductList({
 }) {
   const navigation = useNavigation()
   const addProductToCart = useAddProductToCart()
-  const { user, logout } = useAuthContext()
+  const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
+  const { cartData, getCartData } = useGetCartData()
 
   useEffect(() => {
     if (!user || !user.user || !user.user.cart) {
       setBoughtProducts([])
       return
     }
-    const userCart = user.user.cart
-    console.log(userCart);
-    
+    const userCart = cartData
 
     const productIds = userCart.map((item) => item._id.toString())
     setBoughtProducts(productIds)
-    getData(1, find, sortValue, category, minValue, maxValue);
-  }, [user?.user?.cart])
-
-  
+  }, [cartData, user])
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -49,6 +46,7 @@ export default function ProductList({
       return <Text>{newStr + '...'}</Text>
     }
   }
+  
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -96,7 +94,15 @@ export default function ProductList({
       {!boughtProducts.includes(item._id.toString()) && (
         <Text
           className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-          onPress={() => addProductToCart(item._id.toString())}
+          onPress={async () => {
+            try {
+              await addProductToCart(item._id.toString())
+              await getCartData()
+              setBoughtProducts(prev => [...prev, item._id.toString()])
+            } catch (error) {
+              console.log(error)
+            }
+          }}
         >
           Add to Cart
         </Text>

@@ -7,7 +7,7 @@ export default function useAddProductToCart() {
   const { user, setUser } = useAuthContext()
   const addProductToCart = async (id) => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `http://${ip}:5000/material-delivery/cart/${id}`,
         {}, // empty object for request body
         {
@@ -16,12 +16,9 @@ export default function useAddProductToCart() {
           },
         }
       )
-      console.log(res.data.cart);
-      
     } catch (error) {
       console.log(error)
     }
   }
   return addProductToCart
 }
- 
