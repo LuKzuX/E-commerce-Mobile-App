@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { useProductContext } from '@/context/productContext.jsx'
+import { useQueryClient } from 'react-query'
 
 export default function CreateProductScreen() {
   const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
@@ -33,6 +34,7 @@ export default function CreateProductScreen() {
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
   const { getData } = useProductContext()
+  const queryClient = useQueryClient()
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
@@ -102,7 +104,7 @@ export default function CreateProductScreen() {
                     productDescription,
                     productQuantity
                   )
-                  await getData()
+                  queryClient.invalidateQueries(['products'])
                   setProductName('')
                   setProductPrice('')
                   setProductCategory([

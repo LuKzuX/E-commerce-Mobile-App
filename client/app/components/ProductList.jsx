@@ -27,19 +27,16 @@ export default function ProductList({
       return
     }
     const userCart = user.user.cart
-    
-    for (let i = 0; i < userCart.length; i++) {
-      const productIds = userCart.map((item) => item._id.toString())
-      setBoughtProducts(productIds)
-    }
-  }, [])
 
+    const productIds = userCart.map((item) => item._id.toString())
+    setBoughtProducts(productIds)
+  }, [])
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
       return <Text>{string}</Text>
     } else {
-      let newStr = '' 
+      let newStr = ''
       for (let i = 0; i < 17; i++) {
         newStr += string[i]
       }

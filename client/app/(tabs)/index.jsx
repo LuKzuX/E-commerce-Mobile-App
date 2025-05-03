@@ -17,10 +17,6 @@ export default function HomeScreen() {
   const [minValue, setMinValue] = useState('')
   const [maxValue, setMaxValue] = useState('')
 
-  useEffect(() => {
-    getData(1, find, '', category)
-  }, [])
-
   const handleSortMenu = () => {
     if (isSortOpen) {
       setIsSortOpen(false)
