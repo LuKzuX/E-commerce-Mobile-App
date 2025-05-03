@@ -16,8 +16,7 @@ export default function useAddProductToCart() {
           },
         }
       )
-      setUser((prop) => prop.cart = res.data.user.cart) // Assuming res.data contains updated user info
-      console.log(res.data.user.cart);
+      console.log(res.data.cart);
       
     } catch (error) {
       console.log(error)

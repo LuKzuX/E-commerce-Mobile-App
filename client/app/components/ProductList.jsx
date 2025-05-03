@@ -19,18 +19,24 @@ export default function ProductList({
 }) {
   const navigation = useNavigation()
   const addProductToCart = useAddProductToCart()
-  const { user } = useAuthContext()
+  const { user, logout } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
 
   useEffect(() => {
     if (!user || !user.user || !user.user.cart) {
+      setBoughtProducts([])
       return
     }
     const userCart = user.user.cart
+    console.log(userCart);
+    
 
     const productIds = userCart.map((item) => item._id.toString())
     setBoughtProducts(productIds)
-  }, [])
+    getData(1, find, sortValue, category, minValue, maxValue);
+  }, [user?.user?.cart])
+
+  
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
