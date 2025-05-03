@@ -1,15 +1,11 @@
 import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native'
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useInfiniteQuery } from 'react-query'
 import { prettierPrice } from '../../utils/prettierPrice.js'
-import useAddProductToCart from "../../utils/useAddProductToCart.js"
+import useAddProductToCart from '../../utils/useAddProductToCart.js'
+import { useAuthContext } from '@/context/authContext.jsx'
+import { useState, useEffect } from 'react'
 
 export default function ProductList({
   products,
@@ -23,12 +19,27 @@ export default function ProductList({
 }) {
   const navigation = useNavigation()
   const addProductToCart = useAddProductToCart()
+  const { user } = useAuthContext()
+  const [boughtProducts, setBoughtProducts] = useState([])
+
+  useEffect(() => {
+    if (!user || !user.user || !user.user.cart) {
+      return
+    }
+    const userCart = user.user.cart
+    
+    for (let i = 0; i < userCart.length; i++) {
+      const productIds = userCart.map((item) => item._id.toString())
+      setBoughtProducts(productIds)
+    }
+  }, [])
+
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
       return <Text>{string}</Text>
     } else {
-      let newStr = ''
+      let newStr = '' 
       for (let i = 0; i < 17; i++) {
         newStr += string[i]
       }
@@ -71,12 +82,22 @@ export default function ProductList({
           </Text>
         </View>
       </View>
-      <Text
-        className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-        onPress={() => addProductToCart(item._id)}
-      >
-        Add to Cart
-      </Text>
+      {boughtProducts.includes(item._id.toString()) && (
+        <Text
+          className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
+          disabled={true}
+        >
+          Added to Cart
+        </Text>
+      )}
+      {!boughtProducts.includes(item._id.toString()) && (
+        <Text
+          className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
+          onPress={() => addProductToCart(item._id.toString())}
+        >
+          Add to Cart
+        </Text>
+      )}
     </TouchableOpacity>
   )
 

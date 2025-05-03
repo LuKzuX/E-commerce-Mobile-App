@@ -39,13 +39,17 @@ export const addSpecificProductQuantityToCart = (
 
 export const subtractProductQuantity = async (user, id) => {
   const product = user.cart.find((obj) => obj._id == id)
-  console.log(product);
-  
+  const fullProduct = await Product.find({ _id: id })
+  console.log(fullProduct)
+
   if (product.quantity <= 1) {
-    user.cart.filter((obj) => obj._id !== id)
+    user.cart = user.cart.filter((obj) => obj._id.toString() !== id)
   } else {
     product.quantity -= 1
+    product.totalPrice -= fullProduct[0].productPrice
   }
+  await user.save()
+  return user.cart
 }
 
 export const calculatePrice = async (user) => {
