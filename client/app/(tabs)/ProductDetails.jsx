@@ -14,7 +14,6 @@ export default function ProductDetails() {
   const route = useRoute()
   const { id } = route.params
   const { getProduct } = useGetProductDetails()
-  const {data} = getProduct(id)
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
   const { getData } = useProductContext()
