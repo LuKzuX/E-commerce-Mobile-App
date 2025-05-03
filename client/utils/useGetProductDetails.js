@@ -2,21 +2,18 @@ import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export default function useGetProductDetails(id) {
+export default function useGetProductDetails() {
   const [data, setData] = useState([])
 
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const product = await axios.get(
-          `http://${ip}:5000/material-delivery/${id}`
-        )
-        setData(product.data)
-      } catch (error) {
-        console.log(error)
-      }
+  const getProduct = async (id) => {
+    try {
+      const product = await axios.get(
+        `http://${ip}:5000/material-delivery/${id}`
+      )
+      setData(product.data)
+    } catch (error) {
+      console.log(error)
     }
-    getProduct()
-  }, [id])
-  return { data, setData }
+  }
+  return {getProduct, data}
 }

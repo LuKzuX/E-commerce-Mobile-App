@@ -13,7 +13,8 @@ export default function ProductDetails() {
   const { user } = useAuthContext()
   const route = useRoute()
   const { id } = route.params
-  const { data, setData } = useGetProductDetails(id)
+  const { getProduct } = useGetProductDetails()
+  const {data} = getProduct(id)
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
   const { getData } = useProductContext()
@@ -27,7 +28,7 @@ export default function ProductDetails() {
     { label: 'Food & Beverage', value: 'food-beverage' },
     { label: 'Office Supplies', value: 'office-supplies' },
   ]
-
+  
   const Cat = () => {
     if (!data) {
       return <Text>Loading...</Text>
@@ -43,10 +44,6 @@ export default function ProductDetails() {
       </View>
     )
   }
-
-  useEffect(() => {
-    setData([])
-  }, [id])
 
   return (
     <ScrollView className='bg-bg-gray'>
@@ -126,7 +123,9 @@ export default function ProductDetails() {
                 Delete Product
               </Text>
               <Text
-                onPress={() => navigation.navigate('UpdateProduct', { id })}
+                onPress={() => {
+                  navigation.navigate('UpdateProduct', { id })
+                }}
                 className='bg-orange-400 px-6 py-3 rounded-md text-white font-semibold'
               >
                 Update Product

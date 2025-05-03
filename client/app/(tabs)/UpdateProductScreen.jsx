@@ -18,16 +18,16 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import useGetProductDetails from '../../utils/useGetProductDetails.js'
 import axios from 'axios'
+import { useQueryClient } from 'react-query'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
   const { id } = route.params
   const navigation = useNavigation()
-  const { getProduct } = useGetProductDetails(id)
+  const { getProduct } = useGetProductDetails()
 
   const { uploadData, handleUpload, success, uri, setUri } = useUploadData()
   const { user } = useAuthContext()
-  const { getData } = useProductContext()
 
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState('')
@@ -45,6 +45,7 @@ export default function UpdateProductScreen() {
   ])
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     const getProductData = async () => {
@@ -144,7 +145,8 @@ export default function UpdateProductScreen() {
                     productQuantity
                   )
                   if (response) {
-                    await getData()
+                    getProduct(id)
+                    queryClient.invalidateQueries(['products'])
                   }
                 } catch (error) {
                   console.log(error)
