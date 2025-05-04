@@ -47,6 +47,11 @@ export default function ProductList({
     }
   }
 
+  const getProductQuantityInCart = (id) => {
+    const cartProduct = cartData.filter((obj) => obj._id.toString() == id)
+    return cartProduct[0].quantity
+  }
+
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
@@ -83,12 +88,15 @@ export default function ProductList({
         </View>
       </View>
       {boughtProducts.includes(item._id.toString()) && (
-        <Text
-          className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-          disabled={true}
-        >
-          Added to Cart
-        </Text>
+        <View className='flex-row items-center'>
+          <Text
+            className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
+            disabled={true}
+          >
+            {getProductQuantityInCart(item._id.toString())}
+          </Text>
+          <Text className='text-text-medium'>+</Text>
+        </View>
       )}
       {boughtProducts.includes(item._id.toString()) == false && (
         <Text
