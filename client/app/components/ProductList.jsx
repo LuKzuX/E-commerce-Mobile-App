@@ -23,7 +23,7 @@ export default function ProductList({
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
   const { cartData } = useGetCartData()
-
+  const [productQuantityInCart, setProductQuantityInCart] = useState({})
   useEffect(() => {
     if (!user || !user.user || !user.user.cart) {
       setBoughtProducts([])
@@ -31,7 +31,9 @@ export default function ProductList({
     }
     const userCart = cartData
 
-    const productIds = userCart.map((item) => item._id.toString())
+    const productIds = userCart.map((item) => {
+      return { id: item._id.toString(), qnt: item.quantity }
+    })
     setBoughtProducts(productIds)
   }, [user, cartData])
 
@@ -47,9 +49,13 @@ export default function ProductList({
     }
   }
 
-  const getProductQuantityInCart = (id) => {
-    const cartProduct = cartData.filter((obj) => obj._id.toString() == id)
-    return cartProduct[0].quantity
+  const isProductInCart = (id) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id) {
+        return true
+      }
+    }
+    return false
   }
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
@@ -87,23 +93,24 @@ export default function ProductList({
           </Text>
         </View>
       </View>
-      {boughtProducts.includes(item._id.toString()) && (
+      {isProductInCart(item._id.toString()) && (
         <View className='flex-row items-center'>
+          <Text className='text-text-medium'>-</Text>
           <Text
             className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
             disabled={true}
           >
-            {getProductQuantityInCart(item._id.toString())}
+            added to cart
           </Text>
           <Text className='text-text-medium'>+</Text>
         </View>
       )}
-      {boughtProducts.includes(item._id.toString()) == false && (
+      {!isProductInCart(item._id.toString()) && (
         <Text
           className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
           onPress={async () => {
             try {
-              setBoughtProducts((prev) => [...prev, item._id.toString()])
+              setBoughtProducts((prev) => [...prev, {id: item._id.toString(), qnt: item.quantity}])
               await addProductToCart(item._id.toString())
             } catch (error) {
               setBoughtProducts((prev) =>
