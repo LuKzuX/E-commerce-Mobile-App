@@ -95,14 +95,14 @@ export default function ProductList({
       </View>
       {isProductInCart(item._id.toString()) && (
         <View className='flex-row items-center'>
-          <Text className='text-text-medium'>-</Text>
+          <Text className='text-text-medium'>-</Text> ////////////////// 
           <Text
             className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
             disabled={true}
           >
             added to cart
           </Text>
-          <Text className='text-text-medium'>+</Text>
+          <Text className='text-text-medium'>+</Text> //////////////////
         </View>
       )}
       {!isProductInCart(item._id.toString()) && (
