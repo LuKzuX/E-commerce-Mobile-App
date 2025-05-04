@@ -22,7 +22,7 @@ export default function ProductList({
   const addProductToCart = useAddProductToCart()
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
-  const { cartData, getCartData } = useGetCartData()
+  const { cartData } = useGetCartData()
 
   useEffect(() => {
     if (!user || !user.user || !user.user.cart) {
@@ -33,7 +33,7 @@ export default function ProductList({
 
     const productIds = userCart.map((item) => item._id.toString())
     setBoughtProducts(productIds)
-  }, [cartData, user])
+  }, [user, cartData])
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -46,7 +46,6 @@ export default function ProductList({
       return <Text>{newStr + '...'}</Text>
     }
   }
-  
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -91,15 +90,17 @@ export default function ProductList({
           Added to Cart
         </Text>
       )}
-      {!boughtProducts.includes(item._id.toString()) && (
+      {boughtProducts.includes(item._id.toString()) == false && (
         <Text
           className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
           onPress={async () => {
             try {
+              setBoughtProducts((prev) => [...prev, item._id.toString()])
               await addProductToCart(item._id.toString())
-              await getCartData()
-              setBoughtProducts(prev => [...prev, item._id.toString()])
             } catch (error) {
+              setBoughtProducts((prev) =>
+                prev.filter((id) => id !== item._id.toString())
+              )
               console.log(error)
             }
           }}
