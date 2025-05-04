@@ -57,6 +57,23 @@ export default function ProductList({
     return false
   }
 
+  const incrementQuantity = (id, qnt) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id) {
+        const array = [...boughtProducts]
+        array[i] = {
+          id: boughtProducts[i].id,
+          qnt: boughtProducts[i].qnt + 1,
+        }
+        setBoughtProducts(array)
+      }
+    }
+    addProductToCart(id)
+  }
+  console.log(boughtProducts)
+
+  const decrementQuantity = (id) => {}
+
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
@@ -109,7 +126,14 @@ export default function ProductList({
           >
             {getProductQuantityInCart(item._id)}
           </Text>
-          <Text className='text-text-medium'>+</Text>
+          <Text
+            onPress={() =>
+              incrementQuantity(item._id.toString(), item.quantity)
+            }
+            className='text-text-medium p-4'
+          >
+            <Text>+</Text>
+          </Text>
         </View>
       )}
       {!isProductInCart(item._id.toString()) && (
