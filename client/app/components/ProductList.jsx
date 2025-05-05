@@ -8,7 +8,7 @@ import { useAuthContext } from '@/context/authContext.jsx'
 import { useState, useEffect } from 'react'
 import useGetCartData from '../../utils/useGetCartData.js'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
-import { all } from 'axios'
+import useRemoveProductFromCart from "../../utils/useRemoveProductFromCart.js"
 
 export default function ProductList({
   products,
@@ -22,6 +22,7 @@ export default function ProductList({
 }) {
   const navigation = useNavigation()
   const addProductToCart = useAddProductToCart()
+  const removeProductFromCart = useRemoveProductFromCart()
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
   const { cartData } = useGetCartData()
@@ -71,7 +72,6 @@ export default function ProductList({
       }
     }
     addProductToCart(id)
-    return qnt
   }
 
   const decrementQuantity = (id) => {
@@ -85,6 +85,7 @@ export default function ProductList({
         setBoughtProducts(array)
       }
     }
+    removeProductFromCart(id)
   }
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
