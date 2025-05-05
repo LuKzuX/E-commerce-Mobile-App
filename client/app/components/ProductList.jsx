@@ -7,6 +7,8 @@ import useAddProductToCart from '../../utils/useAddProductToCart.js'
 import { useAuthContext } from '@/context/authContext.jsx'
 import { useState, useEffect } from 'react'
 import useGetCartData from '../../utils/useGetCartData.js'
+import Ionicons from '@expo/vector-icons/Ionicons.js'
+import { all } from 'axios'
 
 export default function ProductList({
   products,
@@ -69,10 +71,21 @@ export default function ProductList({
       }
     }
     addProductToCart(id)
+    return qnt
   }
-  console.log(boughtProducts)
 
-  const decrementQuantity = (id) => {}
+  const decrementQuantity = (id) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id) {
+        const array = [...boughtProducts]
+        array[i] = {
+          id: boughtProducts[i].id,
+          qnt: boughtProducts[i].qnt - 1,
+        }
+        setBoughtProducts(array)
+      }
+    }
+  }
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -99,46 +112,52 @@ export default function ProductList({
   }
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
-      className='flex w-1/2 px-7 py-10 bg-white'
-    >
-      <Image
-        source={{ uri: `http://${ip}:5000/` + item.productImage }}
-        className='h-[150px]'
-        resizeMode='contain'
-      />
-      <View className='mt-[5px] flex-col justify-between'>
-        <ThreeDots string={item.productName}></ThreeDots>
-        <View className='flex-row items-center'>
-          <Text className='text-sm mr-[1px]'>$</Text>
-          <Text className='text-green-600 text-text-small font-semibold'>
-            {prettierPrice(item.productPrice)}
-          </Text>
+    <View className='flex w-1/2 px-7 py-10 bg-white'>
+      {/* Área que leva à tela de detalhes */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
+      >
+        <Image
+          source={{ uri: `http://${ip}:5000/` + item.productImage }}
+          className='h-[150px]'
+          resizeMode='contain'
+        />
+        <View className='mt-[5px] flex-col justify-between'>
+          <ThreeDots string={item.productName} />
+          <View className='flex-row items-center'>
+            <Text className='text-sm mr-[1px]'>$</Text>
+            <Text className='text-green-600 text-text-small font-semibold'>
+              {prettierPrice(item.productPrice)}
+            </Text>
+          </View>
         </View>
-      </View>
-      {isProductInCart(item._id.toString()) && (
-        <View className='flex-row items-center'>
-          <Text className='text-text-medium'>-</Text>
-          <Text
-            className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
-            disabled={true}
+      </TouchableOpacity>
+
+      {isProductInCart(item._id.toString()) ? (
+        <View className='flex-row items-center justify-center mt-2'>
+          <TouchableOpacity
+            onPress={() => decrementQuantity(item._id.toString())}
           >
+            <Text className='text-text-medium'>-</Text>
+          </TouchableOpacity>
+          <Text className='mx-2 self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
             {getProductQuantityInCart(item._id)}
           </Text>
-          <Text
+          <TouchableOpacity
+            disabled={getProductQuantityInCart(item._id) >= 5}
             onPress={() =>
               incrementQuantity(item._id.toString(), item.quantity)
             }
-            className='text-text-medium p-4'
+            style={{
+              opacity: getProductQuantityInCart(item._id) >= 5 ? 0.5 : 1,
+            }}
           >
-            <Text>+</Text>
-          </Text>
+            <Ionicons name='add-outline' size={24} />
+          </TouchableOpacity>
         </View>
-      )}
-      {!isProductInCart(item._id.toString()) && (
-        <Text
-          className='self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl mt-[10px]'
+      ) : (
+        <TouchableOpacity
+          className='self-center mt-[10px]'
           onPress={async () => {
             try {
               setBoughtProducts((prev) => [
@@ -154,10 +173,12 @@ export default function ProductList({
             }
           }}
         >
-          Add to Cart
-        </Text>
+          <Text className='text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
+            Add to Cart
+          </Text>
+        </TouchableOpacity>
       )}
-    </TouchableOpacity>
+    </View>
   )
 
   return (
