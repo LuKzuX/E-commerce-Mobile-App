@@ -8,7 +8,7 @@ import { useAuthContext } from '@/context/authContext.jsx'
 import { useState, useEffect } from 'react'
 import useGetCartData from '../../utils/useGetCartData.js'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
-import useRemoveProductFromCart from "../../utils/useRemoveProductFromCart.js"
+import useRemoveProductFromCart from '../../utils/useRemoveProductFromCart.js'
 
 export default function ProductList({
   products,
@@ -22,22 +22,17 @@ export default function ProductList({
 }) {
   const navigation = useNavigation()
   const addProductToCart = useAddProductToCart()
-  const removeProductFromCart = useRemoveProductFromCart()
   const { user } = useAuthContext()
-  const [boughtProducts, setBoughtProducts] = useState([])
-  const { cartData } = useGetCartData()
-  useEffect(() => {
-    if (!user || !user.user || !user.user.cart) {
-      setBoughtProducts([])
-      return
-    }
-    const userCart = cartData
 
-    const productIds = userCart.map((item) => {
-      return { id: item._id.toString(), qnt: item.quantity }
-    })
-    setBoughtProducts(productIds)
-  }, [user, cartData])
+  const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['products', find, sortValue, category, minValue, maxValue],
+    queryFn: ({ pageParam = 1 }) =>
+      getData(pageParam, find, sortValue, category, minValue, maxValue),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 8 ? allPages.length + 1 : undefined
+    },
+  })
+  const allProducts = data?.pages?.flat() || []
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -51,64 +46,9 @@ export default function ProductList({
     }
   }
 
-  const isProductInCart = (id) => {
-    for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id) {
-        return true
-      }
-    }
-    return false
-  }
-
-  const incrementQuantity = (id, qnt) => {
-    for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id) {
-        const array = [...boughtProducts]
-        array[i] = {
-          id: boughtProducts[i].id,
-          qnt: boughtProducts[i].qnt + 1,
-        }
-        setBoughtProducts(array)
-      }
-    }
-    addProductToCart(id)
-  }
-
-  const decrementQuantity = (id) => {
-    for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id) {
-        const array = [...boughtProducts]
-        array[i] = {
-          id: boughtProducts[i].id,
-          qnt: boughtProducts[i].qnt - 1,
-        }
-        setBoughtProducts(array)
-      }
-    }
-    removeProductFromCart(id)
-  }
-
-  const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['products', find, sortValue, category, minValue, maxValue],
-    queryFn: ({ pageParam = 1 }) =>
-      getData(pageParam, find, sortValue, category, minValue, maxValue),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 8 ? allPages.length + 1 : undefined
-    },
-  })
-  const allProducts = data?.pages?.flat() || []
-
   const loadMoreData = () => {
     if (hasNextPage) {
       fetchNextPage()
-    }
-  }
-
-  const getProductQuantityInCart = (id) => {
-    for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id.toString()) {
-        return boughtProducts[i].qnt
-      }
     }
   }
 

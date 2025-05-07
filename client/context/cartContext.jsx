@@ -65,6 +65,7 @@ export const CartContextProvider = ({ children }) => {
       value={{
         addProductToCart,
         isProductInCart,
+        getProductQuantityInCart,
         incrementQuantity,
         decrementQuantity,
         boughtProducts,
