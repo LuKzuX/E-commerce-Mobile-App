@@ -14,28 +14,51 @@ export const useCartContext = () => {
 
 export const CartContextProvider = ({ children }) => {
   const { user } = useAuthContext()
-  const [cartData, setCartData] = useState([])
   const [boughtProducts, setBoughtProducts] = useState([])
 
   useEffect(() => {
-    //get products and set inital staTE FOR Boughtproductys
+    const getCartData = async () => {
+      try {
+        const res = await axios.get(
+          `http://${ip}:5000/material-delivery/cart`,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        const productsInCart = res.data.map((obj) => {
+          return { id: obj._id.toString(), qnt: obj.quantity }
+        })
+        setBoughtProducts(productsInCart)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getCartData()
   }, [user, cartData])
 
-  const addProductToCart = (id) => {
-
+  const addProductToCart = async (id) => {
+    try {
+      await axios.post(
+        `http://${ip}:5000/material-delivery/cart/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const isProductInCart = (id) => {
+  const isProductInCart = (id) => {}
 
-  }
+  const getProductQuantityInCart = (id) => {}
 
-  const incrementQuantity = (id) => {
+  const incrementQuantity = (id) => {}
 
-  }
-
-  const decrementQuantity = (id) => {
-
-  }
+  const decrementQuantity = (id) => {}
 
   return (
     <CartContext.Provider
@@ -44,7 +67,7 @@ export const CartContextProvider = ({ children }) => {
         isProductInCart,
         incrementQuantity,
         decrementQuantity,
-        boughtProducts
+        boughtProducts,
       }}
     >
       {children}
