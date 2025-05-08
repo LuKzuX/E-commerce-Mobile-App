@@ -12,7 +12,7 @@ import ProductCategoriesScreen from './(tabs)/ProductCategories'
 import Cart from './(tabs)/Cart'
 import { AuthContextProvider } from '../context/authContext'
 import { ProductContextProvider } from '../context/productContext'
-import { useAuthContext } from '../context/authContext'
+import { CartContextProvider } from '@/context/cartContext'
 import { View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -112,44 +112,46 @@ export default function App() {
   return (
     <AuthContextProvider>
       <ProductContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack.Navigator>
-            <Stack.Screen
-              name='Tabs'
-              component={Tabs}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='ProductDetails'
-              component={ProductDetails}
-              options={{
-                headerShown: true,
-                title: 'Product Details',
-                headerBackTitle: 'Back',
-              }}
-            />
-            <Stack.Screen
-              name='UpdateProduct'
-              component={UpdateProductScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='Signup'
-              component={SignupScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='Signin'
-              component={SigninScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='Cart'
-              component={Cart}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </QueryClientProvider>
+        <CartContextProvider>
+          <QueryClientProvider client={queryClient}>
+            <Stack.Navigator>
+              <Stack.Screen
+                name='Tabs'
+                component={Tabs}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='ProductDetails'
+                component={ProductDetails}
+                options={{
+                  headerShown: true,
+                  title: 'Product Details',
+                  headerBackTitle: 'Back',
+                }}
+              />
+              <Stack.Screen
+                name='UpdateProduct'
+                component={UpdateProductScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='Signup'
+                component={SignupScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='Signin'
+                component={SigninScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='Cart'
+                component={Cart}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </QueryClientProvider>
+        </CartContextProvider>
       </ProductContextProvider>
     </AuthContextProvider>
   )

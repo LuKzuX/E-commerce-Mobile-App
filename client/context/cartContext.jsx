@@ -34,7 +34,7 @@ export const CartContextProvider = ({ children }) => {
       }
     }
     getCartData()
-  }, [user, cartData])
+  }, [user, boughtProducts])
 
   const addProductToCart = async (id) => {
     try {
@@ -52,7 +52,14 @@ export const CartContextProvider = ({ children }) => {
     }
   }
 
-  const isProductInCart = (id) => {}
+  const isProductInCart = (id) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id.toString()) {
+        return true
+      }
+    }
+    return false
+  }
 
   const getProductQuantityInCart = (id) => {}
 

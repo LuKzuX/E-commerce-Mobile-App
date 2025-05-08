@@ -3,12 +3,9 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useInfiniteQuery } from 'react-query'
 import { prettierPrice } from '../../utils/prettierPrice.js'
-import useAddProductToCart from '../../utils/useAddProductToCart.js'
 import { useAuthContext } from '@/context/authContext.jsx'
-import { useState, useEffect } from 'react'
-import useGetCartData from '../../utils/useGetCartData.js'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
-import useRemoveProductFromCart from '../../utils/useRemoveProductFromCart.js'
+import { useCartContext } from '../../context/cartContext.jsx'
 
 export default function ProductList({
   products,
@@ -21,8 +18,14 @@ export default function ProductList({
   maxValue,
 }) {
   const navigation = useNavigation()
-  const addProductToCart = useAddProductToCart()
-  const { user } = useAuthContext()
+  const {
+    addProductToCart,
+    isProductInCart,
+    getProductQuantityInCart,
+    incrementQuantity,
+    decrementQuantity,
+    boughtProducts,
+  } = useCartContext()
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
