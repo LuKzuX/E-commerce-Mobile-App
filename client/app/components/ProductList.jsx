@@ -59,7 +59,6 @@ export default function ProductList({
 
   const renderItem = ({ item }) => (
     <View className='flex w-1/2 px-7 py-10 bg-white'>
-      {/* Área que leva à tela de detalhes */}
       <TouchableOpacity
         onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
       >
@@ -87,7 +86,7 @@ export default function ProductList({
             <Text className='text-text-medium'>-</Text>
           </TouchableOpacity>
           <Text className='mx-2 self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
-            {getProductQuantityInCart(item._id)}
+            {getProductQuantityInCart(item._id.toString())}
           </Text>
           <TouchableOpacity
             disabled={getProductQuantityInCart(item._id.toString()) >= 5}
@@ -111,7 +110,7 @@ export default function ProductList({
             ])
             addProductToCart(item._id.toString())
             setBoughtProducts((prev) =>
-              prev.filter((id) => id !== item._id.toString())
+              prev.filter((id) => id.toString() !== item._id.toString())
             )
           }}
         >

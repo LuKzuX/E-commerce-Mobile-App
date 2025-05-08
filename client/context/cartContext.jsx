@@ -18,6 +18,7 @@ export const CartContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getCartData = async () => {
+      if (!user || !user.token) return
       try {
         const res = await axios.get(
           `http://${ip}:5000/material-delivery/cart`,
@@ -71,6 +72,8 @@ export const CartContextProvider = ({ children }) => {
   }
 
   const incrementQuantity = (id) => {
+    console.log(id);
+    
     for (let i = 0; i < boughtProducts.length; i++) {
       if (boughtProducts[i].id == id) {
         const newArr = [...boughtProducts]

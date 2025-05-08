@@ -1,6 +1,8 @@
 import { Product } from '../models/productSchema.js'
 
 export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
+  console.log(id);
+  
   let found = false
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
@@ -68,6 +70,4 @@ export const calculatePrice = async (user) => {
       user.cart[i].totalPrice = product.productPrice * user.cart[i].quantity
     }
   }
-
-  await user.save()
 }
