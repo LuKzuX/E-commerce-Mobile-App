@@ -34,7 +34,7 @@ export const CartContextProvider = ({ children }) => {
       }
     }
     getCartData()
-  }, [user, boughtProducts])
+  }, [user])
 
   const addProductToCart = async (id) => {
     try {
@@ -61,9 +61,24 @@ export const CartContextProvider = ({ children }) => {
     return false
   }
 
-  const getProductQuantityInCart = (id) => {}
+  const getProductQuantityInCart = (id) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id.toString()) {
+        return boughtProducts[i].qnt
+      }
+    }
+  }
 
-  const incrementQuantity = (id) => {}
+  const incrementQuantity = (id) => {
+    for (let i = 0; i < boughtProducts.length; i++) {
+      if (boughtProducts[i].id == id.toString()) {
+        const newArr = [...boughtProducts]
+        newArr[i] = { id: id.toString(), qnt: boughtProducts[i].qnt + 1 }
+        addProductToCart(id)
+        setBoughtProducts(newArr)
+      }
+    }
+  }
 
   const decrementQuantity = (id) => {}
 
@@ -76,6 +91,7 @@ export const CartContextProvider = ({ children }) => {
         incrementQuantity,
         decrementQuantity,
         boughtProducts,
+        setBoughtProducts,
       }}
     >
       {children}

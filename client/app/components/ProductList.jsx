@@ -25,7 +25,10 @@ export default function ProductList({
     incrementQuantity,
     decrementQuantity,
     boughtProducts,
+    setBoughtProducts,
   } = useCartContext()
+  console.log(boughtProducts);
+  
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -90,7 +93,7 @@ export default function ProductList({
           <TouchableOpacity
             disabled={getProductQuantityInCart(item._id) >= 5}
             onPress={() =>
-              incrementQuantity(item._id.toString(), item.quantity)
+              incrementQuantity(item._id.toString())
             }
             style={{
               opacity: getProductQuantityInCart(item._id) >= 5 ? 0.5 : 1,
@@ -102,19 +105,15 @@ export default function ProductList({
       ) : (
         <TouchableOpacity
           className='self-center mt-[10px]'
-          onPress={async () => {
-            try {
-              setBoughtProducts((prev) => [
-                ...prev,
-                { id: item._id.toString(), qnt: item.quantity },
-              ])
-              await addProductToCart(item._id.toString())
-            } catch (error) {
-              setBoughtProducts((prev) =>
-                prev.filter((id) => id !== item._id.toString())
-              )
-              console.log(error)
-            }
+          onPress={() => {
+            setBoughtProducts((prev) => [
+              ...prev,
+              { id: item._id.toString(), qnt: item.quantity },
+            ])
+            addProductToCart(item._id.toString())
+            setBoughtProducts((prev) =>
+              prev.filter((id) => id !== item._id.toString())
+            )
           }}
         >
           <Text className='text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
