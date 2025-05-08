@@ -110,7 +110,7 @@ export default function ProductList({
             ])
             addProductToCart(item._id.toString())
             setBoughtProducts((prev) =>
-              prev.filter((id) => id.toString() !== item._id.toString())
+              prev.filter((id) => id !== item._id.toString())
             )
           }}
         >
