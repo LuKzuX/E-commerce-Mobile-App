@@ -33,6 +33,7 @@ export const CartContextProvider = ({ children }) => {
         console.log(error)
       }
     }
+
     getCartData()
   }, [user])
 
@@ -54,7 +55,7 @@ export const CartContextProvider = ({ children }) => {
 
   const isProductInCart = (id) => {
     for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id.toString()) {
+      if (boughtProducts[i].id == id) {
         return true
       }
     }
@@ -63,7 +64,7 @@ export const CartContextProvider = ({ children }) => {
 
   const getProductQuantityInCart = (id) => {
     for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id.toString()) {
+      if (boughtProducts[i].id == id) {
         return boughtProducts[i].qnt
       }
     }
@@ -71,9 +72,9 @@ export const CartContextProvider = ({ children }) => {
 
   const incrementQuantity = (id) => {
     for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id.toString()) {
+      if (boughtProducts[i].id == id) {
         const newArr = [...boughtProducts]
-        newArr[i] = { id: id.toString(), qnt: boughtProducts[i].qnt + 1 }
+        newArr[i] = { id: id, qnt: boughtProducts[i].qnt + 1 }
         addProductToCart(id)
         setBoughtProducts(newArr)
       }
