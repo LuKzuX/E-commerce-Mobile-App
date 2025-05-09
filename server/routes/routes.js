@@ -21,7 +21,6 @@ import {
   getCartProducts,
   addProductToCart,
   removeProductFromCart,
-  updateProductQuantityInCart,
   buy,
 } from '../controllers/cartControllers.js'
 import { getUserOrders } from '../controllers/orderControllers.js'
