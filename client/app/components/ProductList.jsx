@@ -89,7 +89,9 @@ export default function ProductList({
           </Text>
           <TouchableOpacity
             disabled={getProductQuantityInCart(item._id.toString()) >= 100}
-            onPress={() => incrementQuantity(item._id.toString())}
+            onPress={() => 
+              incrementQuantity(item._id.toString())
+            }
             style={{
               opacity:
                 getProductQuantityInCart(item._id.toString()) >= 100 ? 0.5 : 1,

@@ -1,18 +1,14 @@
 import { Product } from '../models/productSchema.js'
 
 export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
-  console.log(id);
-  
-  let found = false
+
   for (let i = 0; i < user.cart.length; i++) {
-    if (id == user.cart[i]._id.toString()) {
+    if (user.cart[i]._id.toString() === id.toString()) {
       user.cart[i].quantity += 1
-      found = true
+      return
     }
   }
-  if (!found) {
-    user.cart.push(productToBeAdded)
-  }
+  user.cart.push(productToBeAdded)
 }
 
 export const addSpecificProductQuantityToCart = (
