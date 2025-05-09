@@ -27,7 +27,6 @@ export default function ProductList({
     boughtProducts,
     setBoughtProducts,
   } = useCartContext()
-   
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -89,12 +88,11 @@ export default function ProductList({
             {getProductQuantityInCart(item._id.toString())}
           </Text>
           <TouchableOpacity
-            disabled={getProductQuantityInCart(item._id.toString()) >= 5}
-            onPress={() =>
-              incrementQuantity(item._id.toString())
-            }
+            disabled={getProductQuantityInCart(item._id.toString()) >= 100}
+            onPress={() => incrementQuantity(item._id.toString())}
             style={{
-              opacity: getProductQuantityInCart(item._id.toString()) >= 5 ? 0.5 : 1,
+              opacity:
+                getProductQuantityInCart(item._id.toString()) >= 100 ? 0.5 : 1,
             }}
           >
             <Ionicons name='add-outline' size={24} />

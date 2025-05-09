@@ -38,6 +38,8 @@ export const addProductToCart = async (req, res, next) => {
     addMoreOfTheSameProductToCart(loggedUser, id, product)
     calculatePrice(loggedUser)
     await loggedUser.save()
+    console.log(loggedUser);
+    
     res.send(loggedUser)
   } catch (error) {
     res.send(error)

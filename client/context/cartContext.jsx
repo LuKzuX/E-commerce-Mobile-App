@@ -39,7 +39,9 @@ export const CartContextProvider = ({ children }) => {
   }, [user])
 
   const addProductToCart = async (id) => {
+    
     try {
+      console.log(id);
       await axios.post(
         `http://${ip}:5000/material-delivery/cart/${id}`,
         {},
@@ -72,10 +74,8 @@ export const CartContextProvider = ({ children }) => {
   }
 
   const incrementQuantity = (id) => {
-    console.log(id);
-    
     for (let i = 0; i < boughtProducts.length; i++) {
-      if (boughtProducts[i].id == id) {
+      if (boughtProducts[i].id === id) {
         const newArr = [...boughtProducts]
         newArr[i] = { id: id, qnt: boughtProducts[i].qnt + 1 }
         addProductToCart(id)
