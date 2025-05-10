@@ -42,7 +42,6 @@ export const addProductToCart = async (req, res, next) => {
     }
     loggedUser.cart = userCart
     await loggedUser.save()
-    await loggedUser.save()
 
     res.send(loggedUser)
   } catch (error) {
