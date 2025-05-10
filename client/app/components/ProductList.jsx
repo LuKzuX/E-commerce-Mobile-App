@@ -106,7 +106,7 @@ export default function ProductList({
           onPress={() => {
             setBoughtProducts((prev) => [
               ...prev,
-              { id: item._id.toString(), qnt: item.quantity },
+              { id: item._id.toString(), qnt: 1 },
             ])
             addProductToCart(item._id.toString())
             setBoughtProducts((prev) =>

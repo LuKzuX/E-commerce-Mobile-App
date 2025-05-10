@@ -39,9 +39,8 @@ export const CartContextProvider = ({ children }) => {
   }, [user])
 
   const addProductToCart = async (id) => {
-    
     try {
-      console.log(id);
+      console.log(id)
       await axios.post(
         `http://${ip}:5000/material-delivery/cart/${id}`,
         {},
@@ -68,6 +67,8 @@ export const CartContextProvider = ({ children }) => {
   const getProductQuantityInCart = (id) => {
     for (let i = 0; i < boughtProducts.length; i++) {
       if (boughtProducts[i].id == id) {
+        console.log(boughtProducts)
+
         return boughtProducts[i].qnt
       }
     }
@@ -77,9 +78,15 @@ export const CartContextProvider = ({ children }) => {
     for (let i = 0; i < boughtProducts.length; i++) {
       if (boughtProducts[i].id === id) {
         const newArr = [...boughtProducts]
-        newArr[i] = { id: id, qnt: boughtProducts[i].qnt + 1 }
-        addProductToCart(id)
-        setBoughtProducts(newArr)
+        if (boughtProducts[i].qnt == undefined) {
+          newArr[i] = { id: id, qnt: 1 }
+          addProductToCart(id)
+          setBoughtProducts(newArr)
+        } else {
+          newArr[i] = { id: id, qnt: boughtProducts[i].qnt + 1 }
+          addProductToCart(id)
+          setBoughtProducts(newArr)
+        }
       }
     }
   }
