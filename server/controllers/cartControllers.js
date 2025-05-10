@@ -9,8 +9,8 @@ import {
 
 export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user
-  const loggedUser = await User.findById({ _id })
   try {
+    const loggedUser = await User.findById({ _id })
     res.json(loggedUser.cart)
   } catch (error) {
     res.send(error)
@@ -24,12 +24,11 @@ export const addProductToCart = async (req, res, next) => {
   try {
     const product = await Product.findById({ _id: id })
     const loggedUser = await User.findById({ _id })
-
-    addMoreOfTheSameProductToCart(loggedUser, id, product)
-    calculatePrice(loggedUser)
     const productIds = loggedUser.cart.map((obj) => obj._id.toString())
     const products = await Product.find({ _id: { $in: productIds } })
     const userCart = []
+    addMoreOfTheSameProductToCart(loggedUser, id, product)
+    calculatePrice(loggedUser)
 
     for (let i = 0; i < loggedUser.cart.length; i++) {
       if (products[i]._id.toString() == loggedUser.cart[i]._id.toString()) {
