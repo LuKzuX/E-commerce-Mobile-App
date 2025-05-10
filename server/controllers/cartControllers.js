@@ -24,23 +24,8 @@ export const addProductToCart = async (req, res, next) => {
   try {
     const product = await Product.findById({ _id: id })
     const loggedUser = await User.findById({ _id })
-    const productIds = loggedUser.cart.map((obj) => obj._id.toString())
-    const products = await Product.find({ _id: { $in: productIds } })
-    const userCart = []
-    addMoreOfTheSameProductToCart(loggedUser, id, product)
-    calculatePrice(loggedUser)
 
-    for (let i = 0; i < loggedUser.cart.length; i++) {
-      if (products[i]._id.toString() == loggedUser.cart[i]._id.toString()) {
-        const obj = {
-          _id: loggedUser.cart[i]._id,
-          quantity: loggedUser.cart[i].quantity,
-          totalPrice: loggedUser.cart[i].quantity * products[i].productPrice,
-        }
-        userCart.push(obj)
-      }
-    }
-    loggedUser.cart = userCart
+    addMoreOfTheSameProductToCart(loggedUser, id, product)
     await loggedUser.save()
 
     res.send(loggedUser)

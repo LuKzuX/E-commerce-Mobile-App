@@ -5,11 +5,18 @@ export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
   for (let i = 0; i < user.cart.length; i++) {
     if (id == user.cart[i]._id.toString()) {
       user.cart[i].quantity += 1
+      user.cart[i].totalPrice =
+        user.cart[i].quantity * productToBeAdded.productPrice
       found = true
+      break
     }
   }
   if (!found) {
-    user.cart.push(productToBeAdded)
+    user.cart.push({
+      _id: productToBeAdded._id,
+      quantity: 1,
+      totalPrice: productToBeAdded.productPrice * 1,
+    })
   }
 }
 
