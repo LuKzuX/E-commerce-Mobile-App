@@ -9,12 +9,9 @@ import {
 
 export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user
+  const loggedUser = await User.findById({ _id })
   try {
-    const loggedUser = await User.findById({ _id })
-    const productIds = loggedUser.cart.map((obj) => obj._id.toString())
-    const products = await Product.find({ _id: { $in: productIds } })
-
-    res.json(loggedUser)
+    res.json(loggedUser.cart)
   } catch (error) {
     res.send(error)
   }
@@ -30,6 +27,22 @@ export const addProductToCart = async (req, res, next) => {
 
     addMoreOfTheSameProductToCart(loggedUser, id, product)
     calculatePrice(loggedUser)
+    const productIds = loggedUser.cart.map((obj) => obj._id.toString())
+    const products = await Product.find({ _id: { $in: productIds } })
+    const userCart = []
+
+    for (let i = 0; i < loggedUser.cart.length; i++) {
+      if (products[i]._id.toString() == loggedUser.cart[i]._id.toString()) {
+        const obj = {
+          _id: loggedUser.cart[i]._id,
+          quantity: loggedUser.cart[i].quantity,
+          totalPrice: loggedUser.cart[i].quantity * products[i].productPrice,
+        }
+        userCart.push(obj)
+      }
+    }
+    loggedUser.cart = userCart
+    await loggedUser.save()
     await loggedUser.save()
 
     res.send(loggedUser)

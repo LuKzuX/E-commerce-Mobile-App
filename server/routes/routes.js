@@ -51,7 +51,6 @@ router.patch(`/user`, userAuth, getUserToUpdate, updateUserInfo)
 router.get('/cart', userAuth, getCartProducts)
 router.post('/cart/:id', userAuth, addProductToCart)
 router.post('/cart', userAuth, buy)
-router.patch('/cart/:id', userAuth, updateProductQuantityInCart)
 router.delete('/cart/:id', userAuth, removeProductFromCart)
 
 // Product routes
