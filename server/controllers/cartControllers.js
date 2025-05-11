@@ -3,7 +3,6 @@ import { Product } from '../models/productSchema.js'
 import { Order } from '../models/orderSchema.js'
 import {
   addMoreOfTheSameProductToCart,
-  calculatePrice,
   subtractProductQuantity,
 } from '../utils/cartUtils.js'
 
