@@ -9,6 +9,7 @@ export default function Cart() {
   const {
     boughtProducts,
     setBoughtProducts,
+    deleteProductFromCart,
     incrementQuantity,
     decrementQuantity,
     getProductQuantityInCart,
@@ -75,19 +76,26 @@ export default function Cart() {
             </Text>
           </TouchableOpacity>
         )}
-        <Ionicons name='trash-bin-outline' size={25} color={'red'}></Ionicons>
+        <Ionicons
+          onPress={() => {
+            deleteProductFromCart(item.id, true)
+            setBoughtProducts((prev) => prev.filter((obj) => obj.id !== item.id))
+          }}
+          name='trash-bin-outline'
+          size={25}
+          color={'red'}
+        ></Ionicons>
       </View>
     </View>
   )
 
   return (
-    <View>
-      {!boughtProducts && (
-        <View>
-          <Text>Cart empty</Text>
+    <View className='flex-1'>
+      {boughtProducts.length === 0 ? (
+        <View className='flex-1 items-center justify-center'>
+          <Text className='text-gray-500 text-lg'>Your cart is empty</Text>
         </View>
-      )}
-      {boughtProducts && (
+      ) : (
         <FlatList
           data={boughtProducts}
           renderItem={renderItem}

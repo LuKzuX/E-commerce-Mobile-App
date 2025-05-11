@@ -37,11 +37,12 @@ export const removeProductFromCart = async (req, res, next) => {
   try {
     const { _id } = req.user.user
     const { id } = req.params
-    const { removeAll } = req.params
+    const { removeAll } = req.query
     const loggedUser = await User.findById({ _id })
     if (!removeAll) {
       await subtractProductQuantity(loggedUser, id)
       res.send(loggedUser.cart)
+      return
     } else {
       const newCart = loggedUser.cart.filter((obj) => {
         return obj._id.toString() !== id

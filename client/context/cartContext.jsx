@@ -67,11 +67,14 @@ export const CartContextProvider = ({ children }) => {
 
   const deleteProductFromCart = async (id, removeAll) => {
     try {
-      await axios.delete(`http://${ip}:5000/material-delivery/cart/${id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      await axios.delete(
+        `http://${ip}:5000/material-delivery/cart/${id}?removeAll=${removeAll}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
     } catch (error) {
       console.log(error)
     }
@@ -104,8 +107,8 @@ export const CartContextProvider = ({ children }) => {
           setBoughtProducts(newArr)
           return
         } else {
-          const currentQnt = newArr[i].qnt || 0;
-          const newQnt = currentQnt + 1;
+          const currentQnt = newArr[i].qnt || 0
+          const newQnt = currentQnt + 1
           newArr[i] = {
             ...newArr[i],
             id: id,
@@ -124,8 +127,8 @@ export const CartContextProvider = ({ children }) => {
       if (boughtProducts[i].id === id) {
         if (boughtProducts[i].qnt > 1) {
           const newArr = [...boughtProducts]
-          const currentQnt = newArr[i].qnt || 0;
-          const newQnt = currentQnt - 1;
+          const currentQnt = newArr[i].qnt || 0
+          const newQnt = currentQnt - 1
           newArr[i] = {
             ...newArr[i],
             id: id,
@@ -158,6 +161,7 @@ export const CartContextProvider = ({ children }) => {
         addProductToCart,
         isProductInCart,
         getProductQuantityInCart,
+        deleteProductFromCart,
         incrementQuantity,
         decrementQuantity,
         boughtProducts,

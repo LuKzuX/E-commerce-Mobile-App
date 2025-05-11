@@ -147,7 +147,22 @@ export default function App() {
               <Stack.Screen
                 name='Cart'
                 component={Cart}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: true,
+                  title: 'Your Cart',
+                  headerStyle: {
+                    backgroundColor: '#ebebeb', // light gray background
+                    elevation: 0, // removes shadow on Android
+                    shadowOpacity: 0, // removes shadow on iOS
+                  },
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    color: '#333',
+                  },
+                  headerTintColor: '#rgb(37 99 235)', // back button and icons color
+                  headerTitleAlign: 'center',
+                }}
               />
             </Stack.Navigator>
           </QueryClientProvider>
