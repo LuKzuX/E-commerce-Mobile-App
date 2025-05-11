@@ -15,7 +15,6 @@ export const useCartContext = () => {
 export const CartContextProvider = ({ children }) => {
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
-  const [allProducts, setAllProducts] = useState([])
   const [allQuantity, setAllQuantity] = useState(0)
   useEffect(() => {
     const getCartData = async () => {
@@ -28,7 +27,13 @@ export const CartContextProvider = ({ children }) => {
           }
         )
         const productsInCart = res.data.map((obj) => {
-          return { id: obj._id.toString(), qnt: obj.quantity }
+          return {
+            id: obj._id.toString(),
+            qnt: obj.quantity,
+            price: obj.productPrice,
+            totalPrice: obj.totalPrice,
+            image: obj.productImage,
+          }
         })
         setBoughtProducts(productsInCart)
       } catch (error) {
@@ -42,24 +47,6 @@ export const CartContextProvider = ({ children }) => {
   useEffect(() => {
     getAllQuantity()
   }, [boughtProducts])
-
-  useEffect(() => {
-    const getCartDataDetails = async () => {
-      if (!user || !user.token) return
-      try {
-        const res = await axios.get(
-          `http://${ip}:5000/material-delivery/cart?showAll=true`,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
-        )
-        setAllProducts(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getCartDataDetails()
-  }, [user])
 
   const addProductToCart = async (id) => {
     try {
@@ -160,7 +147,6 @@ export const CartContextProvider = ({ children }) => {
         boughtProducts,
         setBoughtProducts,
         allQuantity,
-        allProducts,
       }}
     >
       {children}

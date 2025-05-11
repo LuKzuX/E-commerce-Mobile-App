@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useRoute } from '@react-navigation/native'
 
 export default function Cart() {
-  const { allProducts } = useCartContext()
-  console.log(allProducts)
+  const { boughtProducts } = useCartContext()
+  console.log(boughtProducts)
 
   return (
     <View>

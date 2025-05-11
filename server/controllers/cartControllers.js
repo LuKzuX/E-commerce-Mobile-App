@@ -4,7 +4,6 @@ import { Order } from '../models/orderSchema.js'
 import {
   addMoreOfTheSameProductToCart,
   subtractProductQuantity,
-  showProductsInCart,
 } from '../utils/cartUtils.js'
 
 export const getCartProducts = async (req, res, next) => {
