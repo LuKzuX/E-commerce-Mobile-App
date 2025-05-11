@@ -97,9 +97,6 @@ export default function ProductList({
               { id: item._id.toString(), qnt: 1 },
             ])
             addProductToCart(item._id.toString())
-            setBoughtProducts((prev) =>
-              prev.filter((id) => id !== item._id.toString())
-            )
           }}
         >
           <Text className='text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>

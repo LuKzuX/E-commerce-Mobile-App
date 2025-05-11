@@ -14,7 +14,7 @@ export default function GetProductQuantityInCart({
     const quantity = getProductQuantity?.() || 0
 
     Animated.timing(translateX, {
-      toValue: -(quantity * 50) + 80 - quantity * 10, // shift 10px per item in cart
+      toValue: -(quantity * 50) + 80 - quantity * 10, 
       duration: 300,
       useNativeDriver: true,
     }).start()
