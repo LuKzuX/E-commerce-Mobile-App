@@ -15,6 +15,7 @@ export const useCartContext = () => {
 export const CartContextProvider = ({ children }) => {
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
+  const [allQuantity, setAllQuantity] = useState(0)
 
   useEffect(() => {
     const getCartData = async () => {
@@ -37,6 +38,10 @@ export const CartContextProvider = ({ children }) => {
 
     getCartData()
   }, [user])
+  
+  useEffect(() => {
+    getAllQuantity()
+  }, [boughtProducts])
 
   const addProductToCart = async (id) => {
     try {
@@ -118,6 +123,14 @@ export const CartContextProvider = ({ children }) => {
     }
   }
 
+  const getAllQuantity = () => {
+    let allQnt = 0
+    for (let i = 0; i < boughtProducts.length; i++) {
+      allQnt += boughtProducts[i].qnt
+    }
+    setAllQuantity(allQnt)
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -128,6 +141,7 @@ export const CartContextProvider = ({ children }) => {
         decrementQuantity,
         boughtProducts,
         setBoughtProducts,
+        allQuantity,
       }}
     >
       {children}

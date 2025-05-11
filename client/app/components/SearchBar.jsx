@@ -15,13 +15,16 @@ import { useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/authContext'
 import { useProductContext } from '@/context/productContext'
 import { useNavigation } from '@react-navigation/native'
+import { useCartContext } from '@/context/cartContext'
 
 export default function SearchBar() {
   const navigation = useNavigation()
-  const { user } = useAuthContext()
+  
   const { products, find, setFind, getData, category, displayCat } =
     useProductContext()
   const [search, setSearch] = useState('')
+  const {allQuantity} = useCartContext() 
+  
   return (
     <View>
       <StatusBar backgroundColor='#2563eb' barStyle='light-content' />
@@ -51,6 +54,8 @@ export default function SearchBar() {
             size={30}
             onPress={() => navigation.navigate('Cart')}
           />
+          
+          {allQuantity >= 1 && <Text className='absolute right-1 top-3 text-white bg-red-500 py-1 px-2 rounded-xl font-bold'>{allQuantity}</Text>}
         </View>
       </SafeAreaView>
       {find && (
