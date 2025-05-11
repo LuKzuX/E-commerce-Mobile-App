@@ -76,15 +76,19 @@ export default function Cart() {
             </Text>
           </TouchableOpacity>
         )}
-        <Ionicons
-          onPress={() => {
-            deleteProductFromCart(item.id, true)
-            setBoughtProducts((prev) => prev.filter((obj) => obj.id !== item.id))
-          }}
-          name='trash-bin-outline'
-          size={25}
-          color={'red'}
-        ></Ionicons>
+        <TouchableOpacity>
+          <Ionicons
+            onPress={() => {
+              deleteProductFromCart(item.id, true)
+              setBoughtProducts((prev) =>
+                prev.filter((obj) => obj.id !== item.id)
+              )
+            }}
+            name='trash-bin-outline'
+            size={25}
+            color={'red'}
+          ></Ionicons>
+        </TouchableOpacity>
       </View>
     </View>
   )
