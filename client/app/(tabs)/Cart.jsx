@@ -1,7 +1,6 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useCartContext } from '@/context/cartContext'
 import { useEffect } from 'react'
-import { useRoute } from '@react-navigation/native'
 
 export default function Cart() {
   const { boughtProducts } = useCartContext()
