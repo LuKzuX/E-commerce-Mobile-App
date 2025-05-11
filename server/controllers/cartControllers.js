@@ -4,12 +4,18 @@ import { Order } from '../models/orderSchema.js'
 import {
   addMoreOfTheSameProductToCart,
   subtractProductQuantity,
+  showProductsInCart,
 } from '../utils/cartUtils.js'
 
 export const getCartProducts = async (req, res, next) => {
   const { _id } = req.user.user
+  const { showAll } = req.query
   try {
     const loggedUser = await User.findById({ _id })
+    if (showAll) {
+      const allProductsInCart = await showProductsInCart(loggedUser)
+      return res.send(allProductsInCart)
+    }
     res.json(loggedUser.cart)
   } catch (error) {
     res.send(error)

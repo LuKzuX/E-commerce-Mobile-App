@@ -23,7 +23,6 @@ export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
 export const subtractProductQuantity = async (user, id) => {
   const product = user.cart.find((obj) => obj._id == id)
   const fullProduct = await Product.find({ _id: id })
-  console.log(fullProduct)
 
   if (product.quantity <= 1) {
     user.cart = user.cart.filter((obj) => obj._id.toString() !== id)
@@ -33,4 +32,33 @@ export const subtractProductQuantity = async (user, id) => {
   }
   await user.save()
   return user.cart
+}
+
+export const showProductsInCart = async (user) => {
+  try {
+    const idArr = []
+    for (let i = 0; i < user.cart.length; i++) {
+      idArr.push(user.cart[i]._id)
+    }
+    const products = await Product.find({ _id: { $in: idArr } })
+    const newArr = []
+    for (let j = 0; j < products.length; j++) {
+      for (let k = 0; k < user.cart.length; k++) {
+        if (products[j]._id.toString() == user.cart[k]._id.toString()) {
+          newArr.push({
+            _id: user.cart[k]._id,
+            productName: products[j].productName,
+            productPrice: products[j].productPrice,
+            productDescription: products[j].productDescription,
+            productImage: products[j].productImage,
+            quantity: user.cart[k].quantity,
+            totalPrice: user.cart[k].totalPrice
+          })
+        }
+      }
+    }
+    return newArr
+  } catch (error) {
+    console.log(error)
+  }
 }
