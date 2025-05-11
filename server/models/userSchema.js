@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         type: String,
       },
       productPrice: {
-        type: String,
+        type: Number,
       },
       productImage: {
         type: String,

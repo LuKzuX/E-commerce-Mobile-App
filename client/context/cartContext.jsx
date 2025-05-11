@@ -29,6 +29,7 @@ export const CartContextProvider = ({ children }) => {
         const productsInCart = res.data.map((obj) => {
           return {
             id: obj._id.toString(),
+            name: obj.productName,
             qnt: obj.quantity,
             price: obj.productPrice,
             totalPrice: obj.totalPrice,
@@ -98,11 +99,19 @@ export const CartContextProvider = ({ children }) => {
       if (boughtProducts[i].id === id) {
         const newArr = [...boughtProducts]
         if (boughtProducts[i].qnt == undefined) {
-          newArr[i] = { id: id, qnt: 1 }
+          newArr[i] = { ...newArr[i], id: id, qnt: 1 }
           addProductToCart(id)
           setBoughtProducts(newArr)
+          return
         } else {
-          newArr[i] = { id: id, qnt: boughtProducts[i].qnt + 1 }
+          const currentQnt = newArr[i].qnt || 0;
+          const newQnt = currentQnt + 1;
+          newArr[i] = {
+            ...newArr[i],
+            id: id,
+            qnt: boughtProducts[i].qnt + 1,
+            totalPrice: newQnt * newArr[i].price,
+          }
           addProductToCart(id)
           setBoughtProducts(newArr)
         }
@@ -115,7 +124,14 @@ export const CartContextProvider = ({ children }) => {
       if (boughtProducts[i].id === id) {
         if (boughtProducts[i].qnt > 1) {
           const newArr = [...boughtProducts]
-          newArr[i] = { id: id, qnt: boughtProducts[i].qnt - 1 }
+          const currentQnt = newArr[i].qnt || 0;
+          const newQnt = currentQnt - 1;
+          newArr[i] = {
+            ...newArr[i],
+            id: id,
+            qnt: boughtProducts[i].qnt - 1,
+            totalPrice: newQnt * newArr[i].price,
+          }
           setBoughtProducts(newArr)
           deleteProductFromCart(id)
         } else {
