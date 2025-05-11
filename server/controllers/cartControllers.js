@@ -34,21 +34,6 @@ export const addProductToCart = async (req, res, next) => {
   }
 }
 
-// export const updateProductQuantityInCart = async (req, res, next) => {
-//   const { id } = req.params
-//   const { _id } = req.user.user
-//   const { quantity } = req.body
-//   try {
-//     const product = await Product.findById({ _id: id })
-//     const loggedUser = await User.findById({ _id })
-//     addSpecificProductQuantityToCart(loggedUser, id, quantity, product)
-//     calculatePrice(loggedUser)
-//     res.json(loggedUser)
-//   } catch (error) {
-//     res.send(error)
-//   }
-// }
-
 export const removeProductFromCart = async (req, res, next) => {
   try {
     const { _id } = req.user.user
