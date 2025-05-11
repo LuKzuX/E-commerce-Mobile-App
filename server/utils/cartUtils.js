@@ -21,7 +21,6 @@ export const addMoreOfTheSameProductToCart = (user, id, productToBeAdded) => {
       productPrice: productToBeAdded.productPrice,
       productCategory: productToBeAdded.category,
       productDescriptiondescription: productToBeAdded.description,
-      // add more properties as needed
     });
   }
 }
