@@ -6,6 +6,7 @@ import { prettierPrice } from '../../utils/prettierPrice.js'
 import { useAuthContext } from '@/context/authContext.jsx'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
 import { useCartContext } from '../../context/cartContext.jsx'
+import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
 
 export default function ProductList({
   products,
@@ -79,26 +80,13 @@ export default function ProductList({
 
       {isProductInCart(item._id.toString()) ? (
         <View className='flex-row items-center justify-center mt-2'>
-          <TouchableOpacity
-            onPress={() => decrementQuantity(item._id.toString())}
-          >
-            <Text className='text-text-medium'>-</Text>
-          </TouchableOpacity>
-          <Text className='mx-2 self-center text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
-            {getProductQuantityInCart(item._id.toString())}
-          </Text>
-          <TouchableOpacity
-            disabled={getProductQuantityInCart(item._id.toString()) >= 100}
-            onPress={() => 
-              incrementQuantity(item._id.toString())
+          <GetProductQuantityInCart
+            getProductQuantity={() =>
+              getProductQuantityInCart(item._id.toString())
             }
-            style={{
-              opacity:
-                getProductQuantityInCart(item._id.toString()) >= 100 ? 0.5 : 1,
-            }}
-          >
-            <Ionicons name='add-outline' size={24} />
-          </TouchableOpacity>
+            increment={() => incrementQuantity(item._id.toString())}
+            decrement={() => decrementQuantity(item._id.toString())}
+          />
         </View>
       ) : (
         <TouchableOpacity
