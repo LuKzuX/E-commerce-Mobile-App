@@ -31,25 +31,6 @@ export const createUser = async (req, res, next) => {
     if (!username || !password || !email) {
       return res.status(400).send('fill all the fields')
     }
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: 'maddison53@ethereal.email',
-        pass: 'jn7jnAPss4f63QBp6D',
-      },
-    })
-
-    const info = await transporter.sendMail({
-      from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
-      to: email,
-      subject: 'Hello ✔',
-      text: 'Hello world?', // plain‑text body
-      html: '<b>Hello world?</b>', // HTML body
-    })
-    console.log(info);
-    
 
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(password, salt)
