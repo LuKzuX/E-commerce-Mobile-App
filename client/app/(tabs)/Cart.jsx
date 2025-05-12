@@ -13,7 +13,6 @@ export default function Cart() {
     incrementQuantity,
     decrementQuantity,
     getProductQuantityInCart,
-    isProductInCart,
   } = useCartContext()
 
   const ThreeDots = ({ string }) => {
@@ -39,43 +38,29 @@ export default function Cart() {
       {/* Product info */}
       <View className='flex-1 ml-4'>
         <ThreeDots string={item.name} />
-        <View className='flex-row items-center mt-1'>
-          <Text className='text-sm mr-[1px]'>$</Text>
-          <Text className='text-green-600 text-text-small font-semibold'>
-            {prettierPrice(item.totalPrice || 0)}
-          </Text>
+        <View>
+          <View className='flex-row items-center mt-1'>
+            <Text className='text-sm mr-[1px]'>$</Text>
+            <Text className='text-green-600 text-text-small font-semibold'>
+              {prettierPrice(item.totalPrice || 0)}
+            </Text>
+          </View>
+          <View className='flex-row items-center mt-1'>
+            <Text className='text-[10px] mr-[1px]'>$</Text>
+            <Text className='text-green-600 text-sm font-semibold'>
+              {prettierPrice(item.price || 0)}
+            </Text>
+          </View>
         </View>
       </View>
 
       {/* Buttons on the right */}
       <View className='items-end flex-row items-center gap-2'>
-        {isProductInCart(item.id) ? (
-          <GetProductQuantityInCart
-            getProductQuantity={() => getProductQuantityInCart(item.id)}
-            increment={() => incrementQuantity(item.id)}
-            decrement={() => decrementQuantity(item.id)}
-          />
-        ) : (
-          <TouchableOpacity
-            onPress={() => {
-              setBoughtProducts((prev) => [
-                ...prev,
-                {
-                  id: item.id,
-                  qnt: 1,
-                  name: item.name,
-                  price: item.price,
-                  image: item.image,
-                },
-              ])
-              addProductToCart(item.id)
-            }}
-          >
-            <Text className='text-text-small bg-bg-yellow py-[6px] px-[15px] rounded-xl'>
-              Add
-            </Text>
-          </TouchableOpacity>
-        )}
+        <GetProductQuantityInCart
+          getProductQuantity={() => getProductQuantityInCart(item.id)}
+          increment={() => incrementQuantity(item.id)}
+          decrement={() => decrementQuantity(item.id)}
+        />
         <TouchableOpacity>
           <Ionicons
             onPress={() => {
