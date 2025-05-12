@@ -1,9 +1,8 @@
-//verify if new password is equal to curr password
-
 import { User } from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { addressObject, checkAreaCodeFormat } from '../utils/userUtils.js'
+import nodemailer from 'nodemailer'
 
 export const getUser = async (req, res, next) => {
   try {
@@ -29,6 +28,29 @@ export const getUserToUpdate = async (req, res, next) => {
 export const createUser = async (req, res, next) => {
   try {
     const { username, password, email } = req.body
+    if (!username || !password || !email) {
+      return res.status(400).send('fill all the fields')
+    }
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: 'maddison53@ethereal.email',
+        pass: 'jn7jnAPss4f63QBp6D',
+      },
+    })
+
+    const info = await transporter.sendMail({
+      from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
+      to: email,
+      subject: 'Hello ✔',
+      text: 'Hello world?', // plain‑text body
+      html: '<b>Hello world?</b>', // HTML body
+    })
+    console.log(info);
+    
+
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(password, salt)
     const countryFormatObject = addressObject()
@@ -40,7 +62,7 @@ export const createUser = async (req, res, next) => {
     })
     res.json(newUser)
   } catch (error) {
-    res.send(error)
+    res.status(400).send(error)
   }
 }
 
@@ -111,6 +133,6 @@ export const updateUserInfo = async (req, res, next) => {
     )
     res.json(user)
   } catch (error) {
-    return res.json(error)
+    return res.status(400).json(error)
   }
 }
