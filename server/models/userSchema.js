@@ -4,10 +4,13 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    minlength: [3, 'Name must be at least 3 characters long']
   },
   password: {
     type: String,
     required: true,
+    minlength: [4, 'Password must be at least 4 characters long'] 
+
   },
   email: {
     unique: true,
@@ -38,6 +41,9 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  ip: {
+    type: String,
+  },
   address: {
     type: Object,
   },

@@ -33,11 +33,14 @@ export default function ProductList({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
       getData(pageParam, find, sortValue, category, minValue, maxValue),
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 8 ? allPages.length + 1 : undefined
-    },
+   getNextPageParam: (lastPage, allPages) => {
+  if (!lastPage || !Array.isArray(lastPage)) return undefined
+  return lastPage.length === 8 ? allPages.length + 1 : undefined
+}
   })
   const allProducts = data?.pages?.flat() || []
+  console.log(allProducts);
+  
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {

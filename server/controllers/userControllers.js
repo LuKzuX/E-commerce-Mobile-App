@@ -2,7 +2,6 @@ import { User } from '../models/userSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { addressObject, checkAreaCodeFormat } from '../utils/userUtils.js'
-import nodemailer from 'nodemailer'
 
 export const getUser = async (req, res, next) => {
   try {
@@ -29,9 +28,11 @@ export const createUser = async (req, res, next) => {
   try {
     const { username, password, email } = req.body
     if (!username || !password || !email) {
-      return res.status(400).send('fill all the fields')
+      return res.status(400).send('Fill all the fields')
     }
-
+    if (password.length <= 3) {
+      return res.status(400).send('Password must be longer than 3 characters')
+    }
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(password, salt)
     const countryFormatObject = addressObject()
@@ -39,6 +40,7 @@ export const createUser = async (req, res, next) => {
       username,
       password: hashedPassword,
       email,
+      ip: req.ip,
       address: countryFormatObject,
     })
     res.json(newUser)
@@ -52,18 +54,18 @@ export const loginUser = async (req, res, next) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
     if (!user) {
-      return res.status(401).send('this user does not exist')
+      return res.status(400).send('this user does not exist')
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
-      return res.status(401).send('incorrect password')
+      return res.status(400).send('incorrect password')
     }
 
     const token = jwt.sign({ user }, process.env.SECRET)
     req.userId = user._id
     return res.json({ user, token })
   } catch (error) {
-    return res.status(401).send(error)
+    return res.status(400).send(error)
   }
 }
 

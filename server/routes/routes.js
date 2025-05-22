@@ -71,6 +71,3 @@ router.patch(
   updateProduct
 )
 router.delete('/:id', userAuth, adminAuth, deleteProduct)
-
-// Order routes
-router.get('/orders/get', userAuth, getUserOrders)

@@ -6,7 +6,7 @@ export default function SignupScreen() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const signup = useSignup()
+  const {signup, error} = useSignup()
 
   const handleSubmit = (username, email, password) => {
     signup(username, email, password)
@@ -14,7 +14,7 @@ export default function SignupScreen() {
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
-      <View className='bg-white flex flex-col gap-10 p-6 shadow-md'>
+      <View className='bg-white flex flesx-col gap-10 p-6 shadow-md'>
         <TextInput
           className='border-b text-text-small-medium'
           placeholder='Username'
@@ -40,6 +40,7 @@ export default function SignupScreen() {
         >
           Signup
         </Text>
+        <Text className='text-red-500'>{error}</Text>
       </View>
     </View>
   )
