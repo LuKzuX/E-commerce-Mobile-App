@@ -1,7 +1,5 @@
-function errorHandler (err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
+export function errorHandler(err, req, res, next) {
+  if (err.message) {
+    return res.send(err.message)
   }
-  res.status(500)
-  res.render('error', { error: err })
 }

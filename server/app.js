@@ -6,6 +6,7 @@ import cors from "cors"
 import { connect } from "./db/connection.js";
 import { router } from "./routes/routes.js";
 import bodyParser from "body-parser";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -13,6 +14,7 @@ app.use('/images', express.static('./images'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(`/material-delivery`, router);
+app.use(errorHandler)
 
 
 const start = async () => {
