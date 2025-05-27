@@ -87,7 +87,7 @@ export const updateUserInfo = async (req, res, next) => {
     if (password == '' || newPassword == '') {
       hashedPassword = req.password
     } else if (!bcrypt.compareSync(password, req.password)) {
-      return res.send('incorrect password')
+      return res.status(400).send('incorrect password')
     } else {
       hashedPassword = bcrypt.hashSync(newPassword, salt)
     }

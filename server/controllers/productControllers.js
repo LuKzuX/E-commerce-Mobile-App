@@ -70,6 +70,9 @@ export const createProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params
+    const oldProd = await Product.findOne({ _id: id })
+    const oldImg = oldProd.productImage
+
     const {
       productName,
       productPrice,
@@ -90,6 +93,13 @@ export const updateProduct = async (req, res, next) => {
       },
       { new: false, runValidators: true }
     )
+    const imagePath = path.join('./images/', oldImg.split('\\')[1])
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    })
     res.json(product)
   } catch (error) {
     res.send(error)
