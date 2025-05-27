@@ -14,6 +14,7 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
   const navigation = useNavigation()
   const [user, setUser] = useState(null)
+  const [error, setError] = useState("")
 
   const signin = async (email, password) => {
     try {
@@ -28,6 +29,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(res.data)
       navigation.navigate('Tabs')
     } catch (error) {
+      setError(error)      
       console.log(error)
     }
   }
@@ -59,7 +61,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ signin, logout, user, setUser }}>
+    <AuthContext.Provider value={{ signin, logout, user, setUser, error }}>
       {children}
     </AuthContext.Provider>
   )

@@ -5,7 +5,7 @@ import { useState } from 'react'
 export default function SigninScreen() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { signin } = useAuthContext()
+  const { signin, error } = useAuthContext()
 
   const handleSubmit = async () => {
     await signin(email, password)
@@ -33,6 +33,7 @@ export default function SigninScreen() {
         >
           Signin
         </Text>
+        <Text>{error}</Text>
       </View>
     </View>
   )
