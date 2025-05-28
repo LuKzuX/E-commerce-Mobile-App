@@ -55,14 +55,14 @@ export const loginUser = async (req, res, next) => {
     const user = await User.findOne({ email })
 
     if (!bcrypt.compareSync(password, user.password) || !user) {
-      return res.status(400).send('Credentials are incorrect')
+      return res.status(400).json({ error: 'Credentials are incorrect' })
     }
 
     const token = jwt.sign({ user }, process.env.SECRET)
     req.userId = user._id
     return res.json({ user, token })
   } catch (error) {
-    return res.status(400).send(error)
+    return res.status(400).json({message: "Provide all credentials"})
   }
 }
 

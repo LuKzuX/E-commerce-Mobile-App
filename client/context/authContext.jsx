@@ -29,8 +29,8 @@ export const AuthContextProvider = ({ children }) => {
       setUser(res.data)
       navigation.navigate('Tabs')
     } catch (error) {
-      setError(error)      
-      console.log(error)
+      setError(error.response.data.message)      
+      console.log(error.response.data.message)
     }
   }
 
