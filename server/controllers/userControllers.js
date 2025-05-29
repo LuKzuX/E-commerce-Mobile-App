@@ -28,7 +28,7 @@ export const createUser = async (req, res, next) => {
   try {
     const { username, password, email } = req.body
     if (!username || !password || !email) {
-      return res.status(400).send('Fill all the fields')
+      return res.status(400).json({ statusText: 'Fill all the fields' })
     }
     if (password.length <= 3) {
       return res.status(400).send('Password must be longer than 3 characters')
@@ -52,17 +52,20 @@ export const createUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body
+    if (!email || !password) {
+      return res.status(400).json({ statusText: 'Fill all the fields' })
+    }
     const user = await User.findOne({ email })
 
     if (!bcrypt.compareSync(password, user.password) || !user) {
-      return res.status(400).json({ error: 'Credentials are incorrect' })
+      throw new CustomError(400, 'Credentialsss')
     }
 
     const token = jwt.sign({ user }, process.env.SECRET)
     req.userId = user._id
     return res.json({ user, token })
   } catch (error) {
-    return res.status(400).json({message: "Provide all credentials"})
+    return res.status(400).json({ statusText: 'error' })
   }
 }
 

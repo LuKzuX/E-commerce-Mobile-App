@@ -14,7 +14,7 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
   const navigation = useNavigation()
   const [user, setUser] = useState(null)
-  const [error, setError] = useState("")
+  const [error, setError] = useState('')
 
   const signin = async (email, password) => {
     try {
@@ -29,8 +29,10 @@ export const AuthContextProvider = ({ children }) => {
       setUser(res.data)
       navigation.navigate('Tabs')
     } catch (error) {
-      setError(error.response.data.message)      
-      console.log(error.response.data.message)
+      setError(error.response.data.statusText)
+      setInterval(() => {
+        setError('')
+      }, 3000)
     }
   }
 
