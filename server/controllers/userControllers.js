@@ -31,7 +31,9 @@ export const createUser = async (req, res, next) => {
       return res.status(400).json({ statusText: 'Fill all the fields' })
     }
     if (password.length <= 3) {
-      return res.status(400).send('Password must be longer than 3 characters')
+      return res
+        .status(400)
+        .json({ statusText: 'Password must be longer than 3 characters' })
     }
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(password, salt)
@@ -45,7 +47,7 @@ export const createUser = async (req, res, next) => {
     })
     res.json(newUser)
   } catch (error) {
-    next(error)
+    res.status(500).json(error)
   }
 }
 
@@ -58,14 +60,14 @@ export const loginUser = async (req, res, next) => {
     const user = await User.findOne({ email })
 
     if (!bcrypt.compareSync(password, user.password) || !user) {
-      throw new CustomError(400, 'Credentialsss')
+      return res.status(400).json({ statusText: 'Credentials are incorrect' })
     }
 
     const token = jwt.sign({ user }, process.env.SECRET)
     req.userId = user._id
     return res.json({ user, token })
   } catch (error) {
-    return res.status(400).json({ statusText: 'error' })
+    return res.status(400).json(error)
   }
 }
 
@@ -90,7 +92,7 @@ export const updateUserInfo = async (req, res, next) => {
     if (password == '' || newPassword == '') {
       hashedPassword = req.password
     } else if (!bcrypt.compareSync(password, req.password)) {
-      return res.status(400).send('incorrect password')
+      return res.status(400).json({ statusText: 'Incorrect password' })
     } else {
       hashedPassword = bcrypt.hashSync(newPassword, salt)
     }

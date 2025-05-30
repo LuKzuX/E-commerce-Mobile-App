@@ -12,7 +12,7 @@ export const getCartProducts = async (req, res, next) => {
     const loggedUser = await User.findById({ _id })
     res.json(loggedUser.cart)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -27,9 +27,9 @@ export const addProductToCart = async (req, res, next) => {
     addMoreOfTheSameProductToCart(loggedUser, id, product)
     await loggedUser.save()
 
-    res.send(loggedUser)
+    res.json(loggedUser)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -52,7 +52,7 @@ export const removeProductFromCart = async (req, res, next) => {
       res.json(newCart)
     }
   } catch (error) {
-    console.log(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -83,18 +83,18 @@ export const buy = async (req, res, next) => {
 
     for (let j = 0; j < finalObj.length; j++) {
       if (products[j].productQuantity <= 0) {
-        return res.json({
+        return res.status(400).json({
           message: 'no product in stock',
-          productIssue: 'product: ' + products[j],
+          //productIssue: 'product: ' + products[j],
         })
       }
       if (finalObj[j].productId.toString() == products[j]._id.toString()) {
         products[j].productQuantity -= finalObj[j].quantity
       }
       if (products[j].productQuantity - finalObj[j].quantity < 1) {
-        return res.json({
-          message: 'we dont have the amount required in stock',
-          productIssue: products[j],
+        return res.status(400).json({
+          statusText: 'we dont have the amount required in stock',
+          //productIssue: products[j],
         })
       }
       await products[j].save()
@@ -125,6 +125,6 @@ export const buy = async (req, res, next) => {
     await loggedUser.save()
     res.json(order)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }

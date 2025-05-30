@@ -28,7 +28,7 @@ export const getAllProducts = async (req, res, next) => {
 
     res.json(products)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -38,7 +38,7 @@ export const getProductDetails = async (req, res, next) => {
     const product = await Product.find({ _id: id })
     res.json(product)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -52,6 +52,16 @@ export const createProduct = async (req, res, next) => {
       productImage = req.file.path,
       productQuantity,
     } = req.body
+    if (
+      !productName ||
+      !productPrice ||
+      !productCategory ||
+      !productDescription ||
+      !productImage ||
+      !productQuantity
+    ) {
+      return res.status(400).json({ statusText: 'Fill all the fields' })
+    }
     const product = await Product.create({
       productName,
       productPrice,
@@ -63,7 +73,7 @@ export const createProduct = async (req, res, next) => {
 
     res.json(product)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -102,7 +112,7 @@ export const updateProduct = async (req, res, next) => {
     })
     res.json(product)
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
 
@@ -124,6 +134,6 @@ export const deleteProduct = async (req, res, next) => {
 
     res.send('deleted')
   } catch (error) {
-    res.send(error)
+    return res.status(400).json(error)
   }
 }
