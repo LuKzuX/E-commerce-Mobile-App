@@ -9,7 +9,7 @@ export const getAllProducts = async (req, res, next) => {
   const sort = req.query.s || null
   const category = req.query.c || null
   const numFilterMin = req.query.minprice || 0
-  const numFilterMax = req.query.maxprice || 1000000
+  const numFilterMax = req.query.maxprice || 100000000
   const productsPerPage = 8
   try {
     const query = {
