@@ -15,7 +15,7 @@ export const useSignup = () => {
       })
       navigator.replace('Signin')
     } catch (error) {
-      setError(error)
+      setError(error.response.data.statusText)
       console.log(error)
     }
   }

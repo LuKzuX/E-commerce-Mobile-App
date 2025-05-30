@@ -47,6 +47,8 @@ export const createUser = async (req, res, next) => {
     })
     res.json(newUser)
   } catch (error) {
+    console.log(error)
+
     res.status(500).json(error)
   }
 }
@@ -67,7 +69,9 @@ export const loginUser = async (req, res, next) => {
     req.userId = user._id
     return res.json({ user, token })
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+
+    return res.status(400).json({ statusText: 'Credentials are incorrect' })
   }
 }
 

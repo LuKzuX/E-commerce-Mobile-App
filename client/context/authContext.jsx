@@ -29,8 +29,9 @@ export const AuthContextProvider = ({ children }) => {
       setUser(res.data)
       navigation.navigate('Tabs')
     } catch (error) {
+      console.log(error.response.data);
       setError(error.response.data.statusText)
-      setInterval(() => {
+      setTimeout(() => {
         setError('')
       }, 3000)
     }
@@ -42,6 +43,9 @@ export const AuthContextProvider = ({ children }) => {
       setUser(null)
     } catch (error) {
       setError(error.response.data.statusText)
+      setTimeout(() => {
+        setError('')
+      }, 3000)
     }
   }
 
@@ -55,7 +59,7 @@ export const AuthContextProvider = ({ children }) => {
           setUser(null)
         }
       } catch (error) {
-        setError(error.response.data.statusText)
+        console.log('no user found to be logged in')
       }
     }
     getUserSession()
