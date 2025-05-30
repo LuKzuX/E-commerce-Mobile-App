@@ -85,7 +85,7 @@ export const buy = async (req, res, next) => {
       if (products[j].productQuantity <= 0) {
         return res.status(400).json({
           message: 'no product in stock',
-          //productIssue: 'product: ' + products[j],
+          productIssue: 'product: ' + products[j],
         })
       }
       if (finalObj[j].productId.toString() == products[j]._id.toString()) {
@@ -94,7 +94,7 @@ export const buy = async (req, res, next) => {
       if (products[j].productQuantity - finalObj[j].quantity < 1) {
         return res.status(400).json({
           statusText: 'we dont have the amount required in stock',
-          //productIssue: products[j],
+          productIssue: products[j],
         })
       }
       await products[j].save()

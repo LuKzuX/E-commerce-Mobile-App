@@ -40,9 +40,8 @@ export const AuthContextProvider = ({ children }) => {
     try {
       await AsyncStorage.removeItem('user')
       setUser(null)
-      console.log('user loggouted')
     } catch (error) {
-      console.log(error)
+      setError(error.response.data.statusText)
     }
   }
 
@@ -56,7 +55,7 @@ export const AuthContextProvider = ({ children }) => {
           setUser(null)
         }
       } catch (error) {
-        console.log(error)
+        setError(error.response.data.statusText)
       }
     }
     getUserSession()

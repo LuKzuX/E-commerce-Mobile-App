@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react'
 import { useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { ip } from '../getIp.js'
 import { useNavigation } from '@react-navigation/native'
@@ -16,6 +15,7 @@ export const CartContextProvider = ({ children }) => {
   const { user } = useAuthContext()
   const [boughtProducts, setBoughtProducts] = useState([])
   const [allQuantity, setAllQuantity] = useState(0)
+  const [error, setError] = useState('')
   useEffect(() => {
     const getCartData = async () => {
       if (!user || !user.token) return
@@ -38,7 +38,7 @@ export const CartContextProvider = ({ children }) => {
         })
         setBoughtProducts(productsInCart)
       } catch (error) {
-        console.log(error)
+        setError(error.response.data)
       }
     }
 
@@ -61,7 +61,7 @@ export const CartContextProvider = ({ children }) => {
         }
       )
     } catch (error) {
-      console.log(error)
+      setError(error)
     }
   }
 
@@ -167,6 +167,7 @@ export const CartContextProvider = ({ children }) => {
         boughtProducts,
         setBoughtProducts,
         allQuantity,
+        error,
       }}
     >
       {children}

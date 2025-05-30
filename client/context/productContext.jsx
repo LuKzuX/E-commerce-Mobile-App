@@ -9,8 +9,16 @@ export function ProductContextProvider({ children }) {
   const [cat, setCat] = useState('')
   const [displayCat, setDisplayCat] = useState('')
   const [find, setFind] = useState('')
+  const [error, setError] = useState('')
 
-  const getData = async (page = 1, find = '', sort = '', category = '', minPrice = "", maxPrice = "") => {
+  const getData = async (
+    page = 1,
+    find = '',
+    sort = '',
+    category = '',
+    minPrice = '',
+    maxPrice = ''
+  ) => {
     try {
       const response = await axios.get(
         `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
@@ -18,7 +26,7 @@ export function ProductContextProvider({ children }) {
       setCat(category)
       return response.data
     } catch (error) {
-      console.log(error)
+      setError(error)
     }
   }
 
@@ -33,6 +41,7 @@ export function ProductContextProvider({ children }) {
         category: cat,
         displayCat,
         setDisplayCat,
+        error,
       }}
     >
       {children}
