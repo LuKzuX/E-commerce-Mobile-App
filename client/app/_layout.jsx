@@ -10,7 +10,7 @@ import ProductDetails from './(tabs)/ProductDetails'
 import UpdateProductScreen from './(tabs)/UpdateProductScreen'
 import ProductCategoriesScreen from './(tabs)/ProductCategories'
 import Cart from './(tabs)/Cart'
-import { AuthContextProvider } from '../context/authContext'
+import { AuthContextProvider, useAuthContext } from '../context/authContext'
 import { ProductContextProvider } from '../context/productContext'
 import { CartContextProvider } from '@/context/cartContext'
 import { View } from 'react-native'
@@ -30,6 +30,8 @@ const queryClient = new QueryClient({
 })
 
 function Tabs() {
+  const { user } = useAuthContext()
+  
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -90,11 +92,11 @@ function Tabs() {
         options={{ title: 'User' }}
       />
 
-      <Tab.Screen
+      {user?.user?.isAdmin && <Tab.Screen
         name='CreateProduct'
         component={CreateProductScreen}
         options={{ title: 'Create Product' }}
-      />
+      />}
 
       <Tab.Screen
         name='ProductDetails'

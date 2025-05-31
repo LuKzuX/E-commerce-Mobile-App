@@ -6,7 +6,7 @@ import { useState } from 'react'
 export const useSignup = () => {
   const navigator = useNavigation()
   const [error, setError] = useState('')
-  const signin = async (username, email, password) => {
+  const signup = async (username, email, password) => {
     try {
       await axios.post(`http://${ip}:5000/material-delivery/signup`, {
         username,
@@ -19,5 +19,5 @@ export const useSignup = () => {
       console.log(error)
     }
   }
-  return { signin, error }
+  return { signup, error }
 }
