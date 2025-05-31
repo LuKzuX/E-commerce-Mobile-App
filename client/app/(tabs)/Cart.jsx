@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useCartContext } from '@/context/cartContext'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart'
 import { ip } from '@/getIp'
-import { prettierPrice } from '@/utils/prettierPrice'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 export default function Cart() {
@@ -42,13 +41,13 @@ export default function Cart() {
           <View className='flex-row items-center mt-1'>
             <Text className='text-sm mr-[1px]'>$</Text>
             <Text className='text-green-600 text-text-small font-semibold'>
-              {prettierPrice(item.totalPrice || 0)}
+              {item.totalPrice || 0}
             </Text>
           </View>
           <View className='flex-row items-center mt-1'>
             <Text className='text-[10px] mr-[1px]'>$</Text>
             <Text className='text-green-600 text-sm font-semibold'>
-              {prettierPrice(item.price || 0)}
+              {item.price || 0}
             </Text>
           </View>
         </View>

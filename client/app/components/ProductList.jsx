@@ -2,7 +2,6 @@ import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useInfiniteQuery } from 'react-query'
-import { prettierPrice } from '../../utils/prettierPrice.js'
 import { useAuthContext } from '@/context/authContext.jsx'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
 import { useCartContext } from '../../context/cartContext.jsx'
@@ -75,7 +74,7 @@ export default function ProductList({
           <View className='flex-row items-center'>
             <Text className='text-sm mr-[1px]'>$</Text>
             <Text className='text-green-600 text-text-small font-semibold'>
-              {prettierPrice(item.productPrice)}
+              {item.productPrice}
             </Text>
           </View>
         </View>
