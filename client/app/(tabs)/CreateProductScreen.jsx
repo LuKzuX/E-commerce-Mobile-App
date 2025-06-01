@@ -36,6 +36,8 @@ export default function CreateProductScreen() {
   const { getData } = useProductContext()
   const queryClient = useQueryClient()
 
+ 
+
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
       <View className='bg-white p-2 rounded-2xl'>
@@ -57,6 +59,7 @@ export default function CreateProductScreen() {
               keyboardType='letter'
             />
             <TextInput
+              
               className='border-b text-text-small '
               onChangeText={(text) => setProductPrice(text)}
               placeholder='price'

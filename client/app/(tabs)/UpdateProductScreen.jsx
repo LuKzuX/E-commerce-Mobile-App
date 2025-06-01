@@ -45,6 +45,26 @@ export default function UpdateProductScreen() {
   const [productQuantity, setProductQuantity] = useState('')
   const queryClient = useQueryClient()
 
+  const currency = (input) => {
+    let cleaned = ''
+    for (let i = 0; i < input.length; i++) {
+      if (!isNaN(input[i])) {
+        cleaned += input[i]
+      }
+    }
+    let result = ''
+    let count = 0
+    for (let i = cleaned.length - 1; i >= 0; i--) {
+      result = cleaned[i] + result
+      count += 1
+      if (count === 3 && i !== 0) {
+        result = '.' + result
+        count = 0
+      }
+    }
+    return result
+  }
+
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -95,7 +115,7 @@ export default function UpdateProductScreen() {
             <TextInput
               className='border-b text-text-small '
               value={productPrice}
-              onChangeText={(text) => setProductPrice(text)}
+              onChangeText={(text) => setProductPrice(currency(text))}
               placeholder='price'
               keyboardType='numeric'
             />
