@@ -48,7 +48,7 @@ export default function UpdateProductScreen() {
   const currency = (input) => {
     let cleaned = ''
     for (let i = 0; i < input.length; i++) {
-      if (!isNaN(input[i])) {
+      if (!isNaN(input[i]) && input[i] !== ' ') {
         cleaned += input[i]
       }
     }
