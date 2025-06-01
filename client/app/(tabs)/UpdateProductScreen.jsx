@@ -57,9 +57,8 @@ export default function UpdateProductScreen() {
     for (let i = cleaned.length - 1; i >= 0; i--) {
       result = cleaned[i] + result
       count += 1
-      if (count === 3 && i !== 0) {
+      if (count % 3 == 0 && i !== 0) {
         result = '.' + result
-        count = 0
       }
     }
     return result
