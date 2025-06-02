@@ -32,14 +32,13 @@ export default function ProductList({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
       getData(pageParam, find, sortValue, category, minValue, maxValue),
-   getNextPageParam: (lastPage, allPages) => {
-  if (!lastPage || !Array.isArray(lastPage)) return undefined
-  return lastPage.length === 8 ? allPages.length + 1 : undefined
-}
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage || !Array.isArray(lastPage)) return undefined
+      return lastPage.length === 8 ? allPages.length + 1 : undefined
+    },
   })
   const allProducts = data?.pages?.flat() || []
-  console.log(allProducts);
-  
+  console.log(allProducts)
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -94,17 +93,34 @@ export default function ProductList({
         <TouchableOpacity
           className='self-center mt-[10px]'
           onPress={() => {
-            setBoughtProducts((prev) => [
-              ...prev,
-              {
-                id: item._id,
-                qnt: 1,
-                name: item.productName,
-                price: item.productPrice,
-                image: item.productImage,
-                totalPrice: item.productPrice,
-              },
-            ])
+            setBoughtProducts((prev) => {
+              const existing = prev.find((obj) => obj.id === item._id)
+              if (existing) {
+                // Increase quantity and totalPrice
+                return prev.map((obj) =>
+                  obj.id === item._id
+                    ? {
+                        ...obj,
+                        qnt: obj.qnt + 1,
+                        totalPrice: (obj.qnt + 1) * obj.price,
+                      }
+                    : obj
+                )
+              } else {
+                // Add new product
+                return [
+                  ...prev,
+                  {
+                    id: item._id,
+                    qnt: 1,
+                    name: item.productName,
+                    price: item.productPrice,
+                    image: item.productImage,
+                    totalPrice: item.productPrice,
+                  },
+                ]
+              }
+            })
             addProductToCart(item._id.toString())
           }}
         >

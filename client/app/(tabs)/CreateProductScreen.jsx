@@ -36,7 +36,25 @@ export default function CreateProductScreen() {
   const { getData } = useProductContext()
   const queryClient = useQueryClient()
 
- 
+   const currency = (input) => {
+    let cleaned = ''
+    for (let i = 0; i < input.length; i++) {
+      if (!isNaN(input[i]) && input[i] !== ' ') {
+        cleaned += input[i]
+      }
+    }
+    let result = ''
+    let count = 0
+    for (let i = cleaned.length - 1; i >= 0; i--) {
+      
+      result = cleaned[i] + result
+      count += 1
+      if (count % 3 == 0 && i !== 0) {
+        result = '.' + result
+      }
+    }
+    return result
+  }
 
   return (
     <View className='flex-1 p-10 bg-bg-gray'>
@@ -61,7 +79,7 @@ export default function CreateProductScreen() {
             <TextInput
               
               className='border-b text-text-small '
-              onChangeText={(text) => setProductPrice(text)}
+              onChangeText={(text) => setProductPrice(currency(text))}
               placeholder='price'
               keyboardType='numeric'
             />

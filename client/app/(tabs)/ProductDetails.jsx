@@ -7,6 +7,8 @@ import { useAuthContext } from '@/context/authContext'
 import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
+import { useCartContext } from '../../context/cartContext.jsx'
+import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -26,6 +28,15 @@ export default function ProductDetails() {
     { label: 'Food & Beverage', value: 'food-beverage' },
     { label: 'Office Supplies', value: 'office-supplies' },
   ]
+  const {
+    addProductToCart,
+    isProductInCart,
+    getProductQuantityInCart,
+    incrementQuantity,
+    decrementQuantity,
+    boughtProducts,
+    setBoughtProducts,
+  } = useCartContext()
 
   useEffect(() => {
     setData([])
@@ -135,11 +146,56 @@ export default function ProductDetails() {
             </View>
           )}
           <View className='mt-6 space-y-3'>
-            <TouchableOpacity className='bg-bg-yellow p-4 rounded-lg items-center shadow-md'>
-              <Text className='text-lg font-bold text-text-dark'>
-                Add to Cart
-              </Text>
-            </TouchableOpacity>
+            {isProductInCart(data[0]._id.toString()) ? (
+              <View className='flex-row items-center justify-center mt-2'>
+                <GetProductQuantityInCart
+                  getProductQuantity={() =>
+                    getProductQuantityInCart(data[0]._id.toString())
+                  }
+                  increment={() => incrementQuantity(data[0]._id.toString())}
+                  decrement={() => decrementQuantity(data[0]._id.toString())}
+                />
+              </View>
+            ) : (
+              <TouchableOpacity
+                className='self-center mt-[10px]'
+                onPress={() => {
+                  setBoughtProducts((prev) => {
+                    const existing = prev.find((obj) => obj.id === data[0]._id)
+                    if (existing) {
+                      // Increase quantity and totalPrice
+                      return prev.map((obj) =>
+                        obj.id === data[0]._id
+                          ? {
+                              ...obj,
+                              qnt: obj.qnt + 1,
+                              totalPrice: (obj.qnt + 1) * obj.price,
+                            }
+                          : obj
+                      )
+                    } else {
+                      // Add new product
+                      return [
+                        ...prev,
+                        {
+                          id: data[0]._id,
+                          qnt: 1,
+                          name: data[0].productName,
+                          price: data[0].productPrice,
+                          image: data[0].productImage,
+                          totalPrice: data[0].productPrice,
+                        },
+                      ]
+                    }
+                  })
+                  addProductToCart(data[0]._id.toString())
+                }}
+              >
+                <Text className='text-text-small bg-bg-yellow py-[6px] px-[30px] rounded-xl'>
+                  Add to Cart
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       )}
