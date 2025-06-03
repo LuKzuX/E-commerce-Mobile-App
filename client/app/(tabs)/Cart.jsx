@@ -41,7 +41,7 @@ export default function Cart() {
           <View className='flex-row items-center mt-1'>
             <Text className='text-sm mr-[1px]'>$</Text>
             <Text className='text-green-600 text-text-small font-semibold'>
-              {item.totalPrice || 0}
+              {(parseFloat(item.totalPrice) || 0).toFixed(2)}
             </Text>
           </View>
           <View className='flex-row items-center mt-1'>
