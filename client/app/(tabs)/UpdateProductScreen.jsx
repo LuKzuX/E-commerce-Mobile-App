@@ -57,18 +57,11 @@ export default function UpdateProductScreen() {
     for (let i = cleaned.length - 1; i >= 0; i--) {
       result = cleaned[i] + result
       count += 1
-      if (count % 3 == 0 && i !== 0) {
+      if (count % 3 == 0 && i !== 0 && count > 4) {
         result = '.' + result
       }
-    }
-    return result
-  }
-
-  const convertBackToInt = (input) => {
-    let result = ''
-    for (let i = 0; i < input.length; i++) {
-      if (input[i] !== '.') {
-        result += input[i]
+      if (count == 2) {
+        result = '.' + result
       }
     }
     return result
@@ -86,7 +79,7 @@ export default function UpdateProductScreen() {
           }
         )
         setProductName(res.data[0].productName)
-        setProductPrice(String(res.data[0].productPrice))
+        setProductPrice(String(res.data[0].productPrice.$numberDecimal))
         setValue(res.data[0].productCategory)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(String(res.data[0].productQuantity))
@@ -166,7 +159,7 @@ export default function UpdateProductScreen() {
                     `http://${ip}:5000/material-delivery/${id}`,
                     'patch',
                     productName,
-                    convertBackToInt(productPrice),
+                    productPrice,
                     productCategoryValue,
                     productDescription,
                     productQuantity
