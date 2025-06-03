@@ -64,6 +64,16 @@ export default function UpdateProductScreen() {
     return result
   }
 
+  const convertBackToInt = (input) => {
+    let result = ''
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] !== '.') {
+        result += input[i]
+      }
+    }
+    return result
+  }
+
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -149,14 +159,14 @@ export default function UpdateProductScreen() {
                 />
               )}
             </View>
-            <Text
+            <TouchableOpacity
               onPress={async () => {
                 try {
                   const response = await handleUpload(
                     `http://${ip}:5000/material-delivery/${id}`,
                     'patch',
                     productName,
-                    productPrice,
+                    convertBackToInt(productPrice),
                     productCategoryValue,
                     productDescription,
                     productQuantity
@@ -168,10 +178,11 @@ export default function UpdateProductScreen() {
                   console.log(error)
                 }
               }}
-              className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'
             >
-              Update Product
-            </Text>
+              <Text className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'>
+                Update Product
+              </Text>
+            </TouchableOpacity>
             <Text>{success}</Text>
           </View>
         </ScrollView>

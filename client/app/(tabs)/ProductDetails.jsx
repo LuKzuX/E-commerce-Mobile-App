@@ -9,6 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
 import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
+import {formatedPrice} from '../../utils/formatedPrice.js'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -80,7 +81,7 @@ export default function ProductDetails() {
               <View className='flex-row items-center'>
                 <Text className='text-sm mr-[1px]'>$</Text>
                 <Text className='text-text-small-medium font-semibold text-green-600'>
-                  {data[0].productPrice}
+                  {formatedPrice(String(data[0].productPrice))}
                 </Text>
               </View>
             </View>

@@ -6,6 +6,7 @@ import { useAuthContext } from '@/context/authContext.jsx'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
 import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
+import {formatedPrice} from '../../utils/formatedPrice.js'
 
 export default function ProductList({
   products,
@@ -73,7 +74,7 @@ export default function ProductList({
           <View className='flex-row items-center'>
             <Text className='text-sm mr-[1px]'>$</Text>
             <Text className='text-green-600 text-text-small font-semibold'>
-              {item.productPrice}
+              {formatedPrice(String(item.productPrice))}
             </Text>
           </View>
         </View>
