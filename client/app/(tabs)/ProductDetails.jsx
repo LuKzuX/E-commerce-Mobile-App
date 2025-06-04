@@ -17,7 +17,7 @@ export default function ProductDetails() {
   const { id } = route.params
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
-  const { getData, products } = useProductContext()
+  const { getData, products, setProducts } = useProductContext()
   const { data, setData } = useGetProductDetails(id)
   const categories = [
     { label: 'Computers', value: 'computers' },
@@ -57,6 +57,11 @@ export default function ProductDetails() {
         <Text>{category?.label || 'Unknown Category'}</Text>
       </View>
     )
+  }
+
+  const updateProductList = (id) => {
+    const newList = products.filter((obj) => obj._id !== id)
+    setProducts(newList)   
   }
 
   return (
@@ -130,6 +135,7 @@ export default function ProductDetails() {
               <TouchableOpacity
                 onPress={async () => {
                   await deleteProduct(id)
+                  updateProductList(id)
                   navigation.navigate('Home')
                 }}
               >

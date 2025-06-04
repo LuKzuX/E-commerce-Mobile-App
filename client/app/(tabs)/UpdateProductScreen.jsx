@@ -179,6 +179,7 @@ export default function UpdateProductScreen() {
                   )
                   if (response) {
                     queryClient.invalidateQueries(['products'])
+                    navigation.navigate('ProductDetails', { id })
                   }
                 } catch (error) {
                   console.log(error)

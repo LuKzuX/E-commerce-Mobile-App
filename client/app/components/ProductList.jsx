@@ -1,16 +1,17 @@
 import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery, useQueryClient } from 'react-query'
 import { useAuthContext } from '@/context/authContext.jsx'
 import Ionicons from '@expo/vector-icons/Ionicons.js'
 import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
-import {formatedPrice} from '../../utils/formatedPrice.js'
+import { formatedPrice } from '../../utils/formatedPrice.js'
+import { useEffect } from 'react'
 
 export default function ProductList({
   products,
-  setData,
+  setProducts,
   getData,
   find,
   sortValue,
@@ -28,6 +29,7 @@ export default function ProductList({
     boughtProducts,
     setBoughtProducts,
   } = useCartContext()
+  const queryClient = useQueryClient()
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
@@ -39,7 +41,6 @@ export default function ProductList({
     },
   })
   const allProducts = data?.pages?.flat() || []
-  console.log(allProducts)
 
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
@@ -58,6 +59,10 @@ export default function ProductList({
       fetchNextPage()
     }
   }
+
+  useEffect(() => {
+    queryClient.invalidateQueries(['products'])
+  }, [products])
 
   const renderItem = ({ item }) => (
     <View className='flex w-1/2 px-7 py-10 bg-white'>
