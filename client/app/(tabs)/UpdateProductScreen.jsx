@@ -77,6 +77,7 @@ export default function UpdateProductScreen() {
     return parseFloat(result)
   }
   
+
   useEffect(() => {
     const getProductData = async () => {
       try {
