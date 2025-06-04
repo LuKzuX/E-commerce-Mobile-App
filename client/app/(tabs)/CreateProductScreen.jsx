@@ -36,7 +36,7 @@ export default function CreateProductScreen() {
   const { getData } = useProductContext()
   const queryClient = useQueryClient()
 
-   const currency = (input) => {
+  const currency = (input) => {
     let cleaned = ''
     for (let i = 0; i < input.length; i++) {
       if (!isNaN(input[i]) && input[i] !== ' ') {
@@ -46,14 +46,29 @@ export default function CreateProductScreen() {
     let result = ''
     let count = 0
     for (let i = cleaned.length - 1; i >= 0; i--) {
-      
       result = cleaned[i] + result
       count += 1
-      if (count % 3 == 0 && i !== 0) {
+      if (count % 5 == 0 && i !== 0) {
+        result = '.' + result
+      }
+      if (count == 2) {
         result = '.' + result
       }
     }
     return result
+  }
+
+  const convertBackToInt = (input) => {
+    let result = ''
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] == '.' && i >= input.length - 3) {
+        result += input[i]
+      }
+      if (input[i] !== '.') {
+        result += input[i]
+      }
+    }
+    return parseFloat(result)
   }
 
   return (
@@ -77,8 +92,8 @@ export default function CreateProductScreen() {
               keyboardType='letter'
             />
             <TextInput
-              
               className='border-b text-text-small '
+              value={currency(productPrice)}
               onChangeText={(text) => setProductPrice(currency(text))}
               placeholder='price'
               keyboardType='numeric'
@@ -120,7 +135,7 @@ export default function CreateProductScreen() {
                     `http://${ip}:5000/material-delivery/new-product`,
                     'post',
                     productName,
-                    productPrice,
+                    convertBackToInt(currency(productPrice)),
                     productCategoryValue,
                     productDescription,
                     productQuantity

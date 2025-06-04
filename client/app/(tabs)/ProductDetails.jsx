@@ -9,7 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
 import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
-import {formatedPrice} from '../../utils/formatedPrice.js'
+import { formatedPrice } from '../../utils/formatedPrice.js'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -127,15 +127,16 @@ export default function ProductDetails() {
 
           {user?.user.isAdmin && (
             <View className='flex-row items-center justify-center gap-4 px-6'>
-              <Text
-                onPress={() => {
-                  deleteProduct(id)
-                  getData()
+              <TouchableOpacity
+                onPress={async () => {
+                  await deleteProduct(id)
+                  navigation.navigate('Home')
                 }}
-                className='bg-bg-red px-6 py-3 rounded-md text-white font-semibold'
               >
-                Delete Product
-              </Text>
+                <Text className='bg-bg-red px-6 py-3 rounded-md text-white font-semibold'>
+                  Delete Product
+                </Text>
+              </TouchableOpacity>
               <Text
                 onPress={() => {
                   navigation.navigate('UpdateProduct', { id: id })

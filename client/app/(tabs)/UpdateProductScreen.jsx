@@ -70,13 +70,15 @@ export default function UpdateProductScreen() {
   const convertBackToInt = (input) => {
     let result = ''
     for (let i = 0; i < input.length; i++) {
-      if (input[i] !== '.' || i <= input.length - 2) {
+      if (input[i] == '.' && i >= input.length - 3) {
+        result += input[i]
+      }
+      if (input[i] !== '.') {
         result += input[i]
       }
     }
     return parseFloat(result)
   }
-  
 
   useEffect(() => {
     const getProductData = async () => {
@@ -170,7 +172,7 @@ export default function UpdateProductScreen() {
                     `http://${ip}:5000/material-delivery/${id}`,
                     'patch',
                     productName,
-                    convertBackToInt(productPrice),
+                    convertBackToInt(currency(productPrice)),
                     productCategoryValue,
                     productDescription,
                     productQuantity
