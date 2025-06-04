@@ -39,10 +39,6 @@ export default function ProductDetails() {
     setBoughtProducts,
   } = useCartContext()
 
-  useEffect(() => {
-    setData([])
-  }, [id])
-
   const Cat = () => {
     if (!data) {
       return <Text>Loading...</Text>
@@ -61,7 +57,7 @@ export default function ProductDetails() {
 
   const updateProductList = (id) => {
     const newList = products.filter((obj) => obj._id !== id)
-    setProducts(newList)   
+    setProducts(newList)
   }
 
   return (

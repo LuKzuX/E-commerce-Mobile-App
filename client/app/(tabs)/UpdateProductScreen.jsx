@@ -18,6 +18,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
+import useGetProductDetails from '@/utils/useGetProductDetails.js'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
@@ -44,6 +45,7 @@ export default function UpdateProductScreen() {
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
   const queryClient = useQueryClient()
+  const { refetch } = useGetProductDetails(id)
 
   const currency = (input) => {
     let cleaned = ''
@@ -153,6 +155,11 @@ export default function UpdateProductScreen() {
               <Text
                 onPress={async () => {
                   await uploadData()
+                  if (response) {
+                    await refetch() // Refetch the updated product details
+                    queryClient.invalidateQueries(['products'])
+                    navigation.navigate('ProductDetails', { id })
+                  }
                 }}
                 className='py-3 px-6 bg-blue-400 self-start text-text-small rounded-xl font-semibold'
               >
