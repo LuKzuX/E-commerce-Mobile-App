@@ -74,7 +74,7 @@ export default function ProductList({
           <View className='flex-row items-center'>
             <Text className='text-sm mr-[1px]'>$</Text>
             <Text className='text-green-600 text-text-small font-semibold'>
-              {formatedPrice(String(item.productPrice))}
+              {formatedPrice(String(item.productPrice.$numberDecimal))}
             </Text>
           </View>
         </View>

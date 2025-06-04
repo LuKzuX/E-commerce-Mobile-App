@@ -57,7 +57,7 @@ export default function UpdateProductScreen() {
     for (let i = cleaned.length - 1; i >= 0; i--) {
       result = cleaned[i] + result
       count += 1
-      if (count % 3 == 0 && i !== 0 && count > 4) {
+      if (count % 5 == 0 && i !== 0) {
         result = '.' + result
       }
       if (count == 2) {
@@ -67,6 +67,16 @@ export default function UpdateProductScreen() {
     return result
   }
 
+  const convertBackToInt = (input) => {
+    let result = ''
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] !== '.' || i <= input.length - 2) {
+        result += input[i]
+      }
+    }
+    return parseFloat(result)
+  }
+  
   useEffect(() => {
     const getProductData = async () => {
       try {
@@ -116,7 +126,7 @@ export default function UpdateProductScreen() {
             />
             <TextInput
               className='border-b text-text-small '
-              value={productPrice}
+              value={currency(productPrice)}
               onChangeText={(text) => setProductPrice(currency(text))}
               placeholder='price'
               keyboardType='numeric'
@@ -159,7 +169,7 @@ export default function UpdateProductScreen() {
                     `http://${ip}:5000/material-delivery/${id}`,
                     'patch',
                     productName,
-                    productPrice,
+                    convertBackToInt(productPrice),
                     productCategoryValue,
                     productDescription,
                     productQuantity
