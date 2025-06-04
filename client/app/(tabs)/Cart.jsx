@@ -26,52 +26,55 @@ export default function Cart() {
     }
   }
   const renderItem = ({ item }) => (
-    <View className='flex-row px-7 py-10 bg-white items-center justify-between border-b'>
-      {/* Image */}
+    <View className='flex-row items-center justify-between px-4 py-5 bg-white border-b border-gray-200 space-x-3'>
+      {/* Product Image */}
       <Image
         source={{ uri: `http://${ip}:5000/${item.image.replace(/\\/g, '/')}` }}
-        className='h-[100px] w-[100px]'
+        className='h-[100px] w-[100px] mr-2'
         resizeMode='contain'
       />
 
-      {/* Product info */}
-      <View className='flex-1 ml-4'>
+      {/* Product Info */}
+      <View className='flex-1'>
         <ThreeDots string={item.name} />
-        <View>
-          <View className='flex-row items-center mt-1'>
-            <Text className='text-sm mr-[1px]'>$</Text>
-            <Text className='text-green-600 text-text-small font-semibold'>
+
+        <View className='mt-2 space-y-[4px]'>
+          {/* Total Price */}
+          <View className='flex-row items-center'>
+            <Text className='text-[11px] text-gray-500 mr-[2px]'>$</Text>
+            <Text className='text-green-600 text-[15px] font-bold'>
               {(parseFloat(item.totalPrice) || 0).toFixed(2)}
             </Text>
+            <Text className='ml-1 text-[10px] text-gray-400'>Total</Text>
           </View>
-          <View className='flex-row items-center mt-1'>
-            <Text className='text-[10px] mr-[1px]'>$</Text>
-            <Text className='text-green-600 text-sm font-semibold'>
+
+          {/* Unit Price */}
+          <View className='flex-row items-center'>
+            <Text className='text-[10px] text-gray-500 mr-[2px]'>$</Text>
+            <Text className='text-green-500 text-[13px] font-semibold'>
               {item.price || 0}
             </Text>
+            <Text className='ml-1 text-[10px] text-gray-400'>Unit</Text>
           </View>
         </View>
       </View>
 
-      {/* Buttons on the right */}
-      <View className='items-end flex-row items-center gap-2'>
+      {/* Quantity + Delete */}
+      <View className='items-center justify-between h-[80px] space-y-2'>
         <GetProductQuantityInCart
           getProductQuantity={() => getProductQuantityInCart(item.id)}
           increment={() => incrementQuantity(item.id)}
           decrement={() => decrementQuantity(item.id)}
         />
-        <TouchableOpacity>
-          <Ionicons
-            onPress={() => {
-              deleteProductFromCart(item.id, true)
-              setBoughtProducts((prev) =>
-                prev.filter((obj) => obj.id !== item.id)
-              )
-            }}
-            name='trash-bin-outline'
-            size={25}
-            color={'red'}
-          ></Ionicons>
+        <TouchableOpacity
+          onPress={() => {
+            deleteProductFromCart(item.id, true)
+            setBoughtProducts((prev) =>
+              prev.filter((obj) => obj.id !== item.id)
+            )
+          }}
+        >
+          <Ionicons name='trash-bin-outline' size={22} color='red' />
         </TouchableOpacity>
       </View>
     </View>
