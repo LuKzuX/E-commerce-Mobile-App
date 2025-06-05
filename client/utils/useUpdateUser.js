@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { ip } from '../getIp'
 import { useAuthContext } from '../context/authContext'
+import { useState } from 'react'
 
 export default function useUpdateUser() {
   const { user } = useAuthContext()
+  const [updateUserInfoError, setUpdateUserInfoError] = useState("")
   const updateUserInfo = async (
     username,
     password,
@@ -36,8 +38,13 @@ export default function useUpdateUser() {
         }
       )
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.statusText);
+      
+      setUpdateUserInfoError(error.response.data.statusText)
+      setTimeout(() => {
+        setUpdateUserInfoError("")
+      }, 4000);
     }
   }
-  return updateUserInfo
+  return {updateUserInfo, updateUserInfoError}
 }

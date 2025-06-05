@@ -33,7 +33,11 @@ export default function SigninScreen() {
         >
           Signin
         </Text>
-        <Text>{error}</Text>
+        {error && (
+          <View className='bg-red-100 border border-red-400 rounded px-4 py-3 mt-4 mx-6'>
+            <Text className='text-red-700 text-sm font-medium'>{error}</Text>
+          </View>
+        )}
       </View>
     </View>
   )

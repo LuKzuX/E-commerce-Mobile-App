@@ -33,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
       setError(error.response.data.statusText)
       setTimeout(() => {
         setError('')
-      }, 3000)
+      }, 4000)
     }
   }
 
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
       setError(error.response.data.statusText)
       setTimeout(() => {
         setError('')
-      }, 3000)
+      }, 4000)
     }
   }
 

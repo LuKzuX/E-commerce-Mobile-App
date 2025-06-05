@@ -92,9 +92,8 @@ export const updateUserInfo = async (req, res, next) => {
     } = req.body
 
     const salt = bcrypt.genSaltSync(10)
-
     if (password == '' || newPassword == '') {
-      hashedPassword = req.password
+      return res.status(400).json({statusText: 'Fill the Password fields'})
     } else if (!bcrypt.compareSync(password, req.password)) {
       return res.status(400).json({ statusText: 'Incorrect password' })
     } else {
@@ -122,6 +121,6 @@ export const updateUserInfo = async (req, res, next) => {
     )
     res.json(user)
   } catch (error) {
-    return res.status(400).json(error)
+    return res.status(400).json({statusText: error.message})
   }
 }

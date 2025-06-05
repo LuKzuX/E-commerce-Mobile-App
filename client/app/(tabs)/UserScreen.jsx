@@ -11,7 +11,7 @@ export default function UserScreen() {
   const { user, logout } = useAuthContext()
   const [isEditing, setIsEditing] = useState(false)
   const navigation = useNavigation()
-  const updateUserInfo = useUpdaterUser()
+  const { updateUserInfo, updateUserInfoError } = useUpdaterUser()
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -288,6 +288,13 @@ export default function UserScreen() {
           Logout
         </Text>
       </View>
+      {updateUserInfoError ? (
+        <View className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-6 mt-6'>
+          <Text className='text-red-700 text-sm font-medium'>
+            {updateUserInfoError}
+          </Text>
+        </View>
+      ) : null}
     </ScrollView>
   )
 }
