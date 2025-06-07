@@ -1,4 +1,4 @@
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { useAuthContext } from '../../context/authContext.jsx'
 import { useEffect, useState, useCallback } from 'react'
@@ -265,29 +265,31 @@ export default function UserScreen() {
       )}
 
       {!user && (
-        <View className='h-screen flex flex-col items-center gap-10 my-20'>
+        <View className='mt-56 flex flex-col justify-center items-center gap-10 my-20 bg-white py-20'>
           <Text
             onPress={() => navigation.navigate('Signin')}
-            className='bg-green-400 py-4 px-8 rounded-xl text-text-small'
+            className='bg-green-500 py-4 px-8 rounded-xl text-text-small-medium text-white'
           >
             Signin
           </Text>
           <Text
             onPress={() => navigation.navigate('Signup')}
-            className='bg-blue-400 py-4 px-8 rounded-xl text-text-small'
+            className='bg-blue-500 py-4 px-8 rounded-xl text-text-small-medium text-white'
           >
             Signup
           </Text>
         </View>
       )}
-      <View>
-        <Text
-          onPress={handleLogout}
-          className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small font-semibold mt-10 text-white'
-        >
-          Logout
-        </Text>
-      </View>
+      {user && (
+        <View>
+          <Text
+            onPress={handleLogout}
+            className='self-center bg-bg-red py-4 px-8 rounded-xl text-text-small font-semibold mt-10 text-white'
+          >
+            Logout
+          </Text>
+        </View>
+      )}
       {updateUserInfoError ? (
         <View className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-6 mt-6'>
           <Text className='text-red-700 text-sm font-medium'>

@@ -28,7 +28,7 @@ export default function SigninScreen() {
           secureTextEntry
         />
         <Text
-          className='text-center self-center bg-green-400 py-6 px-12 text-text-medium rounded-xl'
+          className='text-center self-center bg-green-500 py-6 px-12 text-text-medium rounded-xl text-white'
           onPress={handleSubmit}
         >
           Signin

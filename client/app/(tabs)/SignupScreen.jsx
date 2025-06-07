@@ -35,7 +35,7 @@ export default function SignupScreen() {
           secureTextEntry
         />
         <Text
-          className='text-center self-center bg-blue-400 py-6 px-12 text-text-medium rounded-xl'
+          className='text-center self-center bg-blue-500 py-6 px-12 text-text-medium rounded-xl text-white'
           onPress={() => handleSubmit(username, email, password)}
         >
           Signup
