@@ -41,7 +41,7 @@ export default function UserScreen() {
         setAreaCode(res.data.address.areaCode)
       }
     } catch (error) {
-      console.log('no user logged')
+      return
     }
   }
 

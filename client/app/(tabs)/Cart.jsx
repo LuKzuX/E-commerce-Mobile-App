@@ -14,6 +14,8 @@ export default function Cart() {
     getProductQuantityInCart,
   } = useCartContext()
 
+  console.log(boughtProducts);
+  
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
       return <Text>{string}</Text>
