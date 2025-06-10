@@ -6,40 +6,52 @@ import cors from "cors"
 import { connect } from "./db/connection.js";
 import { router } from "./routes/routes.js";
 import bodyParser from "body-parser";
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.use(cors())
-app.use(bodyParser.json())
-app.use('/images', express.static(path.join(__dirname, 'images')))
-app.use(express.urlencoded({ extended: true }));
+// Basic middleware
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
-app.use(`/material-delivery`, router); 
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
+// Test route
+app.get('/', (req, res) => {
+  res.json({ message: 'API is working!' });
 });
 
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK' });
+});
+
+// Use the router
+app.use('/', router);
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'Server error' });
+});
+
+// Connect to MongoDB
 const start = async () => {
   try {
-    await connect(process.env.MONGO_URI);
-    const port = process.env.PORT || 5000;
-    app.listen(port, () => {
-      console.log(`Server is listening on port ${port}`);
-    });
+    if (process.env.MONGO_URI) {
+      await connect(process.env.MONGO_URI);
+      console.log('MongoDB connected');
+    }
   } catch (error) {
-    console.log(error);
+    console.error('MongoDB connection error:', error);
   }
 };
 
+// Initialize MongoDB connection
+start();
+
 // For local development
 if (process.env.NODE_ENV !== 'production') {
-  start();
+  app.listen(5000, () => {
+    console.log('Server running on port 5000');
+  });
 }
 
-// For Vercel deployment
+// Export the Express app
 export default app;

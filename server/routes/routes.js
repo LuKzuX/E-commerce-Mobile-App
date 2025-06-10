@@ -21,13 +21,18 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from '../controllers/cartControllers.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './images')
+    cb(null, path.join(__dirname, '../images'))
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname)
+    cb(null, Date.now() + '-' + file.originalname)
   },
 })
 
