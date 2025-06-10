@@ -12,8 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Use the router
-app.use('/api/', router);
+// Use the router without /api prefix since Vercel handles that
+app.use('/', router);
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -35,7 +35,6 @@ const start = async () => {
 
 // Initialize MongoDB connection
 start();
-
 
 // Export the Express app
 export default app;
