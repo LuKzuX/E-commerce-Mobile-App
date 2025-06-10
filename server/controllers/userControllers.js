@@ -26,7 +26,16 @@ export const getUserToUpdate = async (req, res, next) => {
 
 export const createUser = async (req, res, next) => {
   try {
+    const ip =
+      req.headers['x-forwarded-for']?.split(',').shift() ||
+      req.socket?.remoteAddress ||
+      req.ip
     const { username, password, email } = req.body
+    const sameIpUser = await User.findOne({ ip: ip })
+    if (sameIpUser) {
+      return res.status(400).json({ statusText: 'You already have an account' })
+    }
+
     if (!username || !password || !email) {
       return res.status(400).json({ statusText: 'Fill all the fields' })
     }
@@ -42,7 +51,10 @@ export const createUser = async (req, res, next) => {
       username,
       password: hashedPassword,
       email,
-      ip: req.ip,
+      ip:
+        req.headers['x-forwarded-for']?.split(',').shift() ||
+        req.socket?.remoteAddress ||
+        req.ip,
       address: countryFormatObject,
     })
     res.json(newUser)
@@ -54,8 +66,6 @@ export const createUser = async (req, res, next) => {
 }
 
 export const loginUser = async (req, res, next) => {
-  console.log(req.headers);
-  
   try {
     const { email, password } = req.body
     if (!email || !password) {
@@ -95,7 +105,7 @@ export const updateUserInfo = async (req, res, next) => {
 
     const salt = bcrypt.genSaltSync(10)
     if (password == '' || newPassword == '') {
-      return res.status(400).json({statusText: 'Fill the Password fields'})
+      return res.status(400).json({ statusText: 'Fill the Password fields' })
     } else if (!bcrypt.compareSync(password, req.password)) {
       return res.status(400).json({ statusText: 'Incorrect password' })
     } else {
@@ -123,6 +133,6 @@ export const updateUserInfo = async (req, res, next) => {
     )
     res.json(user)
   } catch (error) {
-    return res.status(400).json({statusText: error.message})
+    return res.status(400).json({ statusText: error.message })
   }
 }
