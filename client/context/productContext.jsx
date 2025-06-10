@@ -1,55 +1,33 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
-import { ip } from '../getIp'
+import { getApiUrl } from '../config.js'
 
-const ProductContext = createContext()
+export const ProductContext = createContext({})
 
-export function ProductContextProvider({ children }) {
+export const useProductContext = () => {
+  return useContext(ProductContext)
+}
+
+export const ProductContextProvider = ({ children }) => {
   const [products, setProducts] = useState([])
-  const [cat, setCat] = useState('')
-  const [displayCat, setDisplayCat] = useState('')
-  const [find, setFind] = useState('')
-  const [error, setError] = useState('')
+  const [totalPages, setTotalPages] = useState(0)
 
-  const getData = async (
-    page = 1,
-    find = '',
-    sort = '',
-    category = '',
-    minPrice = '',
-    maxPrice = ''
-  ) => {
+  const getProducts = async (sort, find, page, category, minPrice, maxPrice) => {
     try {
-      const response = await axios.get(
-        `http://${ip}:5000/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
+      const res = await axios.get(
+        `${getApiUrl()}/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
       )
-      setCat(category)
-      return response.data
+      setProducts(res.data.products)
+      setTotalPages(res.data.totalPages)
     } catch (error) {
-      setError(error)
+      console.log(error)
     }
   }
 
   return (
-    <ProductContext.Provider
-      value={{
-        products,
-        setProducts,
-        getData,
-        find,
-        setFind,
-        category: cat,
-        displayCat,
-        setDisplayCat,
-        error,
-      }}
-    >
+    <ProductContext.Provider value={{ products, getProducts, totalPages }}>
       {children}
     </ProductContext.Provider>
   )
-}
-
-export function useProductContext() {
-  const context = useContext(ProductContext)
-  return context
 }

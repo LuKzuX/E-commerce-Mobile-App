@@ -1,15 +1,4 @@
-import { ip } from '../../getIp.js'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  TextInput,
-} from 'react-native'
+import { View, Text, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useProductContext } from '@/context/productContext.jsx'
 import { useUploadData } from '@/utils/useUploadData.js'
@@ -19,6 +8,7 @@ import { useRoute, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import useGetProductDetails from '@/utils/useGetProductDetails.js'
+import { getApiUrl } from '../../config.js'
 
 export default function UpdateProductScreen() {
   const route = useRoute()
@@ -86,7 +76,7 @@ export default function UpdateProductScreen() {
     const getProductData = async () => {
       try {
         const res = await axios.get(
-          `http://${ip}:5000/material-delivery/${id}`,
+          `${getApiUrl()}/material-delivery/${id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -94,13 +84,10 @@ export default function UpdateProductScreen() {
           }
         )
         setProductName(res.data[0].productName)
-        setProductPrice(String(res.data[0].productPrice.$numberDecimal))
-        setValue(res.data[0].productCategory)
+        setProductPrice(res.data[0].productPrice)
         setProductDescription(res.data[0].productDescription)
-        setProductQuantity(String(res.data[0].productQuantity))
-        setUri({
-          uri: `http://${ip}:5000/` + res.data[0].productImage,
-        })
+        setProductQuantity(res.data[0].productQuantity)
+        setUri(`http://${getApiUrl()}/` + res.data[0].productImage)
       } catch (error) {
         console.log(error)
       }
@@ -167,7 +154,7 @@ export default function UpdateProductScreen() {
               </Text>
               {uri && (
                 <Image
-                  source={uri.uri ? { uri: uri.uri } : { uri }}
+                  source={uri ? { uri } : { uri }}
                   style={{ width: 110, height: 110, objectFit: 'contain' }}
                 />
               )}
@@ -176,7 +163,7 @@ export default function UpdateProductScreen() {
               onPress={async () => {
                 try {
                   const response = await handleUpload(
-                    `http://${ip}:5000/material-delivery/${id}`,
+                    `${getApiUrl()}/material-delivery/${id}`,
                     'patch',
                     productName,
                     convertBackToInt(currency(productPrice)),

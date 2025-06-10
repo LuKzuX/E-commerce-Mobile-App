@@ -8,6 +8,7 @@ import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
 import { formatedPrice } from '../../utils/formatedPrice.js'
 import { useEffect } from 'react'
+import { getApiUrl } from '../../config.js'
 
 export default function ProductList({
   products,
@@ -70,7 +71,7 @@ export default function ProductList({
         onPress={() => navigation.navigate('ProductDetails', { id: item._id })}
       >
         <Image
-          source={{ uri: `http://${ip}:5000/` + item.productImage }}
+          source={{ uri: `${getApiUrl()}/` + item.productImage }}
           className='h-[150px]'
           resizeMode='contain'
         />

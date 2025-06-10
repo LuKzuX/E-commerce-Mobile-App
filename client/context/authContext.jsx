@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { ip } from '../getIp.js'
+import { getApiUrl } from '../config.js'
 import { useNavigation } from '@react-navigation/native'
 
 export const AuthContext = createContext({})
@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
   const signin = async (email, password) => {
     try {
       const res = await axios.post(
-        `http://${ip}:5000/material-delivery/signin`,
+        `${getApiUrl()}/material-delivery/signin`,
         {
           email,
           password,
@@ -33,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
       setError(error.response.data.statusText)
       setTimeout(() => {
         setError('')
-      }, 4000)
+      }, 3000)
     }
   }
 

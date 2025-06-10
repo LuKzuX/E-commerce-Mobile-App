@@ -1,1 +1,2 @@
-export const ip = "10.0.0.160"
+import { getApiUrl } from './config';
+export const ip = getApiUrl();

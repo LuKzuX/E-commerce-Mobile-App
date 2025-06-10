@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ip } from '../getIp.js'
+import { getApiUrl } from '../config.js'
 import { useNavigation } from '@react-navigation/native'
 import { useAuthContext } from '../context/authContext.jsx'
 
@@ -16,33 +16,35 @@ export const CartContextProvider = ({ children }) => {
   const [boughtProducts, setBoughtProducts] = useState([])
   const [allQuantity, setAllQuantity] = useState(0)
   const [error, setError] = useState('')
-  useEffect(() => {
-    const getCartData = async () => {
-      if (!user || !user.token) return
-      try {
-        const res = await axios.get(
-          `http://${ip}:5000/material-delivery/cart`,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
-        )
-        const productsInCart = res.data.map((obj) => {
-          return {
-            id: obj._id.toString(),
-            name: obj.productName,
-            qnt: obj.quantity,
-            price: obj.productPrice,
-            totalPrice: obj.totalPrice,
-            image: obj.productImage,
-          }
-        })
-        setBoughtProducts(productsInCart)
-      } catch (error) {
-        setError(error.response.data)
-      }
-    }
 
-    getCartData()
+  const getCartProducts = async () => {
+    try {
+      const res = await axios.get(
+        `${getApiUrl()}/material-delivery/cart`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      const productsInCart = res.data.map((obj) => {
+        return {
+          id: obj._id.toString(),
+          name: obj.productName,
+          qnt: obj.quantity,
+          price: obj.productPrice,
+          totalPrice: obj.totalPrice,
+          image: obj.productImage,
+        }
+      })
+      setBoughtProducts(productsInCart)
+    } catch (error) {
+      setError(error.response.data)
+    }
+  }
+
+  useEffect(() => {
+    getCartProducts()
   }, [user])
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export const CartContextProvider = ({ children }) => {
   const addProductToCart = async (id) => {
     try {
       await axios.post(
-        `http://${ip}:5000/material-delivery/cart/${id}`,
+        `${getApiUrl()}/material-delivery/cart/${id}`,
         {},
         {
           headers: {
@@ -60,6 +62,7 @@ export const CartContextProvider = ({ children }) => {
           },
         }
       )
+      getCartProducts()
     } catch (error) {
       setError(error)
     }
@@ -68,13 +71,14 @@ export const CartContextProvider = ({ children }) => {
   const deleteProductFromCart = async (id, removeAll) => {
     try {
       await axios.delete(
-        `http://${ip}:5000/material-delivery/cart/${id}?removeAll=${removeAll}`,
+        `${getApiUrl()}/material-delivery/cart/${id}?removeAll=${removeAll}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         }
       )
+      getCartProducts()
     } catch (error) {
       console.log(error)
     }

@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { TextInput } from 'react-native-gesture-handler'
 import useUpdaterUser from '../../utils/useUpdateUser.js'
 import axios from 'axios'
-import { ip } from '../../getIp.js'
+import { getApiUrl } from '../../config.js'
 
 export default function UserScreen() {
   const { user, logout } = useAuthContext()
@@ -26,7 +26,7 @@ export default function UserScreen() {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(`http://${ip}:5000/material-delivery/user`, {
+      const res = await axios.get(`${getApiUrl()}/material-delivery/user`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -41,7 +41,7 @@ export default function UserScreen() {
         setAreaCode(res.data.address.areaCode)
       }
     } catch (error) {
-      return
+      console.log('no user logged')
     }
   }
 
