@@ -12,8 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Use the router
-app.use('/', router);
+// Use the router with /api prefix
+app.use('/api', router);
 
 // Error handler
 app.use((err, req, res, next) => {
