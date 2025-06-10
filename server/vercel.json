@@ -1,35 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/products",
-      "dest": "/api/products.js"
-    },
-    {
-      "src": "/api/signin",
-      "dest": "/api/auth.js"
-    },
-    {
-      "src": "/api/signup",
-      "dest": "/api/auth.js"
-    },
-    {
-      "src": "/api/cart",
-      "dest": "/api/cart.js"
-    },
-    {
-      "src": "/api/user",
-      "dest": "/api/user.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/$1.js"
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }

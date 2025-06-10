@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Use the router without /api prefix since Vercel handles that
+// Use the router
 app.use('/', router);
 
 // Error handler
