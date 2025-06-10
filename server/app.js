@@ -12,16 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Test route
-app.get('/', (req, res) => {
-  res.json({ message: 'API is working!' });
-});
-
-// Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK' });
-});
-
 // Use the router
 app.use('/', router);
 
@@ -46,12 +36,6 @@ const start = async () => {
 // Initialize MongoDB connection
 start();
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(5000, () => {
-    console.log('Server running on port 5000');
-  });
-}
 
 // Export the Express app
 export default app;
