@@ -1,40 +1,43 @@
-import dotenv from "dotenv";
-dotenv.config();
-import express from "express";
-const app = express();
-import cors from "cors"
-import { connect } from "./db/connection.js";
-import { router } from "./routes/routes.js";
-import bodyParser from "body-parser";
+import dotenv from 'dotenv'
+dotenv.config()
+import express from 'express'
+const app = express()
+import cors from 'cors'
+import { connect } from './db/connection.js'
+import { router } from './routes/routes.js'
+import bodyParser from 'body-parser'
 
 // Basic middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.json());
+app.use(cors())
+app.use(bodyParser.json())
+app.use(express.json())
 
 // Use the router with /api prefix
-app.use('/api', router);
+app.use('/api', router)
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: 'Server error' });
-});
+  console.error(err)
+  res.status(500).json({ error: 'Server error' })
+})
 
 // Connect to MongoDB
 const start = async () => {
   try {
     if (process.env.MONGO_URI) {
-      await connect(process.env.MONGO_URI);
-      console.log('MongoDB connected');
+      await connect(process.env.MONGO_URI)
+      console.log('MongoDB connected')
     }
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server is listening`)
+    })
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    console.error('MongoDB connection error:', error)
   }
-};
+}
 
 // Initialize MongoDB connection
-start();
+start()
 
 // Export the Express app
-export default app;
+export default app
