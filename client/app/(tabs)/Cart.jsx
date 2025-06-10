@@ -14,8 +14,11 @@ export default function Cart() {
     getProductQuantityInCart,
   } = useCartContext()
 
-  console.log(boughtProducts);
-  
+  let a = 0
+  for (let i = 0; i < boughtProducts.length; i++) {
+    a += boughtProducts[i].totalPrice
+  }
+
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
       return <Text>{string}</Text>
@@ -96,6 +99,9 @@ export default function Cart() {
           numColumns={1}
         />
       )}
+      <View className='bg-white px-6 py-4 rounded-xl shadow-md my-4'>
+        <Text className='text-lg font-semibold text-gray-800'>Total: ${a}</Text>
+      </View>
     </View>
   )
 }
