@@ -54,6 +54,8 @@ export const createUser = async (req, res, next) => {
 }
 
 export const loginUser = async (req, res, next) => {
+  console.log(req.headers);
+  
   try {
     const { email, password } = req.body
     if (!email || !password) {

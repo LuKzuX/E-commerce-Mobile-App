@@ -1,4 +1,3 @@
-import path from 'path'
 import express from 'express'
 export const router = express.Router()
 import multer from 'multer'
@@ -21,9 +20,7 @@ import {
   getCartProducts,
   addProductToCart,
   removeProductFromCart,
-  buy,
 } from '../controllers/cartControllers.js'
-import { getUserOrders } from '../controllers/orderControllers.js'
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
