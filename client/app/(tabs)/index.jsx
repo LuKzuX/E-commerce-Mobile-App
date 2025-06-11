@@ -1,16 +1,25 @@
 import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import { useState, useEffect } from 'react'
-import ProductList from '../components/ProductList.jsx'
-import { useProductContext } from '@/context/productContext.jsx'
+import ProductList from '../components/ProductList'
+import { useProductContext } from '../../context/productContext'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import SearchBar from '../components/SearchBar.jsx'
-import Filter from '../components/FilterComponent.jsx'
-import Sort from '../components/SortComponent.jsx'
+import SearchBar from '../components/SearchBar'
+import Filter from '../components/FilterComponent'
+import Sort from '../components/SortComponent'
 
 export default function HomeScreen() {
-  const { products, setProducts, getData, category, displayCat, find } =
-    useProductContext()
+  const { 
+    products, 
+    getProducts, 
+    category, 
+    displayCat, 
+    find,
+    setCategory,
+    setDisplayCat,
+    setFind 
+  } = useProductContext()
+  
   const [sortValue, setSortValue] = useState('')
   const [isSortOpen, setIsSortOpen] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -24,12 +33,19 @@ export default function HomeScreen() {
       setIsSortOpen(true)
     }
   }
+
   const handleFilterMenu = () => {
     if (isFilterOpen) {
       setIsFilterOpen(false)
     } else {
       setIsFilterOpen(true)
     }
+  }
+
+  const handleClearCategory = () => {
+    setCategory('')
+    setDisplayCat('')
+    getProducts(1, '', sortValue, '')
   }
 
   return (
@@ -50,18 +66,14 @@ export default function HomeScreen() {
         <SearchBar />
         <View className='flex-row border-b border-gray-300 justify-evenly'>
           <TouchableOpacity
-            onPress={() => {
-              handleFilterMenu()
-            }}
+            onPress={handleFilterMenu}
             className='flex-row items-center p-4 gap-[1px]'
           >
             <Ionicons size={25} name='filter-outline' />
             <Text>Filter</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {
-              handleSortMenu()
-            }}
+            onPress={handleSortMenu}
             className='flex-row items-center p-4 gap-[1px]'
           >
             <Ionicons size={25} name='today-outline' />
@@ -77,15 +89,14 @@ export default function HomeScreen() {
               name='close-outline'
               size={26}
               color='#333'
-              onPress={() => getData(1, '', sortValue, '')}
+              onPress={handleClearCategory}
             />
           </View>
         )}
       </View>
       <ProductList
         products={products}
-        setData={setProducts}
-        getData={getData}
+        getProducts={getProducts}
         find={find}
         sortValue={sortValue}
         category={category}
@@ -93,7 +104,7 @@ export default function HomeScreen() {
         maxValue={maxValue}
       />
       <Filter
-        getData={getData}
+        getProducts={getProducts}
         find={find}
         sortValue={sortValue}
         category={category}
@@ -105,7 +116,7 @@ export default function HomeScreen() {
         setMaxValue={setMaxValue}
       />
       <Sort
-        getData={getData}
+        getProducts={getProducts}
         find={find}
         sortValue={sortValue}
         setSortValue={setSortValue}

@@ -7,7 +7,7 @@ import {
   FlatList,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { useProductContext } from '@/context/productContext'
+import { useProductContext } from '../../context/productContext'
 import car from '../../assets/images/car.webp'
 import computer from '../../assets/images/computer.webp'
 import smartphone from '../../assets/images/smartphone.webp'
@@ -18,7 +18,7 @@ import food from '../../assets/images/food.webp'
 import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
-  const { setProducts, getData, setDisplayCat } = useProductContext()
+  const { setProducts, getProducts, setDisplayCat } = useProductContext()
   const navigation = useNavigation()
   const categories = [
     { label: 'Computers', value: 'computers', image: computer },
@@ -38,7 +38,7 @@ export default function ProductCategoriesScreen() {
           onPress={() => {
             setProducts([])
             navigation.navigate('Home')
-            getData(1, '', '', item.value)
+            getProducts(1, '', '', item.value)
             setDisplayCat(item.label)
           }}
           className='flex items-center p-6 bg-white rounded-[100%]'

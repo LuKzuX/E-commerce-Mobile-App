@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { View, Text, Animated, TouchableOpacity } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { useProductContext } from '../../context/productContext'
 
 export default function Filter({
   getData,
@@ -17,6 +18,7 @@ export default function Filter({
   const slideAnim = useRef(new Animated.Value(-800)).current
   const [minValueFilter, setMinValueFilter] = useState("")
   const [maxValueFilter, setMaxValueFilter] = useState("")
+  const { products, getProducts } = useProductContext()
 
   useEffect(() => {
     Animated.timing(slideAnim, {
@@ -78,7 +80,7 @@ export default function Filter({
         onPress={() =>{
           setMinValue(minValueFilter)
           setMaxValue(maxValueFilter)
-          getData(1, find, sortValue, category, minValue, maxValue)
+          getProducts(1, find, sortValue, category, minValue, maxValue)
           setIsFilterOpen(false)
         }}
         className='bg-blue-500 self-center px-12 p-4 mt-10 rounded-xl'

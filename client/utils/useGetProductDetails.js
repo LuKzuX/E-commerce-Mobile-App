@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useProductContext } from '@/context/productContext'
+import { useProductContext } from '../context/productContext'
 import { getApiUrl } from '../config'
 
 export default function useGetProductDetails(id) {

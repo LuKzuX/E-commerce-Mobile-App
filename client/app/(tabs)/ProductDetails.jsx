@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
-import { useProductContext } from '@/context/productContext'
+import { useProductContext } from '../../context/productContext'
 import { useAuthContext } from '@/context/authContext'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
@@ -17,7 +17,7 @@ export default function ProductDetails() {
   const { id } = route.params
   const deleteProduct = useDeleteProduct()
   const navigation = useNavigation()
-  const { getData, products, setProducts } = useProductContext()
+  const { getProducts, products, setProducts } = useProductContext()
   const { data, setData } = useGetProductDetails(id)
   const categories = [
     { label: 'Computers', value: 'computers' },

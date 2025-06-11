@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'
-import { useProductContext } from '@/context/productContext.jsx'
+import { useProductContext } from '../../context/productContext'
 import { useUploadData } from '@/utils/useUploadData.js'
 import { useAuthContext } from '../../context/authContext.jsx'
 import DropDownPicker from 'react-native-dropdown-picker'

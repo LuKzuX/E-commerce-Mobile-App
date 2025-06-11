@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { useProductContext } from '@/context/productContext.jsx'
+import { useProductContext } from '../../context/productContext'
 import { useQueryClient } from 'react-query'
 
 export default function CreateProductScreen() {
@@ -33,7 +33,7 @@ export default function CreateProductScreen() {
 
   const [productDescription, setProductDescription] = useState('')
   const [productQuantity, setProductQuantity] = useState('')
-  const { getData } = useProductContext()
+  const { getProducts } = useProductContext()
   const queryClient = useQueryClient()
 
   const currency = (input) => {

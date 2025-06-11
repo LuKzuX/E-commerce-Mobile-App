@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { View, Text, Animated, TouchableOpacity } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { useProductContext } from '../../context/productContext'
 
 export default function Sort({
   getData,
@@ -23,6 +24,7 @@ export default function Sort({
     { productPrice: 'Price Low to High' },
     { '-productPrice': 'Price High to Low' },
   ]
+  const { products, getProducts } = useProductContext()
 
   useEffect(() => {
     Animated.timing(slideAnim, {
@@ -72,7 +74,7 @@ export default function Sort({
       <TouchableOpacity
         onPress={() => {
           setSortValue(sortValueLocal)
-          getData(1, find, sortValue, category, minValue, maxValue)
+          getProducts(1, find, sortValue, category, minValue, maxValue)
           setIsSortOpen(false)
         }}
         className='bg-blue-500 self-center px-12 p-4 mt-10 rounded-xl'
