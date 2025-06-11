@@ -1,7 +1,7 @@
-import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useProductContext } from '@/context/productContext'
+import { getApiUrl } from '../config'
 
 export default function useGetProductDetails(id) {
   const [data, setData] = useState([])
@@ -10,7 +10,7 @@ export default function useGetProductDetails(id) {
   const fetchProduct = async () => {
     try {
       const product = await axios.get(
-        `http://${ip}:5000/material-delivery/${id}`
+        `${getApiUrl()}/material-delivery/${id}`
       )
       setData(product.data)
     } catch (error) {
@@ -26,7 +26,7 @@ export default function useGetProductDetails(id) {
     const getProduct = async () => {
       try {
         const product = await axios.get(
-          `http://${ip}:5000/material-delivery/${id}`
+          `${getApiUrl()}/material-delivery/${id}`
         )
         setData(product.data)
       } catch (error) {

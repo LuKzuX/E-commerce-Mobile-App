@@ -1,4 +1,3 @@
-import { ip } from '../../getIp.js'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useInfiniteQuery, useQueryClient } from 'react-query'

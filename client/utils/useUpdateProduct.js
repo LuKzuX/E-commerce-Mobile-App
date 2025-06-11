@@ -1,8 +1,8 @@
-import { ip } from '../getIp'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuthContext } from '../context/authContext'
 import { useRoute, useNavigation } from '@react-navigation/native'
+import { getApiUrl } from '../config'
 
 export default function useUpdateProduct() {
   const navigation = useNavigation()
@@ -17,7 +17,7 @@ export default function useUpdateProduct() {
   ) => {
     try {
       await axios.patch(
-        `http://${ip}:5000/material-delivery/${id}`,
+        `${getApiUrl()}/material-delivery/${id}`,
         {
           productName,
           productPrice,

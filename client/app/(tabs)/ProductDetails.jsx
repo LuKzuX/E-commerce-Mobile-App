@@ -4,12 +4,12 @@ import useGetProductDetails from '../../utils/useGetProductDetails'
 import useDeleteProduct from '../../utils/useDeleteProduct'
 import { useProductContext } from '@/context/productContext'
 import { useAuthContext } from '@/context/authContext'
-import { ip } from '../../getIp'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SearchBar from '../components/SearchBar'
 import { useCartContext } from '../../context/cartContext.jsx'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart.jsx'
 import { formatedPrice } from '../../utils/formatedPrice.js'
+import { getApiUrl } from '../../config'
 
 export default function ProductDetails() {
   const { user } = useAuthContext()
@@ -68,7 +68,7 @@ export default function ProductDetails() {
           {/* Product Image */}
           <View>
             <Image
-              source={{ uri: `http://${ip}:5000/` + data[0].productImage }}
+              source={{ uri: `${getApiUrl()}/` + data[0].productImage }}
               className='w-full h-[250px] rounded-md'
               resizeMode='contain'
             />

@@ -1,5 +1,5 @@
 import { useUploadData } from '../../utils/useUploadData.js'
-import { ip } from '../../getIp.js'
+import { getApiUrl } from '../../getApiUrl.js'
 import {
   View,
   Text,
@@ -132,7 +132,7 @@ export default function CreateProductScreen() {
               onPress={async () => {
                 try {
                   await handleUpload(
-                    `http://${ip}:5000/material-delivery/new-product`,
+                    `${getApiUrl()}/material-delivery/new-product`,
                     'post',
                     productName,
                     convertBackToInt(currency(productPrice)),

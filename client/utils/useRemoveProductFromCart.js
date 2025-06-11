@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { ip } from '../getIp'
 import { useAuthContext } from '../context/authContext'
+import { getApiUrl } from '../config'
 
 export default function useAddProductToCart() {
   const { user, setUser } = useAuthContext()
   const removeProductFromCart = async (id) => {
     try {
       await axios.delete(
-        `http://${ip}:5000/material-delivery/cart/${id}`,// empty object for request body
+        `${getApiUrl()}/material-delivery/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

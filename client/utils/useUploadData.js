@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
 import { useState } from 'react'
 import { useAuthContext } from '../context/authContext'
-import { ip } from '@/getIp'
+import { getApiUrl } from '../config'
 
 export const useUploadData = () => {
   const [uri, setUri] = useState('')

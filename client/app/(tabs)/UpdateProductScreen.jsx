@@ -87,7 +87,7 @@ export default function UpdateProductScreen() {
         setProductPrice(res.data[0].productPrice)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(res.data[0].productQuantity)
-        setUri(`http://${getApiUrl()}/` + res.data[0].productImage)
+        setUri(`${getApiUrl()}/` + res.data[0].productImage)
       } catch (error) {
         console.log(error)
       }

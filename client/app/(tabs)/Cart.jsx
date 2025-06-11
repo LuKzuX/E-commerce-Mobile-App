@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import { useCartContext } from '@/context/cartContext'
 import GetProductQuantityInCart from '../components/ProductQuantityInCart'
-import { ip } from '@/getIp'
+import { getApiUrl } from '@/config'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 export default function Cart() {
@@ -34,7 +34,7 @@ export default function Cart() {
     <View className='flex-row items-center justify-between px-4 py-5 bg-white border-b border-gray-200 space-x-3'>
       {/* Product Image */}
       <Image
-        source={{ uri: `http://${ip}:5000/${item.image.replace(/\\/g, '/')}` }}
+        source={{ uri: `${getApiUrl()}/${item.image.replace(/\\/g, '/')}` }}
         className='h-[100px] w-[100px] mr-2'
         resizeMode='contain'
       />

@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { ip } from '../getIp'
 import { useNavigation } from 'expo-router'
 import { useState } from 'react'
+import { getApiUrl } from '../config'
 
 export const useSignup = () => {
   const navigator = useNavigation()
   const [error, setError] = useState('')
   const signup = async (username, email, password) => {
     try {
-      await axios.post(`http://${ip}:5000/material-delivery/signup`, {
+      await axios.post(`${getApiUrl()}/material-delivery/signup`, {
         username,
         email,
         password,

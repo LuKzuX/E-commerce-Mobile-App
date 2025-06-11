@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { ip } from '../getIp'
 import { useAuthContext } from '../context/authContext'
 import { useState } from 'react'
+import { getApiUrl } from '../config'
 
 export default function useUpdateUser() {
   const { user } = useAuthContext()
@@ -19,7 +19,7 @@ export default function useUpdateUser() {
   ) => {
     try {
       await axios.patch(
-        `http://${ip}:5000/material-delivery/user`,
+        `${getApiUrl()}/material-delivery/user`,
         {
           username,
           password,
