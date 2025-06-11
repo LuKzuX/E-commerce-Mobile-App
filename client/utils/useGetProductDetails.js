@@ -10,7 +10,7 @@ export default function useGetProductDetails(id) {
   const fetchProduct = async () => {
     try {
       const product = await axios.get(
-        `${getApiUrl()}/material-delivery/${id}`
+        `${getApiUrl()}/${id}`
       )
       setData(product.data)
     } catch (error) {
@@ -26,7 +26,7 @@ export default function useGetProductDetails(id) {
     const getProduct = async () => {
       try {
         const product = await axios.get(
-          `${getApiUrl()}/material-delivery/${id}`
+          `${getApiUrl()}/${id}`
         )
         setData(product.data)
       } catch (error) {

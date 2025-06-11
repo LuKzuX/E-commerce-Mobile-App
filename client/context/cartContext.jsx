@@ -20,7 +20,7 @@ export const CartContextProvider = ({ children }) => {
   const getCartProducts = async () => {
     try {
       const res = await axios.get(
-        `${getApiUrl()}/material-delivery/cart`,
+        `${getApiUrl()}/cart`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -54,7 +54,7 @@ export const CartContextProvider = ({ children }) => {
   const addProductToCart = async (id) => {
     try {
       await axios.post(
-        `${getApiUrl()}/material-delivery/cart/${id}`,
+        `${getApiUrl()}/cart/${id}`,
         {},
         {
           headers: {
@@ -71,7 +71,7 @@ export const CartContextProvider = ({ children }) => {
   const deleteProductFromCart = async (id, removeAll) => {
     try {
       await axios.delete(
-        `${getApiUrl()}/material-delivery/cart/${id}?removeAll=${removeAll}`,
+        `${getApiUrl()}/cart/${id}?removeAll=${removeAll}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

@@ -26,7 +26,7 @@ export default function UserScreen() {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(`${getApiUrl()}/material-delivery/user`, {
+      const res = await axios.get(`${getApiUrl()}/user`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

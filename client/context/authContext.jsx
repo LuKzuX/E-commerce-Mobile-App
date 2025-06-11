@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
   const signin = async (email, password) => {
     try {
       const res = await axios.post(
-        `${getApiUrl()}/material-delivery/signin`,
+        `${getApiUrl()}/signin`,
         {
           email,
           password,

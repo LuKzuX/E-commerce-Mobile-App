@@ -17,7 +17,7 @@ export default function useUpdateProduct() {
   ) => {
     try {
       await axios.patch(
-        `${getApiUrl()}/material-delivery/${id}`,
+        `${getApiUrl()}/${id}`,
         {
           productName,
           productPrice,

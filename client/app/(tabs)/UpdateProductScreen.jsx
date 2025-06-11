@@ -76,7 +76,7 @@ export default function UpdateProductScreen() {
     const getProductData = async () => {
       try {
         const res = await axios.get(
-          `${getApiUrl()}/material-delivery/${id}`,
+          `${getApiUrl()}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -163,7 +163,7 @@ export default function UpdateProductScreen() {
               onPress={async () => {
                 try {
                   const response = await handleUpload(
-                    `${getApiUrl()}/material-delivery/${id}`,
+                    `${getApiUrl()}/${id}`,
                     'patch',
                     productName,
                     convertBackToInt(currency(productPrice)),

@@ -16,7 +16,7 @@ export const ProductContextProvider = ({ children }) => {
   const getProducts = async (sort, find, page, category, minPrice, maxPrice) => {
     try {
       const res = await axios.get(
-        `${getApiUrl()}/material-delivery/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
+        `${getApiUrl()}/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
       )
       setProducts(res.data.products)
       setTotalPages(res.data.totalPages)

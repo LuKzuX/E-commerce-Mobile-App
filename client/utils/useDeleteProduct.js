@@ -7,7 +7,7 @@ export default function useDeleteProduct() {
   const { user } = useAuthContext()
   const deleteProduct = async (id) => {
     try {
-      const res = await axios.delete(`${getApiUrl()}/material-delivery/${id}`, {
+      const res = await axios.delete(`${getApiUrl()}/${id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

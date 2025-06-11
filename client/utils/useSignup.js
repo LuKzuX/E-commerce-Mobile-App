@@ -8,7 +8,7 @@ export const useSignup = () => {
   const [error, setError] = useState('')
   const signup = async (username, email, password) => {
     try {
-      await axios.post(`${getApiUrl()}/material-delivery/signup`, {
+      await axios.post(`${getApiUrl()}/signup`, {
         username,
         email,
         password,

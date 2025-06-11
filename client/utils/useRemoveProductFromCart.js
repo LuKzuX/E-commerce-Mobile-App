@@ -7,7 +7,7 @@ export default function useAddProductToCart() {
   const removeProductFromCart = async (id) => {
     try {
       await axios.delete(
-        `${getApiUrl()}/material-delivery/cart/${id}`,
+        `${getApiUrl()}/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

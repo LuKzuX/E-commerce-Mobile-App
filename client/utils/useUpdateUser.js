@@ -19,7 +19,7 @@ export default function useUpdateUser() {
   ) => {
     try {
       await axios.patch(
-        `${getApiUrl()}/material-delivery/user`,
+        `${getApiUrl()}/user`,
         {
           username,
           password,
