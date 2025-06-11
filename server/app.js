@@ -28,9 +28,6 @@ const start = async () => {
       await connect(process.env.MONGO_URI)
       console.log('MongoDB connected')
     }
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server is listening`)
-    })
   } catch (error) {
     console.error('MongoDB connection error:', error)
   }
