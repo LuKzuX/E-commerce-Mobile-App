@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(express.json())
 
 // Use the router with /api prefix
-app.use('/api', router)
+app.use('/', router)
 
 // Error handler
 app.use((err, req, res, next) => {
