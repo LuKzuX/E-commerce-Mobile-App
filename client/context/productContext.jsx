@@ -18,20 +18,40 @@ export const ProductContextProvider = ({ children }) => {
 
   const getProducts = async (sort, find, page, category, minPrice, maxPrice) => {
     try {
-      const res = await axios.get(
-        `${getApiUrl()}/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
-      )
-      setProducts(res.data.products)
-      setTotalPages(res.data.totalPages)
-      return res.data.products
+      const url = `${getApiUrl()}/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
+      console.log('Making request to:', url)
+      
+      const res = await axios.get(url)
+      console.log('Raw API Response:', res)
+      console.log('Response Data:', res.data)
+      console.log('Response Data Type:', typeof res.data)
+      console.log('Is Array?', Array.isArray(res.data))
+      
+      if (Array.isArray(res.data)) {
+        setProducts(res.data)
+        setTotalPages(Math.ceil(res.data.length / 8))
+        return res.data
+      } else {
+        console.error('Unexpected response format:', res.data)
+        setProducts([])
+        setTotalPages(0)
+        return []
+      }
     } catch (error) {
-      console.log(error)
+      console.error('Error fetching products:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      })
+      setProducts([])
+      setTotalPages(0)
       return []
     }
   }
 
   useEffect(() => {
-    getProducts(1, '', '', '')
+    console.log('Initial products fetch')
+    getProducts('', '', 1, '', '', '')
   }, [])
 
   return (

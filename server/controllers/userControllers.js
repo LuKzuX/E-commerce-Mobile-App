@@ -104,8 +104,9 @@ export const updateUserInfo = async (req, res, next) => {
     } = req.body
 
     const salt = bcrypt.genSaltSync(10)
-
-    if (!bcrypt.compareSync(password, req.password)) {
+    if (password == '' || newPassword == '') {
+      return res.status(400).json({ statusText: 'Fill the Password fields' })
+    } else if (!bcrypt.compareSync(password, req.password)) {
       return res.status(400).json({ statusText: 'Incorrect password' })
     } else {
       hashedPassword = bcrypt.hashSync(newPassword, salt)

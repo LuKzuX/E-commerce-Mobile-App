@@ -138,7 +138,7 @@ export default function CreateProductScreen() {
                     convertBackToInt(currency(productPrice)),
                     productCategoryValue,
                     productDescription,
-                    productQuantity
+                    Number(productQuantity)
                   )
                   queryClient.invalidateQueries(['products'])
                   setProductName('')
@@ -156,7 +156,9 @@ export default function CreateProductScreen() {
                   setProductDescription('')
                   setProductQuantity('')
                   setUri('')
-                } catch (error) {}
+                } catch (error) {
+                  console.log(error)
+                }
               }}
               className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'
             >

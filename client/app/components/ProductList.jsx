@@ -39,6 +39,8 @@ export default function ProductList({
       if (!lastPage || !Array.isArray(lastPage)) return undefined
       return lastPage.length === 8 ? allPages.length + 1 : undefined
     },
+    staleTime: Infinity,
+    cacheTime: Infinity,
   })
 
   const allProducts = data?.pages?.flat() || products
@@ -61,10 +63,6 @@ export default function ProductList({
       fetchNextPage()
     }
   }
-
-  useEffect(() => {
-    queryClient.invalidateQueries(['products'])
-  }, [products])
 
   const renderItem = ({ item }) => {
     if (!item || !item._id) return null
