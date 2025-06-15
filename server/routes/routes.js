@@ -21,28 +21,13 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from '../controllers/cartControllers.js'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import fs from 'fs'
+import { PutObjectCommand } from '@aws-sdk/client-s3'
+import s3Client from '../utils/cloudflareConfig.js'
+import dotenv from 'dotenv'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+dotenv.config()
 
-// Ensure images directory exists
-const imagesDir = path.join(__dirname, '../images')
-if (!fs.existsSync(imagesDir)) {
-  fs.mkdirSync(imagesDir, { recursive: true })
-}
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, imagesDir)
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, uniqueSuffix + '-' + file.originalname)
-  }
-})
+const storage = multer.memoryStorage()
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image/')) {
@@ -60,6 +45,20 @@ const upload = multer({
   }
 })
 
+// Helper function to upload to Cloudflare R2
+const uploadToR2 = async (file) => {
+  const key = `${Date.now()}-${file.originalname}`
+  const command = new PutObjectCommand({
+    Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+    Key: key,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  })
+
+  await s3Client.send(command)
+  return `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
+}
+
 // User routes
 router.get(`/user`, userAuth, getUser)
 router.post(`/signup`, createUser)
@@ -75,13 +74,21 @@ router.delete('/cart/:id', userAuth, removeProductFromCart)
 router.post(
   `/new-product`,
   (req, res, next) => {
-    upload.single('productImage')(req, res, (err) => {
+    upload.single('productImage')(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ error: 'File upload error: ' + err.message })
       } else if (err) {
         return res.status(400).json({ error: err.message })
       }
-      next()
+      try {
+        if (!req.file) {
+          return res.status(400).json({ error: 'No image file provided' })
+        }
+        req.body.imageUrl = await uploadToR2(req.file)
+        next()
+      } catch (error) {
+        return res.status(500).json({ error: 'Error uploading to Cloudflare: ' + error.message })
+      }
     })
   },
   userAuth,
@@ -93,13 +100,20 @@ router.get('/:id', getProductDetails)
 router.patch(
   '/:id',
   (req, res, next) => {
-    upload.single('productImage')(req, res, (err) => {
+    upload.single('productImage')(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({ error: 'File upload error: ' + err.message })
       } else if (err) {
         return res.status(400).json({ error: err.message })
       }
-      next()
+      try {
+        if (req.file) {
+          req.body.imageUrl = await uploadToR2(req.file)
+        }
+        next()
+      } catch (error) {
+        return res.status(500).json({ error: 'Error uploading to Cloudflare: ' + error.message })
+      }
     })
   },
   userAuth,

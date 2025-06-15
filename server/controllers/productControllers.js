@@ -49,6 +49,7 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
+      imageUrl,
       productQuantity,
     } = req.body
 
@@ -57,7 +58,7 @@ export const createProduct = async (req, res, next) => {
       !productPrice ||
       !productCategory ||
       !productDescription ||
-      !req.file ||
+      !imageUrl ||
       !productQuantity
     ) {
       return res.status(400).json({ statusText: 'Fill all the fields' })
@@ -68,7 +69,7 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
-      productImage: req.file.path,
+      productImage: imageUrl,
       productQuantity,
     })
 
@@ -105,8 +106,7 @@ export const updateProduct = async (req, res, next) => {
 
     res.json(product)
   } catch (error) {
-    console.error('Error updating product:', error)
-    return res.status(500).json({ error: error.message })
+    return res.status(400).json(error)
   }
 }
 
