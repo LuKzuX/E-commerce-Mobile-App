@@ -49,7 +49,7 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
-      productImage = req.file.path,
+      imageUrl,
       productQuantity,
     } = req.body
     if (
@@ -57,7 +57,7 @@ export const createProduct = async (req, res, next) => {
       !productPrice ||
       !productCategory ||
       !productDescription ||
-      !productImage ||
+      !imageUrl ||
       !productQuantity
     ) {
       return res.status(400).json({ statusText: 'Fill all the fields' })
@@ -67,30 +67,29 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
-      productImage,
+      productImage: imageUrl,
       productQuantity,
     })
 
     res.json(product)
   } catch (error) {
-    return res.status(400).json(error)
+    console.error('Error creating product:', error)
+    return res.status(500).json({ error: error.message })
   }
 }
 
 export const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params
-    const oldProd = await Product.findOne({ _id: id })
-    const oldImg = oldProd.productImage
-
     const {
       productName,
       productPrice,
       productCategory,
       productDescription,
-      productImage = req.file.path,
+      imageUrl,
       productQuantity,
     } = req.body
+
     const product = await Product.findByIdAndUpdate(
       { _id: id },
       {
@@ -98,21 +97,16 @@ export const updateProduct = async (req, res, next) => {
         productPrice,
         productCategory,
         productDescription,
-        productImage,
+        productImage: imageUrl,
         productQuantity,
       },
-      { new: false, runValidators: true }
+      { new: true, runValidators: true }
     )
-    const imagePath = path.join('./images/', oldImg.split('\\')[1])
-    fs.unlink(imagePath, (err) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-    })
+
     res.json(product)
   } catch (error) {
-    return res.status(400).json(error)
+    console.error('Error updating product:', error)
+    return res.status(500).json({ error: error.message })
   }
 }
 

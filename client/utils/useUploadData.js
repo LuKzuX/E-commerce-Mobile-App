@@ -12,7 +12,7 @@ export const useUploadData = () => {
   const uploadData = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
@@ -22,7 +22,8 @@ export const useUploadData = () => {
         setUri(selectedUri)
       }
     } catch (error) {
-      console.log(error)
+      console.error('Error picking image:', error)
+      setSuccess('Error selecting image')
     }
   }
 
@@ -35,26 +36,28 @@ export const useUploadData = () => {
     description,
     quantity
   ) => {
-    if (price == typeof String) {
-      setSuccess('type a valid price')
+    if (!name || !price || !category || !description || !quantity || !uri) {
+      setSuccess('Please fill all fields and select an image')
       return
     }
-    const formData = new FormData()
 
-    let validUri = uri
-    if (uri.uri) {
-      validUri = uri.uri
+    if (typeof price !== 'number' || isNaN(price)) {
+      setSuccess('Please enter a valid price')
+      return
     }
+
+    const formData = new FormData()
     formData.append('productImage', {
-      uri: validUri,
-      name: 'uploaded_image.jpg', // Default name if extraction fails
-      type: 'image/jpeg', // Or 'image/png' based on the file type
+      uri: uri,
+      name: 'uploaded_image.jpg',
+      type: 'image/jpeg',
     })
     formData.append('productName', name)
     formData.append('productPrice', price)
     formData.append('productCategory', category)
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
+
     try {
       const response = await axios[method](route, formData, {
         headers: {
@@ -62,11 +65,12 @@ export const useUploadData = () => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      setSuccess('created')
-      return response.data // Return the response data
+      setSuccess('Product created successfully')
+      return response.data
     } catch (error) {
-      setSuccess('fill all the fields')
-      throw error // Throw the error to be caught by the caller
+      console.error('Error uploading product:', error)
+      setSuccess(error.response?.data?.error || 'Error creating product')
+      throw error
     }
   }
 
