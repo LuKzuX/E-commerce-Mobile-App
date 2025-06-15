@@ -34,8 +34,12 @@ export default function Cart() {
     <View className='flex-row items-center justify-between px-4 py-5 bg-white border-b border-gray-200 space-x-3'>
       {/* Product Image */}
       <Image
-        source={{ uri: `${getApiUrl()}/${item.image.replace(/\\/g, '/')}` }}
-        className='h-[100px] w-[100px] mr-2'
+        source={{ 
+          uri: item.image.startsWith('http') 
+            ? item.image 
+            : `${getApiUrl()}/${item.image.replace(/\\/g, '/')}`
+        }}
+        className='w-[100px] h-[100px]'
         resizeMode='contain'
       />
 

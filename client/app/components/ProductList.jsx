@@ -75,7 +75,11 @@ export default function ProductList({
           }
         >
           <Image
-            source={{ uri: `${getApiUrl()}/` + item.productImage }}
+            source={{ 
+              uri: item.productImage.startsWith('http') 
+                ? item.productImage 
+                : `${getApiUrl()}/` + item.productImage 
+            }}
             className='h-[150px]'
             resizeMode='contain'
           />

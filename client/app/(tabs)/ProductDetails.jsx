@@ -68,8 +68,12 @@ export default function ProductDetails() {
           {/* Product Image */}
           <View>
             <Image
-              source={{ uri: `${getApiUrl()}/` + data[0].productImage }}
-              className='w-full h-[250px] rounded-md'
+              source={{ 
+                uri: data[0].productImage.startsWith('http') 
+                  ? data[0].productImage 
+                  : `${getApiUrl()}/` + data[0].productImage 
+              }}
+              className='w-full h-[300px]'
               resizeMode='contain'
             />
           </View>

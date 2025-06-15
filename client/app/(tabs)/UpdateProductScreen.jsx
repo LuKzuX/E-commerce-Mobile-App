@@ -87,7 +87,9 @@ export default function UpdateProductScreen() {
         setProductPrice(res.data[0].productPrice)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(res.data[0].productQuantity)
-        setUri(`${getApiUrl()}/` + res.data[0].productImage)
+        setUri(res.data[0].productImage.startsWith('http') 
+          ? res.data[0].productImage 
+          : `${getApiUrl()}/` + res.data[0].productImage)
       } catch (error) {
         console.log(error)
       }
@@ -152,12 +154,11 @@ export default function UpdateProductScreen() {
               >
                 Select Image:
               </Text>
-              {uri && (
-                <Image
-                  source={uri ? { uri } : { uri }}
-                  style={{ width: 110, height: 110, objectFit: 'contain' }}
-                />
-              )}
+              <Image
+                source={{ uri: uri ? uri : null }}
+                className='w-full h-[200px]'
+                resizeMode='contain'
+              />
             </View>
             <TouchableOpacity
               onPress={async () => {

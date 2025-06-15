@@ -21,20 +21,13 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from '../controllers/cartControllers.js'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { PutObjectCommand } from '@aws-sdk/client-s3'
+import s3Client from '../utils/cloudflareConfig.js'
+import dotenv from 'dotenv'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+dotenv.config()
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../images'))
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  },
-})
+const storage = multer.memoryStorage()
 
 const upload = multer({
   storage,
@@ -42,6 +35,20 @@ const upload = multer({
     fieldSize: 50000000,
   },
 })
+
+// Helper function to upload to Cloudflare R2
+const uploadToR2 = async (file) => {
+  const key = `${Date.now()}-${file.originalname}`
+  const command = new PutObjectCommand({
+    Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+    Key: key,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  })
+
+  await s3Client.send(command)
+  return `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
+}
 
 // User routes
 router.get(`/user`, userAuth, getUser)
@@ -60,6 +67,16 @@ router.post(
   upload.single('productImage'),
   userAuth,
   adminAuth,
+  async (req, res, next) => {
+    try {
+      if (req.file) {
+        req.body.imageUrl = await uploadToR2(req.file)
+      }
+      next()
+    } catch (error) {
+      res.status(500).json({ error: 'Error uploading image' })
+    }
+  },
   createProduct
 )
 router.get('/', getAllProducts)
@@ -69,6 +86,16 @@ router.patch(
   upload.single('productImage'),
   userAuth,
   adminAuth,
+  async (req, res, next) => {
+    try {
+      if (req.file) {
+        req.body.imageUrl = await uploadToR2(req.file)
+      }
+      next()
+    } catch (error) {
+      res.status(500).json({ error: 'Error uploading image' })
+    }
+  },
   updateProduct
 )
 router.delete('/:id', userAuth, adminAuth, deleteProduct)
