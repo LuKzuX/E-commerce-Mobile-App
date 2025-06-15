@@ -38,16 +38,39 @@ const upload = multer({
 
 // Helper function to upload to Cloudflare R2
 const uploadToR2 = async (file) => {
-  const key = `${Date.now()}-${file.originalname}`
-  const command = new PutObjectCommand({
-    Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
-    Key: key,
-    Body: file.buffer,
-    ContentType: file.mimetype,
-  })
+  try {
+    console.log('Starting R2 upload with file:', {
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size
+    });
 
-  await s3Client.send(command)
-  return `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
+    const key = `${Date.now()}-${file.originalname}`
+    const command = new PutObjectCommand({
+      Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    })
+
+    console.log('R2 upload command:', {
+      bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+      key: key,
+      contentType: file.mimetype
+    });
+
+    await s3Client.send(command)
+    const url = `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
+    console.log('R2 upload successful, URL:', url);
+    return url
+  } catch (error) {
+    console.error('R2 upload error:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+    throw error;
+  }
 }
 
 // User routes
@@ -69,12 +92,40 @@ router.post(
   adminAuth,
   async (req, res, next) => {
     try {
-      if (req.file) {
-        req.body.imageUrl = await uploadToR2(req.file)
+      console.log('Received product data:', {
+        body: req.body,
+        file: req.file ? {
+          originalname: req.file.originalname,
+          mimetype: req.file.mimetype,
+          size: req.file.size
+        } : null
+      });
+
+      if (!req.file) {
+        console.error('No file received in request');
+        return res.status(400).json({ error: 'No image file provided' });
       }
+
+      if (!process.env.CLOUDFLARE_ACCOUNT_ID || !process.env.CLOUDFLARE_ACCESS_KEY_ID || !process.env.CLOUDFLARE_SECRET_ACCESS_KEY || !process.env.CLOUDFLARE_BUCKET_NAME) {
+        console.error('Missing Cloudflare credentials:', {
+          hasAccountId: !!process.env.CLOUDFLARE_ACCOUNT_ID,
+          hasAccessKey: !!process.env.CLOUDFLARE_ACCESS_KEY_ID,
+          hasSecretKey: !!process.env.CLOUDFLARE_SECRET_ACCESS_KEY,
+          hasBucketName: !!process.env.CLOUDFLARE_BUCKET_NAME
+        });
+        return res.status(500).json({ error: 'Cloudflare configuration is incomplete' });
+      }
+
+      req.body.imageUrl = await uploadToR2(req.file)
+      console.log('Upload successful, proceeding to create product');
       next()
     } catch (error) {
-      res.status(500).json({ error: 'Error uploading image' })
+      console.error('Error in product upload middleware:', {
+        message: error.message,
+        code: error.code,
+        stack: error.stack
+      });
+      res.status(500).json({ error: 'Error uploading image: ' + error.message })
     }
   },
   createProduct

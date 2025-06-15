@@ -132,6 +132,25 @@ export default function CreateProductScreen() {
             <Text
               onPress={async () => {
                 try {
+                  console.log('Creating product with data:', {
+                    name: productName,
+                    price: convertBackToInt(currency(productPrice)),
+                    category: productCategoryValue,
+                    description: productDescription,
+                    quantity: Number(productQuantity)
+                  })
+
+                  if (!productName || !productPrice || !productCategoryValue || !productDescription || !productQuantity) {
+                    console.log('Missing fields:', {
+                      name: !productName,
+                      price: !productPrice,
+                      category: !productCategoryValue,
+                      description: !productDescription,
+                      quantity: !productQuantity
+                    })
+                    return
+                  }
+
                   await handleUpload(
                     `${getApiUrl()}/new-product`,
                     'post',
@@ -158,7 +177,7 @@ export default function CreateProductScreen() {
                   setProductQuantity('')
                   setUri('')
                 } catch (error) {
-                  console.log(error)
+                  console.error('Error in CreateProductScreen:', error)
                 }
               }}
               className='text-center self-center bg-bg-yellow py-4 px-12 text-text-small-medium rounded-xl font-bold'

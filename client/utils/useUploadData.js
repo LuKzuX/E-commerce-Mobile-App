@@ -36,12 +36,30 @@ export const useUploadData = () => {
     description,
     quantity
   ) => {
+    console.log('Form Data:', {
+      name,
+      price,
+      category,
+      description,
+      quantity,
+      uri
+    })
+
     if (!name || !price || !category || !description || !quantity || !uri) {
+      console.log('Missing fields:', {
+        name: !name,
+        price: !price,
+        category: !category,
+        description: !description,
+        quantity: !quantity,
+        uri: !uri
+      })
       setSuccess('Please fill all fields and select an image')
       return
     }
 
     if (typeof price !== 'number' || isNaN(price)) {
+      console.log('Invalid price:', price, typeof price)
       setSuccess('Please enter a valid price')
       return
     }
@@ -58,6 +76,8 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
 
+    console.log('Sending form data:', Object.fromEntries(formData))
+
     try {
       const response = await axios[method](route, formData, {
         headers: {
@@ -68,7 +88,7 @@ export const useUploadData = () => {
       setSuccess('Product created successfully')
       return response.data
     } catch (error) {
-      console.error('Error uploading product:', error)
+      console.error('Error uploading product:', error.response?.data || error)
       setSuccess(error.response?.data?.error || 'Error creating product')
       throw error
     }
