@@ -21,57 +21,44 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from '../controllers/cartControllers.js'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
-import s3Client from '../utils/cloudflareConfig.js'
-import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import fs from 'fs'
 
-dotenv.config()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const storage = multer.memoryStorage()
+// Ensure images directory exists
+const imagesDir = path.join(__dirname, '../images')
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true })
+}
 
-const upload = multer({
-  storage,
-  limits: {
-    fieldSize: 50000000,
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, imagesDir)
   },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + '-' + file.originalname)
+  }
 })
 
-// Helper function to upload to Cloudflare R2
-const uploadToR2 = async (file) => {
-  try {
-    console.log('Starting R2 upload with file:', {
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      size: file.size
-    });
-
-    const key = `${Date.now()}-${file.originalname}`
-    const command = new PutObjectCommand({
-      Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
-      Key: key,
-      Body: file.buffer,
-      ContentType: file.mimetype,
-    })
-
-    console.log('R2 upload command:', {
-      bucket: process.env.CLOUDFLARE_BUCKET_NAME,
-      key: key,
-      contentType: file.mimetype
-    });
-
-    await s3Client.send(command)
-    const url = `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
-    console.log('R2 upload successful, URL:', url);
-    return url
-  } catch (error) {
-    console.error('R2 upload error:', {
-      message: error.message,
-      code: error.code,
-      stack: error.stack
-    });
-    throw error;
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true)
+  } else {
+    cb(new Error('Not an image! Please upload an image.'), false)
   }
 }
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  }
+})
 
 // User routes
 router.get(`/user`, userAuth, getUser)
@@ -87,66 +74,36 @@ router.delete('/cart/:id', userAuth, removeProductFromCart)
 // Product routes
 router.post(
   `/new-product`,
-  upload.single('productImage'),
+  (req, res, next) => {
+    upload.single('productImage')(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: 'File upload error: ' + err.message })
+      } else if (err) {
+        return res.status(400).json({ error: err.message })
+      }
+      next()
+    })
+  },
   userAuth,
   adminAuth,
-  async (req, res, next) => {
-    try {
-      console.log('Received product data:', {
-        body: req.body,
-        file: req.file ? {
-          originalname: req.file.originalname,
-          mimetype: req.file.mimetype,
-          size: req.file.size
-        } : null
-      });
-
-      if (!req.file) {
-        console.error('No file received in request');
-        return res.status(400).json({ error: 'No image file provided' });
-      }
-
-      if (!process.env.CLOUDFLARE_ACCOUNT_ID || !process.env.CLOUDFLARE_ACCESS_KEY_ID || !process.env.CLOUDFLARE_SECRET_ACCESS_KEY || !process.env.CLOUDFLARE_BUCKET_NAME) {
-        console.error('Missing Cloudflare credentials:', {
-          hasAccountId: !!process.env.CLOUDFLARE_ACCOUNT_ID,
-          hasAccessKey: !!process.env.CLOUDFLARE_ACCESS_KEY_ID,
-          hasSecretKey: !!process.env.CLOUDFLARE_SECRET_ACCESS_KEY,
-          hasBucketName: !!process.env.CLOUDFLARE_BUCKET_NAME
-        });
-        return res.status(500).json({ error: 'Cloudflare configuration is incomplete' });
-      }
-
-      req.body.imageUrl = await uploadToR2(req.file)
-      console.log('Upload successful, proceeding to create product');
-      next()
-    } catch (error) {
-      console.error('Error in product upload middleware:', {
-        message: error.message,
-        code: error.code,
-        stack: error.stack
-      });
-      res.status(500).json({ error: 'Error uploading image: ' + error.message })
-    }
-  },
   createProduct
 )
 router.get('/', getAllProducts)
 router.get('/:id', getProductDetails)
 router.patch(
   '/:id',
-  upload.single('productImage'),
-  userAuth,
-  adminAuth,
-  async (req, res, next) => {
-    try {
-      if (req.file) {
-        req.body.imageUrl = await uploadToR2(req.file)
+  (req, res, next) => {
+    upload.single('productImage')(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: 'File upload error: ' + err.message })
+      } else if (err) {
+        return res.status(400).json({ error: err.message })
       }
       next()
-    } catch (error) {
-      res.status(500).json({ error: 'Error uploading image' })
-    }
+    })
   },
+  userAuth,
+  adminAuth,
   updateProduct
 )
 router.delete('/:id', userAuth, adminAuth, deleteProduct)

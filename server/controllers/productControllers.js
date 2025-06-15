@@ -49,32 +49,32 @@ export const createProduct = async (req, res, next) => {
       productPrice,
       productCategory,
       productDescription,
-      imageUrl,
       productQuantity,
     } = req.body
+
     if (
       !productName ||
       !productPrice ||
       !productCategory ||
       !productDescription ||
-      !imageUrl ||
+      !req.file ||
       !productQuantity
     ) {
       return res.status(400).json({ statusText: 'Fill all the fields' })
     }
+
     const product = await Product.create({
       productName,
       productPrice,
       productCategory,
       productDescription,
-      productImage: imageUrl,
+      productImage: req.file.path,
       productQuantity,
     })
 
     res.json(product)
   } catch (error) {
-    console.error('Error creating product:', error)
-    return res.status(500).json({ error: error.message })
+    return res.status(400).json(error)
   }
 }
 
