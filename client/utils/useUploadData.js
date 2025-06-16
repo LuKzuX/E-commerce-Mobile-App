@@ -88,8 +88,13 @@ export const useUploadData = () => {
       setSuccess('Product created successfully')
       return response.data
     } catch (error) {
-      console.error('Error uploading product:', error.response?.data || error)
-      setSuccess(error.response?.data?.error || 'Error creating product')
+      console.error('Error uploading product:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers
+      })
+      setSuccess(error.response?.data?.error || error.response?.data?.statusText || error.message || 'Error creating product')
       throw error
     }
   }

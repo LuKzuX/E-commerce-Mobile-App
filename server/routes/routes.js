@@ -55,8 +55,14 @@ const uploadToR2 = async (file) => {
     ContentType: file.mimetype,
   })
 
-  await s3Client.send(command)
-  return `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`
+  try {
+    await s3Client.send(command)
+    // Return the public URL for the uploaded file
+    return `https://pub-${process.env.CLOUDFLARE_BUCKET_NAME}.r2.dev/${key}`
+  } catch (error) {
+    console.error('Cloudflare R2 upload error:', error)
+    throw new Error(`Failed to upload to Cloudflare R2: ${error.message}`)
+  }
 }
 
 // User routes
