@@ -29,8 +29,8 @@ export default function ProductList({
     setBoughtProducts,
   } = useCartContext()
   const queryClient = useQueryClient()
-  console.log(products);
-  
+  console.log(products)
+
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
@@ -75,9 +75,10 @@ export default function ProductList({
           }
         >
           <Image
-            source={{ 
-              uri:
-                 `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${item.productImage}`
+            source={{
+              uri: `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${
+                item.productImage.split('/')[3]
+              }`,
             }}
             className='h-[150px]'
             resizeMode='contain'

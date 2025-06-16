@@ -68,11 +68,11 @@ export default function ProductDetails() {
           {/* Product Image */}
           <View>
             <Image
-              source={{ 
-                uri: data[0].productImage.startsWith('http') 
-                  ? data[0].productImage 
-                  : `https://pub-material-delivery-images.r2.dev/${data[0].productImage}`
-              }}
+              source={{
+              uri: `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${
+                data[0].productImage.split('/')[3]
+              }`,
+            }}
               className='w-full h-[300px]'
               resizeMode='contain'
             />
