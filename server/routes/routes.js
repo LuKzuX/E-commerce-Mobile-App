@@ -56,11 +56,24 @@ const uploadToR2 = async (file) => {
   })
 
   try {
+    console.log('Attempting to upload to R2 with config:', {
+      bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+      endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      key: key
+    })
+    
     await s3Client.send(command)
     // Return the public URL for the uploaded file
     return `https://pub-${process.env.CLOUDFLARE_BUCKET_NAME}.r2.dev/${key}`
   } catch (error) {
-    console.error('Cloudflare R2 upload error:', error)
+    console.error('Cloudflare R2 upload error details:', {
+      message: error.message,
+      code: error.code,
+      requestId: error.$metadata?.requestId,
+      cfId: error.$metadata?.cfId,
+      bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+      endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`
+    })
     throw new Error(`Failed to upload to Cloudflare R2: ${error.message}`)
   }
 }
