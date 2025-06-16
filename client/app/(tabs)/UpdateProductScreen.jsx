@@ -1,4 +1,14 @@
-import { View, Text, StyleSheet, Button, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+  TextInput,
+} from 'react-native'
 import { useState, useEffect } from 'react'
 import { useProductContext } from '../../context/productContext'
 import { useUploadData } from '@/utils/useUploadData.js'
@@ -75,21 +85,20 @@ export default function UpdateProductScreen() {
   useEffect(() => {
     const getProductData = async () => {
       try {
-        const res = await axios.get(
-          `${getApiUrl()}/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        )
+        const res = await axios.get(`${getApiUrl()}/${id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
         setProductName(res.data[0].productName)
         setProductPrice(res.data[0].productPrice)
         setProductDescription(res.data[0].productDescription)
         setProductQuantity(res.data[0].productQuantity)
-        setUri(res.data[0].productImage.startsWith('http') 
-          ? res.data[0].productImage 
-          : `${getApiUrl()}/` + res.data[0].productImage)
+        setUri(
+          `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${
+            res.data[0].productImage.split('/')[3]
+          }`
+        )
       } catch (error) {
         console.log(error)
       }

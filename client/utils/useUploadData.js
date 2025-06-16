@@ -36,14 +36,6 @@ export const useUploadData = () => {
     description,
     quantity
   ) => {
-    console.log('Form Data:', {
-      name,
-      price,
-      category,
-      description,
-      quantity,
-      uri
-    })
 
     if (!name || !price || !category || !description || !quantity || !uri) {
       console.log('Missing fields:', {
@@ -52,7 +44,7 @@ export const useUploadData = () => {
         category: !category,
         description: !description,
         quantity: !quantity,
-        uri: !uri
+        uri: !uri,
       })
       setSuccess('Please fill all fields and select an image')
       return
@@ -76,8 +68,6 @@ export const useUploadData = () => {
     formData.append('productDescription', description)
     formData.append('productQuantity', quantity)
 
-    console.log('Sending form data:', Object.fromEntries(formData))
-
     try {
       const response = await axios[method](route, formData, {
         headers: {
@@ -92,9 +82,14 @@ export const useUploadData = () => {
         message: error.message,
         response: error.response?.data,
         status: error.response?.status,
-        headers: error.response?.headers
+        headers: error.response?.headers,
       })
-      setSuccess(error.response?.data?.error || error.response?.data?.statusText || error.message || 'Error creating product')
+      setSuccess(
+        error.response?.data?.error ||
+          error.response?.data?.statusText ||
+          error.message ||
+          'Error creating product'
+      )
       throw error
     }
   }
