@@ -37,7 +37,7 @@ export default function Cart() {
         source={{ 
           uri: item.image.startsWith('http') 
             ? item.image 
-            : `${getApiUrl()}/${item.image.replace(/\\/g, '/')}`
+            : `https://pub-material-delivery-images.r2.dev/${item.image}`
         }}
         className='w-[100px] h-[100px]'
         resizeMode='contain'

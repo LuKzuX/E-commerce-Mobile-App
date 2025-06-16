@@ -71,7 +71,7 @@ export default function ProductDetails() {
               source={{ 
                 uri: data[0].productImage.startsWith('http') 
                   ? data[0].productImage 
-                  : `${getApiUrl()}/` + data[0].productImage 
+                  : `https://pub-material-delivery-images.r2.dev/${data[0].productImage}`
               }}
               className='w-full h-[300px]'
               resizeMode='contain'

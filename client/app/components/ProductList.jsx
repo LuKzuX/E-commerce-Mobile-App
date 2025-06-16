@@ -76,9 +76,8 @@ export default function ProductList({
         >
           <Image
             source={{ 
-              uri: item.productImage.startsWith('http') 
-                ? item.productImage 
-                : `${getApiUrl()}/` + item.productImage 
+              uri:
+                 `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${item.productImage}`
             }}
             className='h-[150px]'
             resizeMode='contain'
