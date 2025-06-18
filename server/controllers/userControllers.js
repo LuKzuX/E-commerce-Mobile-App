@@ -104,11 +104,8 @@ export const updateUserInfo = async (req, res, next) => {
     } = req.body
 
     const currentUser = await User.findById(_id)
-    
+
     if (password || newPassword) {
-      const salt = bcrypt.genSaltSync(10)
-      const hashedOldPassword = bcrypt.hashSync(currentUser.password, salt)
-      const hashedCurrentPassword = bcrypt.hashSync(password, salt)
       if (!bcrypt.compareSync(password, currentUser.password)) {
         return res
           .status(400)
