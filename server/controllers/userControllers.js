@@ -109,8 +109,7 @@ export const updateUserInfo = async (req, res, next) => {
       const salt = bcrypt.genSaltSync(10)
       const hashedOldPassword = bcrypt.hashSync(currentUser.password, salt)
       const hashedCurrentPassword = bcrypt.hashSync(password, salt)
-      return res.send(currentUser)
-      if (hashedCurrentPassword !== hashedOldPassword) {
+      if (!bcrypt.compareSync(hashedOldPassword, hashedCurrentPassword)) {
         return res
           .status(400)
           .json({ statusText: 'Current Password is incorrect' })
