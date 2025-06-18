@@ -103,13 +103,20 @@ export const updateUserInfo = async (req, res, next) => {
       state,
     } = req.body
 
-    const salt = bcrypt.genSaltSync(10)
-    if (password == '' || newPassword == '') {
-      return res.status(400).json({ statusText: 'Fill the Password fields' })
-    } else if (!bcrypt.compareSync(password, req.password)) {
-      return res.status(400).json({ statusText: 'Incorrect password' })
-    } else {
-      hashedPassword = bcrypt.hashSync(newPassword, salt)
+    if (password || newPassword) {
+      const salt = bcrypt.genSaltSync(10)
+      const hashedNewPassword = bcrypt.hashSync(newPassword, salt)
+      const hashedCurrentPassword = bcrypt.hashSync(password, salt)
+      if (user.password == hashedCurrentPassword) {
+        return res
+          .status(400)
+          .json({ statusText: 'Current Password is incorrect' })
+      }
+      if (hashedNewPassword.length < 4) {
+        return res
+          .status(400)
+          .json({ statusText: 'New password must be longer than 3 characters' })
+      }
     }
 
     const user = await User.findByIdAndUpdate(
