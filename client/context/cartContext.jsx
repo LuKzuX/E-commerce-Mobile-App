@@ -19,14 +19,11 @@ export const CartContextProvider = ({ children }) => {
 
   const getCartProducts = async () => {
     try {
-      const res = await axios.get(
-        `${getApiUrl()}/cart`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      )
+      const res = await axios.get(`${getApiUrl()}/cart`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       const productsInCart = res.data.map((obj) => {
         return {
           id: obj._id.toString(),
@@ -70,14 +67,11 @@ export const CartContextProvider = ({ children }) => {
 
   const deleteProductFromCart = async (id, removeAll) => {
     try {
-      await axios.delete(
-        `${getApiUrl()}/cart/${id}?removeAll=${removeAll}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      )
+      await axios.delete(`${getApiUrl()}/cart/${id}?removeAll=${removeAll}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       getCartProducts()
     } catch (error) {
       console.log(error)
@@ -140,7 +134,6 @@ export const CartContextProvider = ({ children }) => {
             totalPrice: newQnt * newArr[i].price,
           }
           setBoughtProducts(newArr)
-          deleteProductFromCart(id)
         } else {
           const newArr = [...boughtProducts]
           const filteredArr = newArr.filter((obj) => obj.id !== id)

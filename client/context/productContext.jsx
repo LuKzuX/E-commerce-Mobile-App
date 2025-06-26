@@ -60,6 +60,7 @@ export const ProductContextProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        setProducts,
         getProducts,
         totalPages,
         category,

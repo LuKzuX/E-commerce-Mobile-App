@@ -14,24 +14,30 @@ export default function Cart() {
     getProductQuantityInCart,
   } = useCartContext()
 
-  let a = 0
+  let totalCartPrice = 0
   for (let i = 0; i < boughtProducts.length; i++) {
-    a += boughtProducts[i].totalPrice
+    totalCartPrice += boughtProducts[i].totalPrice
   }
-
+  totalCartPrice = totalCartPrice.toFixed(2)
   const ThreeDots = ({ string }) => {
     if (string.length <= 17) {
-      return <Text>{string}</Text>
+      return (
+        <Text className='font-semibold text-text-small-medium'>{string}</Text>
+      )
     } else {
       let newStr = ''
       for (let i = 0; i < 17; i++) {
         newStr += string[i]
       }
-      return <Text>{newStr + '...'}</Text>
+      return (
+        <Text className='font-semibold text-text-small-medium'>
+          {newStr + '...'}
+        </Text>
+      )
     }
   }
   const renderItem = ({ item }) => (
-    <View className='flex-row items-center justify-between px-4 py-5 bg-white border-b border-gray-200 space-x-3'>
+    <View className='flex-row gap-6 items-center px-4 py-5 bg-white border-b border-gray-200'>
       {/* Product Image */}
       <Image
         source={{
@@ -47,7 +53,7 @@ export default function Cart() {
       <View className='flex-1'>
         <ThreeDots string={item.name} />
 
-        <View className='mt-2 space-y-[4px]'>
+        <View className='mt-2 '>
           {/* Total Price */}
           <View className='flex-row items-center'>
             <Text className='text-[11px] text-gray-500 mr-[2px]'>$</Text>
@@ -69,7 +75,7 @@ export default function Cart() {
       </View>
 
       {/* Quantity + Delete */}
-      <View className='items-center justify-between h-[80px] space-y-2'>
+      <View className='items-center justify-between h-[70px]'>
         <GetProductQuantityInCart
           getProductQuantity={() => getProductQuantityInCart(item.id)}
           increment={() => incrementQuantity(item.id)}
@@ -104,7 +110,9 @@ export default function Cart() {
         />
       )}
       <View className='bg-white px-6 py-4 rounded-xl shadow-md my-4'>
-        <Text className='text-lg font-semibold text-gray-800'>Total: ${a}</Text>
+        <Text className='text-lg font-semibold text-gray-800'>
+          Total: ${totalCartPrice}
+        </Text>
       </View>
     </View>
   )

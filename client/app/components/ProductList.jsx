@@ -48,13 +48,13 @@ export default function ProductList({
   const ThreeDots = ({ string }) => {
     if (!string) return null
     if (string.length <= 17) {
-      return <Text>{string}</Text>
+      return <Text  className='font-semibold text-text-small-medium'>{string}</Text>
     } else {
       let newStr = ''
       for (let i = 0; i < 17; i++) {
         newStr += string[i]
       }
-      return <Text>{newStr + '...'}</Text>
+      return <Text  className='font-semibold text-text-small-medium'>{newStr + '...'}</Text>
     }
   }
 
@@ -127,7 +127,7 @@ export default function ProductList({
                       id: item._id,
                       qnt: 1,
                       name: item.productName,
-                      price: item.productPrice,
+                      price: item?.productPrice?.$numberDecimal,
                       image: item.productImage,
                       totalPrice: item.productPrice,
                     },
