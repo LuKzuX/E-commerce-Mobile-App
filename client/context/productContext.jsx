@@ -25,7 +25,10 @@ export const ProductContextProvider = ({ children }) => {
     maxPrice
   ) => {
     try {
-      const url = `${getApiUrl()}/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${minPrice}&maxprice=${maxPrice}`
+      // Ensure minPrice and maxPrice are numbers and set defaults if invalid
+      const min = !isNaN(Number(minPrice)) && minPrice !== '' ? Number(minPrice) : 0;
+      const max = !isNaN(Number(maxPrice)) && maxPrice !== '' ? Number(maxPrice) : 100000000;
+      const url = `${getApiUrl()}/?s=${sort}&f=${find}&p=${page}&c=${category}&minprice=${min}&maxprice=${max}`
       console.log('Making request to:', url)
 
       const res = await axios.get(url)

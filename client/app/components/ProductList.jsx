@@ -29,12 +29,18 @@ export default function ProductList({
     setBoughtProducts,
   } = useCartContext()
   const queryClient = useQueryClient()
-  console.log(products)
 
   const { data, error, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['products', find, sortValue, category, minValue, maxValue],
     queryFn: ({ pageParam = 1 }) =>
-      getProducts(sortValue, find, pageParam, category, minValue, maxValue),
+      getProducts(
+        sortValue,
+        find,
+        pageParam,
+        category,
+        minValue !== undefined ? minValue : '',
+        maxValue !== undefined ? maxValue : ''
+      ),
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage || !Array.isArray(lastPage)) return undefined
       return lastPage.length === 8 ? allPages.length + 1 : undefined
@@ -127,7 +133,7 @@ export default function ProductList({
                       id: item._id,
                       qnt: 1,
                       name: item.productName,
-                      price: item?.productPrice?.$numberDecimal,
+                      price: item.productPrice?.$numberDecimal,
                       image: item.productImage,
                       totalPrice: item.productPrice,
                     },

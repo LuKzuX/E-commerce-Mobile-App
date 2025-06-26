@@ -8,13 +8,15 @@ export const getAllProducts = async (req, res, next) => {
   const find = req.query.f || ''
   const sort = req.query.s || null
   const category = req.query.c || null
-  const numFilterMin = req.query.minprice || 0
-  const numFilterMax = req.query.maxprice || 100000000
+  const numFilterMin = Number(req.query.minprice)
+  const numFilterMax = Number(req.query.maxprice)
+  const min = isNaN(numFilterMin) ? 0 : numFilterMin
+  const max = isNaN(numFilterMax) ? 100000000 : numFilterMax
   const productsPerPage = 8
   try {
     const query = {
       productName: { $regex: find, $options: 'i' },
-      productPrice: { $gte: numFilterMin, $lte: numFilterMax },
+      productPrice: { $gte: min, $lte: max },
     }
 
     if (category) {
