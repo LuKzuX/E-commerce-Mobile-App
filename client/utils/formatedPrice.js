@@ -7,6 +7,9 @@ export const formatedPrice = (str) => {
   }
   let result = ''
   let count = 0
+  if (str[str.length - 3] !== '.') {
+    cleaned += '00'
+  }
   for (let i = cleaned.length - 1; i >= 0; i--) {
     result = cleaned[i] + result
     count += 1

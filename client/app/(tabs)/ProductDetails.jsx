@@ -60,6 +60,10 @@ export default function ProductDetails() {
     setProducts(newList)
   }
 
+  useEffect(() => {
+    setData([])
+  }, [id])
+
   return (
     <ScrollView className='bg-bg-gray'>
       <SearchBar></SearchBar>
@@ -69,10 +73,10 @@ export default function ProductDetails() {
           <View>
             <Image
               source={{
-              uri: `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${
-                data[0].productImage.split('/')[3]
-              }`,
-            }}
+                uri: `https://pub-e0192fb33eb54d89be185d36bda72b76.r2.dev/${
+                  data[0].productImage.split('/')[3]
+                }`,
+              }}
               className='w-full h-[300px]'
               resizeMode='contain'
             />
