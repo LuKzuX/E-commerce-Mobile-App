@@ -18,7 +18,7 @@ import food from '../../assets/images/food.webp'
 import office from '../../assets/images/office.webp'
 
 export default function ProductCategoriesScreen() {
-  const { setProducts, getProducts, setDisplayCat } = useProductContext()
+  const { setProducts, getProducts, setDisplayCat, setCategory } = useProductContext()
   const navigation = useNavigation()
   const categories = [
     { label: 'Computers', value: 'computers', image: computer },
@@ -37,6 +37,7 @@ export default function ProductCategoriesScreen() {
         <TouchableOpacity
           onPress={() => {
             setProducts([])
+            setCategory(item.value)
             navigation.navigate('Home')
             getProducts(1, '', '', item.value)
             setDisplayCat(item.label)
