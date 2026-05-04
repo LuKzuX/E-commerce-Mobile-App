@@ -5,7 +5,7 @@ import { useProductContext } from '../../context/productContext'
 import { useRoute } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import SearchBar from '../components/SearchBar'
-import Filter from '../components/FilterComponent'
+import Filter from '../components/filterComponent'
 import Sort from '../components/SortComponent'
 
 export default function HomeScreen() {
