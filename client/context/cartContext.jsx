@@ -98,6 +98,13 @@ export const CartContextProvider = ({ children }) => {
   const incrementQuantity = (id) => {
     for (let i = 0; i < boughtProducts.length; i++) {
       if (boughtProducts[i].id === id) {
+        const currentQnt = boughtProducts[i].qnt || 0
+        
+        // Max quantity is 5
+        if (currentQnt >= 5) {
+          return
+        }
+        
         const newArr = [...boughtProducts]
         if (boughtProducts[i].qnt == undefined) {
           newArr[i] = { ...newArr[i], id: id, qnt: 1 }
@@ -105,12 +112,11 @@ export const CartContextProvider = ({ children }) => {
           setBoughtProducts(newArr)
           return
         } else {
-          const currentQnt = newArr[i].qnt || 0
           const newQnt = currentQnt + 1
           newArr[i] = {
             ...newArr[i],
             id: id,
-            qnt: boughtProducts[i].qnt + 1,
+            qnt: newQnt,
             totalPrice: newQnt * newArr[i].price,
           }
           addProductToCart(id)

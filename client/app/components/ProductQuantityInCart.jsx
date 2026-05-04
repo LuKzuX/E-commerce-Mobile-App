@@ -9,54 +9,55 @@ export default function GetProductQuantityInCart({
   decrement,
 }) {
   const translateX = useRef(new Animated.Value(0)).current
+  const quantity = getProductQuantity?.() || 0
 
   useEffect(() => {
-    const quantity = getProductQuantity?.() || 0
-
+    // Calculate proper translation: (index - 1) * (text width + gap)
+    // Each item is 30px wide, gap is 10px between items
+    const offset = -(quantity - 1) * 40
+    
     Animated.timing(translateX, {
-      toValue: -(quantity * 50) + 80 - quantity * 10, 
+      toValue: offset,
       duration: 300,
       useNativeDriver: true,
     }).start()
-  }, [getProductQuantity()]) // re-run when quantity changes
+  }, [quantity])
 
   return (
-    <View className='flex-row justify-center gap-2'>
-      <TouchableOpacity>
+    <View className='flex-row justify-center gap-2 items-center'>
+      <TouchableOpacity onPress={decrement} disabled={quantity <= 0}>
         <Ionicons
-          className={`${
-            getProductQuantity() <= 0 ? 'opacity-50' : 'opacity-100'
-          } px-2`}
-          disabled={getProductQuantity() <= 0}
-          onPress={decrement}
+          style={{
+            opacity: quantity <= 0 ? 0.5 : 1,
+          }}
+          disabled={quantity <= 0}
           name='remove-outline'
           size={25}
         />
       </TouchableOpacity>
-      <View className='flex-row items-center overflow-hidden border rounded-lg'>
+      <View className='flex-row items-center overflow-hidden border border-gray-300 rounded-lg bg-white' style={{ width: 40, height: 40 }}>
         <Animated.View
           style={{
             transform: [{ translateX }],
-            width: 50,
-            overflow: 'auto',
+            width: 200,
             flexDirection: 'row',
-            gap: 50,
+            gap: 10,
+            paddingHorizontal: 5,
           }}
         >
-          <Text className='w-[10px]'>1</Text>
-          <Text className='w-[10px]'>2</Text>
-          <Text className='w-[10px]'>3</Text>
-          <Text className='w-[10px]'>4</Text>
-          <Text className='w-[10px]'>5</Text>
+          <Text className='w-[30px] text-center font-semibold'>1</Text>
+          <Text className='w-[30px] text-center font-semibold'>2</Text>
+          <Text className='w-[30px] text-center font-semibold'>3</Text>
+          <Text className='w-[30px] text-center font-semibold'>4</Text>
+          <Text className='w-[30px] text-center font-semibold'>5</Text>
         </Animated.View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={increment} disabled={quantity >= 5}>
         <Ionicons
-          className={`${
-            getProductQuantity() >= 5 ? 'opacity-50' : 'opacity-100'
-          } px-2`}
-          disabled={getProductQuantity() >= 5}
-          onPress={increment}
+          style={{
+            opacity: quantity >= 5 ? 0.5 : 1,
+          }}
+          disabled={quantity >= 5}
           name='add-outline'
           size={25}
         />
